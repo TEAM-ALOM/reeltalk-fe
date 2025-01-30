@@ -29,7 +29,7 @@ export default function Header() {
 
           {/* 네비게이션 메뉴 (PC 화면에서만 보임) */}
           <nav className="hidden space-x-4 md:flex">
-            {["/", "/movies", "/series", "/top-reviews"].map((href, index) => (
+            {["/", "/movies-screen", "/series", "/top-reviews"].map((href, index) => (
               <button
                 key={index}
                 onClick={() => handleNavigation(href)}
@@ -39,7 +39,7 @@ export default function Header() {
               >
                 {href === "/"
                   ? "홈"
-                  : href === "/movies"
+                  : href === "/movies-screen"
                   ? "영화"
                   : href === "/series"
                   ? "시리즈"
