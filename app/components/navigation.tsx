@@ -88,7 +88,7 @@ export default function Header() {
       {/* 모바일 네비게이션 */}
       {isMenuOpen && (
         <nav className="p-4 space-y-4 bg-white border-t border-gray-200 md:hidden">
-          {["/", "/movies", "/series", "/top-reviews"].map((href, index) => (
+          {["/", "/movies-screen", "/series", "/top-reviews"].map((href, index) => (
             <button
               key={index}
               onClick={() => handleNavigation(href)}
@@ -96,7 +96,7 @@ export default function Header() {
             >
               {href === "/"
                 ? "홈"
-                : href === "/movies"
+                : href === "/movies-screen"
                 ? "영화"
                 : href === "/series"
                 ? "시리즈"
