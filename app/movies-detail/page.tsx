@@ -6,7 +6,7 @@ export default function MoviesDetail() {
         <main className="flex flex-col justify-center items-center w-full px-4">
 
             {/* 영화 상세 정보*/}
-            <div className="w-full h-full max-w-[1400px] min-h-[300px] lg:min-h-[500px] border border-3 border-black mt-6 flex flex-col lg:flex-row justify-between pl-6 lg:px-16">
+            <div className="w-full h-full max-w-[1600px] min-h-[300px] lg:min-h-[500px] border border-3 border-black mt-6 flex flex-col lg:flex-row space-x-10 pl-6 lg:px-16">
                 {/* 영화 포스터*/}
                 <div className="w-full lg:w-1/3 aspect-[2/3] max-h-[500px] max-w-[370px] h-auto border border-5 border-black flex items-center justify-center">영화 포스터</div>
 
@@ -64,8 +64,17 @@ export default function MoviesDetail() {
             </div>
 
             {/* 리뷰 talk*/}
-            <div>
+            <div className="w-full max-w-[1500px] mt-6 flex flex-col">
+                <div className="w-full flex justify-between">
+                    <span className="text-[#FFC107] text-[18px]">Review Talk</span>
+                    <button className="bg-[#E3F2FD] border rounded-[20px] text-[20px] w-[100px] h-[30px] text-[#787878] flex justify-center items-center">more+</button>
+                </div>
 
+                {/* 리뷰 영상들*/}
+                <div className="border border-3 border-black my-3">
+                    {/*리뷰 영상 동적 렌더링*/}
+                    <div className="max-w-[454px] max-h-[250px] h-[250px] bg-[#CDC8C8] border rounded-[20px]">리뷰영상</div>
+                </div>
             </div>
 
             {/* 실시간 talk*/}
