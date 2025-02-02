@@ -67,19 +67,23 @@ export default function MoviesDetail() {
             <div className="w-full max-w-[1500px] mt-6 flex flex-col">
                 <div className="w-full flex justify-between">
                     <span className="text-[#FFC107] text-[18px]">Review Talk</span>
-                    <button className="bg-[#E3F2FD] border rounded-[20px] text-[20px] w-[100px] h-[30px] text-[#787878] flex justify-center items-center">more+</button>
+                    <button className="bg-[#E3F2FD] border rounded-[20px] text-[21px] w-[100px] h-[30px] text-[#787878] flex justify-center items-center">more+</button>
                 </div>
 
                 {/* 리뷰 영상들*/}
-                <div className="border border-3 border-black my-3">
+                <div className=" my-3">
                     {/*리뷰 영상 동적 렌더링*/}
                     <div className="max-w-[454px] max-h-[250px] h-[250px] bg-[#CDC8C8] border rounded-[20px]">리뷰영상</div>
                 </div>
             </div>
 
             {/* 실시간 talk*/}
-            <div>
- 
+            <div className="w-full h-full m-5  max-w-[1500px] h-[620px] bg-[#D9D9D9] flex flex-col items-center justify-end"> 
+                <form>
+                    <div></div>
+                    <input type="text" className="border border rounded-[30px] w-[1300px] h-[75px] m-3"></input>
+                    <button className="border rounded-[30px] bg-[#FFC107] w-[100px] h-[75px]">입력</button>                
+                    </form>
             </div>
         </main>
     );
