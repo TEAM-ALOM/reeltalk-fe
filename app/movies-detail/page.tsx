@@ -64,7 +64,7 @@ export default function MoviesDetail() {
             </div>
 
             {/* 리뷰 talk*/}
-            <div className="w-full max-w-[1500px] mt-6 flex flex-col">
+            <div className="w-full max-w-[1500px] mt-6 flex flex-col border border-3 border-black">
                 <div className="w-full flex justify-between">
                     <span className="text-[#FFC107] text-[18px]">Review Talk</span>
                     <button className="bg-[#E3F2FD] border rounded-[20px] text-[21px] w-[100px] h-[30px] text-[#787878] flex justify-center items-center">more+</button>
@@ -78,12 +78,15 @@ export default function MoviesDetail() {
             </div>
 
             {/* 실시간 talk*/}
-            <div className="w-full h-full m-5  max-w-[1500px] h-[620px] bg-[#D9D9D9] flex flex-col items-center justify-end"> 
-                <form>
-                    <div></div>
-                    <input type="text" className="border border rounded-[30px] w-[1300px] h-[75px] m-3"></input>
-                    <button className="border rounded-[30px] bg-[#FFC107] w-[100px] h-[75px]">입력</button>                
+            <div className="w-full max-w-[1500px] mt-6 flex flex-col items-start border border-3 border-black">
+                <div className="text-[#FFC107] text-[18px]">실시간Talk</div>
+                <div className="w-full min-h-[620px] max-w-[1500px] bg-[#D9D9D9] flex flex-col items-center justify-end my-3"> 
+                    <form>
+                        <div></div>
+                        <input type="text" className="border border rounded-[30px] w-[1350px] h-[75px] m-3"></input>
+                        <button className="border rounded-[30px] bg-[#FFC107] w-[100px] h-[75px]">입력</button>                
                     </form>
+                </div>
             </div>
         </main>
     );
