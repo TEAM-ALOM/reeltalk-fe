@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 interface IMovieProps {
   title: string;
@@ -17,24 +18,20 @@ export default function AdBanner({ title, id, poster_path }: IMovieProps) {
   return (
     <div
       onClick={onClick}
-      className="relative w-screen h-72 px-10 mt-16 text-white cursor-pointer"
+      className="relative w-screen max-w-screen-xl h-96 mt-16 text-white cursor-pointer mx-auto"
     >
-      {/* 이미지 영역 */}
-      <div className="w-full h-full rounded-lg overflow-hidden relative">
-        <img
-          src={poster_path}
-          alt={title}
-          className="w-full h-full object-cover drop-shadow-md"
-        />
+      <Image
+        src={poster_path || "/default-image.jpg"}
+        alt={title}
+        layout="fill"
+        objectFit="fill"
+        className="w-full h-full filter blur-[2px] brightness-75 rounded-lg"
+      />
 
-        {/* 오버레이 (검은색 반투명 배경) */}
-        <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/70 to-transparent p-5">
-          <h2 className="text-2xl font-bold text-black">{title}</h2>
-          {/* 추가 정보 */}
-          <p className="text-sm text-black">
-            2024 · Netflix · 스릴러/드라마/TV드라마
-          </p>
-        </div>
+      {/* 텍스트 오버레이 */}
+      <div className="absolute bottom-0 left-0 w-full p-5 bg-gradient-to-t from-black/70 to-transparent rounded-b-lg">
+        <h2 className="text-2xl font-bold">{title}</h2>
+        <p className="text-sm">2024 · Netflix · 스릴러/드라마/TV드라마</p>
       </div>
     </div>
   );
