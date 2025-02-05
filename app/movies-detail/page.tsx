@@ -19,7 +19,7 @@ export default function MoviesDetail() {
                     <div className="flex flex-col lg:flex-row justify-between w-full border">
                         {/* 제목 및 장르*/}
                         <div>
-                            <div className="text-[36px] md:text-[36px] font-bold">위키드 3</div>
+                            <div className="text-[36px] md:text-[36px] font-bold">위키드 1</div>
                             <div className="text-[36px] md:text-[36px] font-bold">Wicked: Part One</div>
                             <div className="text-[#898989] text-[14px] md:text-[14px]">2024.판타지/뮤지컬/모험/액션/가족/로맨스/음악.미국</div>
                         </div>
