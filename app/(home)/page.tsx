@@ -1,9 +1,8 @@
+"use client";
+
+import { useRef, useState, useEffect } from "react";
 import AdBanner from "../components/adBanner";
 import MovieCardVertical from "../components/movieCard-vertical";
-
-export const metadata = {
-  title: "Home",
-};
 
 type Movie = {
   id: string;
@@ -18,11 +17,39 @@ async function getMovies(): Promise<Movie[]> {
   }
   return fetch(apiUrl).then((response) => response.json());
 }
-export default async function Home() {
-  const movies = await getMovies();
 
-  // 첫 6개의 영화 가져오기
+export default function Home() {
+  const [movies, setMovies] = useState<Movie[]>([]);
+  const [showLeftButton, setShowLeftButton] = useState(false);
+  const [showRightButton, setShowRightButton] = useState(true);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    getMovies().then((data) => {
+      setMovies(data);
+    });
+  }, []);
+
   const topMovies = movies.slice(0, 8);
+
+  const handleScroll = () => {
+    if (scrollContainerRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } =
+        scrollContainerRef.current;
+      setShowLeftButton(scrollLeft > 0);
+      setShowRightButton(scrollLeft < scrollWidth - clientWidth - 10);
+    }
+  };
+
+  const scroll = (direction: "left" | "right") => {
+    if (scrollContainerRef.current) {
+      const scrollAmount = direction === "left" ? -400 : 400;
+      scrollContainerRef.current.scrollBy({
+        left: scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  };
 
   return (
     <div className="flex flex-col space-y-10">
@@ -35,18 +62,37 @@ export default async function Home() {
         />
       )}
 
-      <span className="font-serif text-xl font-light pl-10">Top 리뷰 순</span>
+      <span className="pl-10 font-serif text-xl font-light">Top 리뷰 순</span>
 
       {/* 가로 스크롤 컨테이너 */}
-      <div className="flex space-x-4 overflow-x-auto scrollbar-hide px-10 pb-10">
-        {topMovies.map((movie) => (
-          <MovieCardVertical
-            key={movie.id}
-            id={movie.id}
-            poster_path={movie.poster_path}
-            title={movie.title}
-          />
-        ))}
+      <div className="relative flex pb-10 pl-10 space-x-4 group">
+        <div
+          ref={scrollContainerRef}
+          className="flex gap-4 overflow-x-auto scroll-smooth"
+          onScroll={handleScroll}
+        >
+          {movies.map((movie) => (
+            <MovieCardVertical key={movie.id} {...movie} />
+          ))}
+        </div>
+
+        {showLeftButton && (
+          <button
+            onClick={() => scroll("left")}
+            className="absolute left-0 p-2 text-lg font-semibold text-gray-300 -translate-y-1/2 bg-white rounded-full opacity-0 top-1/2 group-hover:opacity-80"
+          >
+            ＜
+          </button>
+        )}
+
+        {showRightButton && (
+          <button
+            onClick={() => scroll("right")}
+            className="absolute right-0 p-2 text-lg font-semibold text-gray-300 -translate-y-1/2 bg-white rounded-full opacity-0 top-1/2 group-hover:opacity-80"
+          >
+            ＞
+          </button>
+        )}
       </div>
     </div>
   );
