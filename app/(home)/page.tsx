@@ -14,7 +14,7 @@ type Movie = {
 async function getMovies(): Promise<Movie[]> {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   if (!apiUrl) {
-    throw new Error("NEXT_PUBLIC_API_URL is not defined");
+    throw new Error("NEXT_PUBLIC_API_URL went wrong");
   }
   return fetch(apiUrl).then((response) => response.json());
 }
