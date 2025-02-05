@@ -34,7 +34,7 @@ export default function Header() {
                 key={index}
                 onClick={() => handleNavigation(href)}
                 className={`text-blue-400 text-lg font-extrabold hover:text-gray-700 ${
-                  path === href ? "font-bold text-blue-600" : ""
+                  path === href ? "font-bold text-yellow-400" : ""
                 }`}
               >
                 {href === "/"
