@@ -2,6 +2,14 @@
 import { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { AiOutlineMenu, AiOutlineSearch } from "react-icons/ai";
+import { Sansita } from "next/font/google"; // Sansita 폰트 불러오기
+
+const sansita = Sansita({
+  weight: ["800", "700"],
+  subsets: ["latin"],
+  style: ["italic", "normal"],
+  display: "swap",
+});
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,17 +24,16 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white shadow-m">
-      <div className="container flex items-center justify-between max-w-full p-4 px-2 py-3 bg-blue-100">
+    <header className="sticky top-0 z-50 bg-white shadow-md">
+      <div className="container flex items-center justify-between max-w-full p-4 px-2 py-3 bg-ReelTalk_LightBlue">
         {/* 왼쪽 섹션: 로고 + 네비게이션 메뉴 */}
         <div className="flex items-center space-x-6">
           <button
             onClick={() => handleNavigation("/")}
-            className="ml-5 mr-10 text-2xl italic font-bold text-blue-600"
+            className={`ml-5 mr-10 text-3xl italic font-bold text-ReelTalk_DeepBlue ${sansita.className}`}
           >
             ReelTalk
           </button>
-
           {/* 네비게이션 메뉴 (PC 화면에서만 보임) */}
           <nav className="hidden space-x-4 md:flex">
             {["/", "/movies", "/series", "/top-reviews"].map((href, index) => (
@@ -70,7 +77,7 @@ export default function Header() {
 
           <button
             onClick={() => handleNavigation("/mypage")}
-            className="text-xl font-bold text-yellow-500"
+            className="text-xl font-bold text-ReelTalk_Yellow"
           >
             My Page
           </button>
