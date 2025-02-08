@@ -7,5 +7,7 @@ const config: Config = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {},
+  plugins: [require('tailwind-scrollbar-hide')],
 };
+
 export default config;

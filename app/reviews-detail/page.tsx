@@ -1,5 +1,5 @@
 import React from "react";
-import { StarIcon } from "../components/icons";
+import { IoStarSharp } from "react-icons/io5";
 
 export default function ReviewsDetail() {
     return (
@@ -34,11 +34,11 @@ export default function ReviewsDetail() {
                         <div className="w-full min-h-[120px] flex flex-col justify-center items-center">
                             <div className="text-[17px] text-[#575757]">이 리뷰에 대한 별점을 남겨주세요.</div>
                             <div className="m-2 flex space-x-1">
-                                <StarIcon color="#D9D9D9" size="27px"/>
-                                <StarIcon color="#D9D9D9" size="27px"/>
-                                <StarIcon color="#D9D9D9" size="27px"/>
-                                <StarIcon color="#D9D9D9" size="27px"/>
-                                <StarIcon color="#D9D9D9" size="27px"/>
+                                <IoStarSharp className="text-[#D9D9D9] w-8 h-8"/>
+                                <IoStarSharp className="text-[#D9D9D9] w-8 h-8"/>
+                                <IoStarSharp className="text-[#D9D9D9] w-8 h-8"/>
+                                <IoStarSharp className="text-[#D9D9D9] w-8 h-8"/>
+                                <IoStarSharp className="text-[#D9D9D9] w-8 h-8"/>
                             </div>
                         </div>
                         
@@ -49,8 +49,25 @@ export default function ReviewsDetail() {
             </div>
 
              {/* 댓글*/}
-             <div className="w-full h-full max-w-[1600px] min-h-[920px] lg:min-h-[920px] border border-3 border-black my-6 flex">
-
+             <div className="w-full h-full max-w-[1600px] min-h-[260px] lg:min-h-[260px] my-6 grid grid-rows-[auto_1fr] gap-1">
+                <div className="w-full flex justify-between">
+                    <span>댓글</span>
+                    <button className="text-[17px] bg-[#E3F2FD] w-[80px] h-full flex justify-center items-center rounded-[80px]">more+</button>
+                </div>
+                <div className="w-full border border-3 border-black bg-[#D9D9D9]">
+                    <form className="w-full h-full flew-grow grid grid-rows-[1fr_auto] gap-4">
+                        <div className="w-full"></div>
+                        <div className="w-full h-[60px] flex items-end space-x-4 my-2">
+                            <input
+                            type="text"
+                            className="w-full max-w-[90%] h-full border rounded-[30px] text-[16px] bg-[#EDEDED]"
+                            />
+                            <button className="h-full lg:w-[8%] border rounded-[30px] bg-[#FFC107] lg:text-[24px] md:text-[18px]">
+                            입력
+                            </button>
+                        </div>
+                    </form>
+                </div>
              </div>
         </main>
     )
