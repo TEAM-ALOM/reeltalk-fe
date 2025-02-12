@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 interface IMovieProps {
   title: string;
@@ -20,9 +21,10 @@ export default function MovieCardVertical({
   };
 
   return (
-    <div
+    <motion.div
       onClick={onClick}
       className="relative w-56 h-80 flex-shrink-0 text-white cursor-pointer"
+      whileHover={{ scale: 0.95 }}
     >
       <div className="w-full h-full rounded-3xl overflow-hidden relative">
         <Image
@@ -33,6 +35,6 @@ export default function MovieCardVertical({
           className="w-full h-full drop-shadow-md"
         />
       </div>
-    </div>
+    </motion.div>
   );
 }
