@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./styles/globals.css";
 import Navigation from "./components/navigation";
-import { usePathname } from "next/navigation";
 
 export const metadata: Metadata = {
   title: {
@@ -16,12 +15,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const pathname = usePathname();
-  const hideNavPaths = ["/register"];
   return (
     <html lang="en">
       <body>
-        {!hideNavPaths.includes(pathname) && <Navigation />}
+        <Navigation />
         {children}
       </body>
     </html>
