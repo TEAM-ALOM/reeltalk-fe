@@ -3,6 +3,8 @@ import { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { AiOutlineMenu, AiOutlineSearch } from "react-icons/ai";
 import { Sansita } from "next/font/google"; // Sansita 폰트 불러오기
+import LoginCard from "./loginCard";
+import { motion } from "framer-motion";
 
 const sansita = Sansita({
   weight: ["800", "700"],
@@ -13,6 +15,7 @@ const sansita = Sansita({
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
   const path = usePathname();
   const router = useRouter();
 
@@ -68,15 +71,16 @@ export default function Header() {
             <AiOutlineSearch className="absolute text-gray-500 right-3" />
           </div>
 
+          {/* 로그인 버튼 (팝업 열기) */}
           <button
-            onClick={() => handleNavigation("/login")}
+            onClick={() => setIsLoginOpen(true)}
             className="text-xs text-gray-400 hover:text-blue-500"
           >
             로그인/회원가입
           </button>
 
           <button
-            onClick={() => handleNavigation("/mypage")}
+            onClick={() => handleNavigation("/my-page")}
             className="text-xl font-bold text-ReelTalk_Yellow"
           >
             My Page
@@ -91,6 +95,40 @@ export default function Header() {
           <AiOutlineMenu />
         </button>
       </div>
+
+      {/* 로그인 모달 */}
+      {isLoginOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            className="relative p-6 bg-white rounded-2xl shadow-lg w-[520px]"
+          >
+            <button
+              className="absolute text-gray-400 top-2 right-2 hover:text-gray-600"
+              onClick={() => setIsLoginOpen(false)}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="size-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18 18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+            <LoginCard />
+          </motion.div>
+        </div>
+      )}
 
       {/* 모바일 네비게이션 */}
       {isMenuOpen && (
