@@ -2,6 +2,7 @@ import React from "react";
 import { FaPlus } from "react-icons/fa6";
 import { AiFillTrademarkCircle } from "react-icons/ai";
 import { GiSevenPointedStar } from "react-icons/gi";
+import Image from "next/image";
 
 export default function ReviewerMyPage() {
     return (
@@ -11,17 +12,23 @@ export default function ReviewerMyPage() {
                
             </div>
             {/* 프로필 이미지 영역*/}
-            <div className="absolute min-h-[300px] w-full h-40 top-[20%] grid grid-cols-[90%_10%] z-10 md:px-5 sm:px-5">
+            <div className="absolute min-h-[300px] w-full h-40 top-[17%] grid grid-cols-[90%_10%] z-10 md:px-5 sm:px-5">
                 
                 <div className="w-full h-full grid lg:grid-cols-2 md:grid-cols-1 md:place-items-center">
                     {/*<Image src="/img/profile.png" alt="프로필 이미지" width={100} height={100} /> */}
                     {/* 프로필*/}
-                    <div className="border border-black border-3 max-w-[300px] max-h-[300px] min-w-[300px] ml-[15%] min-h-[300px] w-[15vw] h-[15vw] rounded-full aspect-square self-start flex-grow-0"/>
+                    <Image 
+                    src={"/img/profile.png"}
+                    alt="Profile"
+                    width={350}
+                    height={350}
+                    className="border border-black border-3 max-w-[350px] max-h-[350px] lg:min-w-[350px] lg:min-h-[350px] md:min-h-[300px] md:min-w-[300px] sm:min-h-[250px] sm:min-w-[250px] ml-[15%] min-h-[350px] w-[15vw] h-[15vw] rounded-full aspect-square self-start flex-grow-0"
+                    />
 
                     {/* 리뷰어 및 한줄소개*/}
                     <div className="h-full w-full grid grid-rows-[1fr_auto_auto]">
                         <div></div>
-                        <div className="flex items-center items-center space-x-2">
+                        <div className="flex items-center items-center space-x-2 mb-2">
                             <div className="text-[18px] font-semibold pl-7">리뷰어</div>
                             <div className="text-[38px] font-semibold text-[#1E88E5]">코헤트</div>
                             <AiFillTrademarkCircle className="w-6 h-6"/>
