@@ -80,7 +80,7 @@ export default function Header() {
           </button>
 
           <button
-            onClick={() => handleNavigation("/mypage")}
+            onClick={() => handleNavigation("/my-page")}
             className="text-xl font-bold text-ReelTalk_Yellow"
           >
             My Page
