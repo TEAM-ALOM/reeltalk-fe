@@ -93,12 +93,23 @@ export default function Header() {
               {user}/로그아웃
             </button>
           ) : (
-            <button
-              onClick={() => setIsLoginOpen(true)}
-              className="text-xs text-gray-400 hover:text-blue-500"
-            >
-              로그인/회원가입
-            </button>
+            <div className="flex space-x-1">
+              {/* 로그인 버튼 (팝업) */}
+              <button
+                onClick={() => setIsLoginOpen(true)}
+                className="text-xs text-gray-400 hover:text-blue-500"
+              >
+                로그인
+              </button>
+              <span className="text-gray-400">/</span>
+              {/* 회원가입 버튼 (/register 이동) */}
+              <button
+                onClick={() => handleNavigation("/register")}
+                className="text-xs text-gray-400 hover:text-blue-500"
+              >
+                회원가입
+              </button>
+            </div>
           )}
 
           <button
