@@ -13,15 +13,15 @@ export default function  MyPage() {
                 <button className="lg:text-[20px] md:text-[15px] text-[#FFFFFF] underline decoration-1 my-3 mx-5 flex justify-end">리뷰 등록하기</button>
             </div>
             {/* 프로필 이미지 영역*/}
-            <div className="absolute min-h-[300px] w-full h-40 top-[10%] grid grid-cols-[90%_10%] z-10">
+            <div className="absolute min-h-[350px] w-full h-40 top-[10%] grid grid-cols-[90%_10%] z-10 border border-3 border-black">
                 
                 <div className="w-full h-full grid lg:grid-cols-2 md:grid-cols-1 md:place-items-center">
                     {/*<Image src="/img/profile.png" alt="프로필 이미지" width={100} height={100} /> */}
                     {/* 프로필*/}
-                    <div className="border border-black border-3 max-w-[300px] max-h-[300px] min-w-[300px] ml-[15%] min-h-[300px] w-[15vw] h-[15vw] rounded-full aspect-square self-start flex-grow-0"/>
+                    <div className="border border-black border-3 max-w-[350px] max-h-[350px] lg:min-w-[350px] lg:min-h-[350px] md:min-h-[300px] md:min-w-[300px] sm:min-h-[250px] sm:min-w-[250px] ml-[15%] min-h-[350px] w-[15vw] h-[15vw] rounded-full aspect-square self-start flex-grow-0"/>
 
                     {/* 리뷰어 및 한줄소개*/}
-                    <div className="h-full w-full grid grid-rows-[1fr_auto_auto]">
+                    <div className="h-full w-full grid grid-rows-[1fr_auto_auto] border border-3 border-black pb-12">
                         <div></div>
                         <div className="flex items-center items-center space-x-2">
                             <div className="text-[18px] font-semibold pl-7">리뷰어</div>
