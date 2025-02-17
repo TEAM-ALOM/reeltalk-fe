@@ -8,7 +8,14 @@ const sansita = Sansita({
   style: ["italic", "normal"],
   display: "swap",
 });
-export default function LoginCard() {
+export default function LoginCard({
+  onLogin,
+}: {
+  onLogin: (username: string) => void;
+}) {
+  const handleLoginClick = () => {
+    onLogin("홍길동"); // 예제: 로그인 성공 후 유저 이름을 "홍길동"으로 설정
+  };
   return (
     <form className="flex flex-col items-center p-6 ">
       {/* 제목 */}
@@ -55,6 +62,7 @@ export default function LoginCard() {
       {/* 로그인 버튼 아래 마진 추가 */}
       <button
         type="submit"
+        onClick={handleLoginClick}
         className="w-full py-3 text-xl font-semibold text-white bg-blue-600 rounded-2xl hover:bg-blue-700 mb-14"
       >
         로그인
