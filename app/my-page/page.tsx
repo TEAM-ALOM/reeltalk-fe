@@ -15,16 +15,18 @@ export default function  MyPage() {
             {/* 프로필 이미지 영역*/}
             <div className="absolute min-h-[350px] w-full h-40 top-[10%] grid grid-cols-[90%_10%] z-10">
                 
-                <div className="w-full h-full grid lg:grid-cols-2 md:grid-cols-1 md:place-items-center">
+                <div className="border border-3 border-black w-full h-full grid lg:grid-cols-2 md:grid-cols-1 md:place-items-center">
                     {/*<Image src="/img/profile.png" alt="프로필 이미지" width={100} height={100} /> */}
                     {/* 프로필*/}
-                    <Image 
-                    src={"/img/profile.png"}
-                    alt="Profile"
-                    width={350}
-                    height={350}
-                    className="border border-black border-3 max-w-[350px] max-h-[350px] lg:min-w-[350px] lg:min-h-[350px] md:min-h-[300px] md:min-w-[300px] sm:min-h-[250px] sm:min-w-[250px] ml-[15%] min-h-[350px] w-[15vw] h-[15vw] rounded-full aspect-square self-start flex-grow-0"
-                    />
+                    <div className="border border-black border-3 self-start flex-grow-0 ml-[15%] w-[350px] h-[350px] max-w-[350px] max-h-[350px] lg:min-w-[350px] lg:min-h-[350px] md:min-h-[300px] md:min-w-[300px] sm:min-h-[250px] sm:min-w-[250px] min-h-[350px]">
+                        <Image 
+                        src={"/img/icons/profile.jpg"}
+                        alt="Profile"
+                        width={350}
+                        height={350}
+                        className="border border-black border-3 rounded-full aspect-square "
+                        />
+                    </div>
 
                     {/* 리뷰어 및 한줄소개*/}
                     <div className="h-full w-full grid grid-rows-[1fr_auto_auto] pb-12">
