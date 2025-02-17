@@ -3,6 +3,14 @@
 import { useRef, useState, useEffect } from "react";
 import AdBanner from "../components/adBanner";
 import MovieCardVertical from "../components/movieCard-vertical";
+import { Inter } from "next/font/google";
+
+const inter = Inter({
+  weight: ["500", "400", "300"],
+  subsets: ["latin"],
+  style: ["italic", "normal"],
+  display: "swap",
+});
 
 type Movie = {
   id: string;
@@ -52,7 +60,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col space-y-10">
+    <div className="flex flex-col ">
       {topMovies.length > 0 && (
         <AdBanner
           key={topMovies[0].id}
@@ -62,7 +70,11 @@ export default function Home() {
         />
       )}
 
-      <span className="pl-10 font-serif text-xl font-light">Top 리뷰 순</span>
+      <span
+        className={`pl-10 text-2xl my-6 text-ReelTalk_Yellow ${inter.className} font-normal`}
+      >
+        Top 리뷰 순
+      </span>
 
       {/* 가로 스크롤 컨테이너 */}
       <div className="relative flex pb-10 pl-10 space-x-4 group">
