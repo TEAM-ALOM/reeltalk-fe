@@ -27,14 +27,14 @@ export default function MyPage() {
               alt="Profile"
               width={350}
               height={350}
-              className="border border-black border-3 rounded-full aspect-square "
+              className="border rounded-full aspect-square "
             />
           </div>
 
           {/* 리뷰어 및 한줄소개*/}
           <div className="h-full w-full grid grid-rows-[1fr_auto_auto] pb-12">
             <div></div>
-            <div className="flex items-center items-center space-x-2">
+            <div className="flex items-center  space-x-2">
               <div className="text-[18px] font-semibold pl-7">리뷰어</div>
               <div className="text-[38px] font-semibold text-[#1E88E5]">
                 코헤트
