@@ -19,6 +19,19 @@ export default function Header() {
   const path = usePathname();
   const router = useRouter();
 
+  const [user, setUser] = useState<string | null>(null);
+
+  /** ✅ 로그인 핸들러 (백엔드 연동 시 수정 예정) */
+  const handleLogin = (username: string) => {
+    setUser(username); // 로그인한 유저 정보 저장
+    setIsLoginOpen(false); // 로그인 모달 닫기
+  };
+
+  /** ✅ 로그아웃 핸들러 */
+  const handleLogout = () => {
+    setUser(null); // 유저 정보 제거 (로그아웃)
+  };
+
   const handleNavigation = (href: string) => {
     if (path !== href) {
       router.push(href);
@@ -72,15 +85,35 @@ export default function Header() {
           </div>
 
           {/* 로그인 버튼 (팝업 열기) */}
-          <button
-            onClick={() => setIsLoginOpen(true)}
-            className="text-xs text-gray-400 hover:text-blue-500"
-          >
-            로그인/회원가입
-          </button>
+          {user ? (
+            <button
+              onClick={handleLogout}
+              className="text-xs text-gray-400 hover:text-red-600"
+            >
+              {user}/로그아웃
+            </button>
+          ) : (
+            <div className="flex space-x-1">
+              {/* 로그인 버튼 (팝업) */}
+              <button
+                onClick={() => setIsLoginOpen(true)}
+                className="text-xs text-gray-400 hover:text-blue-500"
+              >
+                로그인
+              </button>
+              <span className="text-gray-400">/</span>
+              {/* 회원가입 버튼 (/register 이동) */}
+              <button
+                onClick={() => handleNavigation("/register")}
+                className="text-xs text-gray-400 hover:text-blue-500"
+              >
+                회원가입
+              </button>
+            </div>
+          )}
 
           <button
-            onClick={() => handleNavigation("/mypage")}
+            onClick={() => handleNavigation("/my-page")}
             className="text-xl font-bold text-ReelTalk_Yellow"
           >
             My Page
@@ -125,7 +158,7 @@ export default function Header() {
                 />
               </svg>
             </button>
-            <LoginCard />
+            <LoginCard onLogin={handleLogin} />
           </motion.div>
         </div>
       )}
