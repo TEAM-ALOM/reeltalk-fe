@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { makeImagePath } from "@/lib/utils";
 
 interface IReviewProps {
   title: string;
@@ -28,7 +29,7 @@ export default function ReviewCardHorizontal({
     >
       <div className="w-full h-full rounded-3xl overflow-hidden relative">
         <Image
-          src={backdrop_path || "/icons/Apple_logo_white.png"}
+          src={makeImagePath(backdrop_path) || "/icons/Apple_logo_white.png"}
           alt={title}
           fill
           style={{ objectFit: "cover" }}

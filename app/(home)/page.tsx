@@ -4,6 +4,7 @@ import { useRef, useState, useEffect } from "react";
 import AdBanner from "../components/adBanner";
 import MovieCardVertical from "../components/movieCard-vertical";
 import { Inter } from "next/font/google";
+import { makeImagePath } from "@/lib/utils";
 
 const inter = Inter({
   weight: ["500", "400", "300"],
@@ -20,11 +21,23 @@ type Movie = {
 };
 
 async function getMovies(): Promise<Movie[]> {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-  if (!apiUrl) {
-    throw new Error("NEXT_PUBLIC_API_URL went wrong");
+  const MOVIE_BASE_PATH = process.env.NEXT_PUBLIC_API_URL_MOVIE;
+  const API_KEY = process.env.NEXT_PUBLIC_API_URL_KEY;
+
+  if (!MOVIE_BASE_PATH) {
+    throw new Error("MOVIE_BASE_PATH went wrong");
   }
-  return fetch(apiUrl).then((response) => response.json());
+
+  if (!API_KEY) {
+    throw new Error("API_KEY went wrong");
+  }
+
+  const response = await fetch(
+    `${MOVIE_BASE_PATH}/movie/popular?api_key=${API_KEY}`
+  );
+  const data = await response.json();
+
+  return data.results;
 }
 
 export default function Home() {
@@ -36,10 +49,9 @@ export default function Home() {
   useEffect(() => {
     getMovies().then((data) => {
       setMovies(data);
+      console.log(data);
     });
   }, []);
-
-  const topMovies = movies.slice(0, 8);
 
   const handleScroll = () => {
     if (scrollContainerRef.current) {
@@ -62,13 +74,13 @@ export default function Home() {
 
   return (
     <div className="flex flex-col ">
-      {topMovies.length > 0 && (
+      {movies.length > 0 && (
         <AdBanner
-          key={topMovies[0].id}
-          id={topMovies[0].id}
-          poster_path={topMovies[0].poster_path}
-          title={topMovies[0].title}
-          backdrop_path={topMovies[0].backdrop_path}
+          key={movies[0].id}
+          id={movies[0].id}
+          poster_path={movies[0].poster_path}
+          title={movies[0].title}
+          backdrop_path={makeImagePath(movies[0].backdrop_path)}
         />
       )}
 
