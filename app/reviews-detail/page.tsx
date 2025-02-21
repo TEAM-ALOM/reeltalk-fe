@@ -30,10 +30,10 @@ export default function ReviewsDetail() {
                             <div className="w-full min-h-[253px] bg-[#D9D9D9] p-3 text-[16px]">뮤지컬 영화 역사를 바꿀 대작의 등장!</div>
                         </div>
 
-                        {/* 별점 */}
-                        <div className="w-full min-h-[120px] flex flex-col justify-center items-center">
-                            <div></div>
-                            <div></div>
+                        {/* 좋아요 싫어요 */}
+                        <div className="w-full min-h-[120px] flex justify-center items-center">
+                            <button className="w-[90px] h-[90px] border border-3 border-black rounded-full m-8"></button>
+                            <button className="w-[90px] h-[90px] border border-3 border-black rounded-full m-8"></button>
                         </div>
                         
                     </div>
@@ -54,9 +54,9 @@ export default function ReviewsDetail() {
                         <div className="w-full h-[60px] flex items-end space-x-4 my-2">
                             <input
                             type="text"
-                            className="w-full max-w-[90%] h-full border border-none rounded-[30px] text-[16px] bg-[#EDEDED]"
+                            className="w-full max-w-[90%] h-full border border-none rounded-[30px] text-[16px] bg-[#EDEDED] mx-2"
                             />
-                            <button className="h-full lg:w-[8%] border rounded-[30px] bg-[#FFC107] lg:text-[24px] md:text-[18px]">
+                            <button className="h-full lg:w-[8%] border rounded-[30px] bg-[#FFC107] lg:text-[24px] md:text-[18px] mx-1">
                             입력
                             </button>
                         </div>
