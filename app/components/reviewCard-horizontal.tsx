@@ -8,7 +8,6 @@ interface IReviewProps {
   title: string;
   id: string;
   backdrop_path: string;
-  children?: React.ReactNode;
 }
 
 export default function ReviewCardHorizontal({
