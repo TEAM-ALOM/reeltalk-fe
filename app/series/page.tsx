@@ -14,11 +14,23 @@ type Movie = {
 };
 
 async function getMovies(): Promise<Movie[]> {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-  if (!apiUrl) {
-    throw new Error("NEXT_PUBLIC_API_URL went wrong");
+  const MOVIE_BASE_PATH = process.env.NEXT_PUBLIC_API_URL_MOVIE;
+  const API_KEY = process.env.NEXT_PUBLIC_API_URL_KEY;
+
+  if (!MOVIE_BASE_PATH) {
+    throw new Error("MOVIE_BASE_PATH went wrong");
   }
-  return fetch(apiUrl).then((response) => response.json());
+
+  if (!API_KEY) {
+    throw new Error("API_KEY went wrong");
+  }
+
+  const response = await fetch(
+    `${MOVIE_BASE_PATH}/movie/popular?api_key=${API_KEY}`
+  );
+  const data = await response.json();
+
+  return data.results;
 }
 
 export default function Movies() {
