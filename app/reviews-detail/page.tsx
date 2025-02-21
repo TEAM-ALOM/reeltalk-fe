@@ -6,7 +6,7 @@ export default function ReviewsDetail() {
         <main className="flex flex-col justify-center items-center w-full px-8">
             
             {/* 리뷰 정보*/}
-            <div className="w-full h-full max-w-[1600px] min-h-[300px] lg:min-h-[500px] border border-3 border-black mt-6 flex flex-col lg:flex-col p-5 space-y-1">
+            <div className="w-full h-full max-w-[1600px] min-h-[300px] lg:min-h-[500px] mt-6 flex flex-col lg:flex-col p-5 space-y-1">
                 <div className="text-[30px] font-bold text-[#FFC107]">Review Talk</div>
                 
                 <div className="w-full h-full flex space-x-10 p-4">
@@ -32,14 +32,8 @@ export default function ReviewsDetail() {
 
                         {/* 별점 */}
                         <div className="w-full min-h-[120px] flex flex-col justify-center items-center">
-                            <div className="text-[17px] text-[#575757]">이 리뷰에 대한 별점을 남겨주세요.</div>
-                            <div className="m-2 flex space-x-1">
-                                <IoStarSharp className="text-[#D9D9D9] w-8 h-8"/>
-                                <IoStarSharp className="text-[#D9D9D9] w-8 h-8"/>
-                                <IoStarSharp className="text-[#D9D9D9] w-8 h-8"/>
-                                <IoStarSharp className="text-[#D9D9D9] w-8 h-8"/>
-                                <IoStarSharp className="text-[#D9D9D9] w-8 h-8"/>
-                            </div>
+                            <div></div>
+                            <div></div>
                         </div>
                         
                     </div>
@@ -54,13 +48,13 @@ export default function ReviewsDetail() {
                     <span>댓글</span>
                     <button className="text-[17px] bg-[#E3F2FD] w-[80px] h-full flex justify-center items-center rounded-[80px]">more+</button>
                 </div>
-                <div className="w-full border border-3 border-black bg-[#D9D9D9]">
+                <div className="w-full bg-[#D9D9D9]">
                     <form className="w-full h-full flew-grow grid grid-rows-[1fr_auto] gap-4">
                         <div className="w-full"></div>
                         <div className="w-full h-[60px] flex items-end space-x-4 my-2">
                             <input
                             type="text"
-                            className="w-full max-w-[90%] h-full border rounded-[30px] text-[16px] bg-[#EDEDED]"
+                            className="w-full max-w-[90%] h-full border border-none rounded-[30px] text-[16px] bg-[#EDEDED]"
                             />
                             <button className="h-full lg:w-[8%] border rounded-[30px] bg-[#FFC107] lg:text-[24px] md:text-[18px]">
                             입력
