@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { makeImagePath } from "@/lib/utils";
 
 interface IMovieProps {
   title: string;
@@ -28,7 +29,7 @@ export default function MovieCardVertical({
     >
       <div className="w-full h-full rounded-3xl overflow-hidden relative">
         <Image
-          src={poster_path || "/default-image.jpg"}
+          src={makeImagePath(poster_path) || "/default-image.jpg"}
           alt={title}
           layout="fill"
           objectFit="cover"
