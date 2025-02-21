@@ -7,9 +7,10 @@ interface IMovieProps {
   title: string;
   id: string;
   poster_path: string;
+  backdrop_path: string;
 }
 
-export default function AdBanner({ title, id, poster_path }: IMovieProps) {
+export default function AdBanner({ title, id, backdrop_path }: IMovieProps) {
   const router = useRouter();
   const onClick = () => {
     router.push(`/movies/${id}`);
@@ -18,11 +19,11 @@ export default function AdBanner({ title, id, poster_path }: IMovieProps) {
   return (
     <div
       onClick={onClick}
-      className="relative w-screen max-w-screen-xl h-96 mt-16 text-white cursor-pointer mx-auto"
+      className="relative w-screen max-w-screen-xl h-[480px] mt-16 text-white cursor-pointer mx-auto"
     >
       <div className="w-full h-full absolute z-10 bg-slate-100 opacity-20"></div>
       <Image
-        src={poster_path || "/default-image.jpg"}
+        src={backdrop_path || "/default-image.jpg"}
         alt={title}
         layout="fill"
         objectFit="fill"

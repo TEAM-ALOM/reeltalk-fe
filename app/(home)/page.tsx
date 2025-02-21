@@ -15,6 +15,7 @@ const inter = Inter({
 type Movie = {
   id: string;
   poster_path: string;
+  backdrop_path: string;
   title: string;
 };
 
@@ -67,6 +68,7 @@ export default function Home() {
           id={topMovies[0].id}
           poster_path={topMovies[0].poster_path}
           title={topMovies[0].title}
+          backdrop_path={topMovies[0].backdrop_path}
         />
       )}
 
@@ -77,7 +79,7 @@ export default function Home() {
       </span>
 
       {/* 가로 스크롤 컨테이너 */}
-      <div className="relative flex pb-10 pl-10 space-x-4 group">
+      <div className="relative  flex pb-10 pl-10 pr-5 space-x-4 group">
         <div
           ref={scrollContainerRef}
           className="flex gap-4 overflow-x-auto scroll-smooth"
