@@ -98,7 +98,7 @@ export default function Home() {
           onScroll={handleScroll}
         >
           {movies.map((movie) => (
-            <MovieCardVertical key={movie.id} {...movie} />
+            <MovieCardVertical key={movie.id} {...movie} isTVSeries={false} />
           ))}
         </div>
 
