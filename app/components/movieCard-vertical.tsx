@@ -24,7 +24,6 @@ export default function MovieCardVertical({
       router.push(`/tv/${id}`);
     } else {
       router.push(`/movies/${id}`);
-      console.log("movie");
     }
   };
 
