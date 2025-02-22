@@ -56,6 +56,7 @@ export default function Movies() {
                 title={movie.title}
                 id={movie.id}
                 poster_path={movie.poster_path}
+                isTVSeries={false}
               />
             </div>
 

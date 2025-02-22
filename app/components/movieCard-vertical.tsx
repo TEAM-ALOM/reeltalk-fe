@@ -9,16 +9,22 @@ interface IMovieProps {
   title: string;
   id: string;
   poster_path: string;
+  isTVSeries: boolean;
 }
 
 export default function MovieCardVertical({
   title,
   id,
   poster_path,
+  isTVSeries,
 }: IMovieProps) {
   const router = useRouter();
   const onClick = () => {
-    router.push(`/movies/${id}`);
+    if (isTVSeries) {
+      router.push(`/tv/${id}`);
+    } else {
+      router.push(`/movies/${id}`);
+    }
   };
 
   return (
