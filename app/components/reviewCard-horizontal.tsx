@@ -18,7 +18,7 @@ export default function ReviewCardHorizontal({
 }: IReviewProps) {
   const router = useRouter();
   const onClick = () => {
-    router.push(`/movies/${id}`);
+    router.push(`/reviews/${id}`);
   };
 
   return (
