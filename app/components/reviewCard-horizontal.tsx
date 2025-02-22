@@ -9,12 +9,16 @@ interface IReviewProps {
   title: string;
   id: string;
   backdrop_path: string;
+  width?: number;
+  height?: number;
 }
 
 export default function ReviewCardHorizontal({
   title,
   id,
   backdrop_path,
+  width = 320,
+  height = 208,
 }: IReviewProps) {
   const router = useRouter();
   const onClick = () => {
@@ -24,7 +28,8 @@ export default function ReviewCardHorizontal({
   return (
     <motion.div
       onClick={onClick}
-      className="relative w-80 h-52 flex-shrink-0 text-white cursor-pointer"
+      style={{ width: `${width}px`, height: `${height}px` }}
+      className="relative flex-shrink-0 text-white cursor-pointer"
       whileHover={{ scale: 0.95 }}
     >
       <div className="w-full h-full rounded-3xl overflow-hidden relative">
