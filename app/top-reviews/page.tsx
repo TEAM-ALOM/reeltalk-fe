@@ -55,13 +55,13 @@ export default function Movies() {
         </div>
 
         {/* Top2 리뷰 컨테이너 */}
-        <div className="flex justify-around w-full h-full mt-10 px-16">
+        <div className="flex justify-between w-full h-full mt-10 px-24">
           {reviews.slice(0, 2).map((review) => (
             <div key={review.id}>
               <ReviewCardHorizontal
                 key={review.id}
-                width={540}
-                height={320}
+                width={720}
+                height={420}
                 {...review}
               />
               {/* top2 영상 하단 정보 컨테이너 */}
@@ -95,8 +95,19 @@ export default function Movies() {
               </div>
             </div>
           ))}
-          {/* 그외 리뷰 컨테이너 */}
-          <div></div>
+        </div>
+        {/* 그 외 리뷰 리스트 (2번 인덱스부터) */}
+        <div className="flex justify-center w-full mt-10 ">
+          <div className="grid grid-cols-3 gap-12 ">
+            {reviews.slice(2).map((review) => (
+              <ReviewCardHorizontal
+                key={review.id}
+                width={480}
+                height={280}
+                {...review}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </main>
