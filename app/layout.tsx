@@ -18,9 +18,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="box-border">
+      <body className="box-border w-full">
+        {/* ✅ 네비게이션 바 (고정 크기 X) */}
         <NavigationWrapper />
-        {children}
+
+        {/* ✅ 본문 컨테이너 (고정 크기) */}
+        <div className="w-[1350px] min-h-screen mx-auto">{children}</div>
       </body>
     </html>
   );
