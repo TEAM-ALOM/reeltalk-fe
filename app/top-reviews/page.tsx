@@ -1,8 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import MovieCardVertical from "../components/movieCard-vertical";
-import StarRating from "../components/StarRating";
 import ReviewCardHorizontal from "../components/reviewCard-horizontal";
 
 type Movie = {
@@ -56,24 +54,25 @@ export default function Movies() {
 
         {/* Top2 리뷰 컨테이너 */}
         <div className="flex justify-between w-full h-full mt-10 px-24">
-          {reviews.slice(0, 2).map((review) => (
+          {reviews.slice(0, 2).map((review, index) => (
             <div key={review.id}>
               <ReviewCardHorizontal
                 key={review.id}
                 width={720}
                 height={420}
+                rank={index + 1}
                 {...review}
               />
               {/* top2 영상 하단 정보 컨테이너 */}
-              <div className="w-full px-3 mt-2 flex justify-between items-center">
-                <div className="flex font-semibold">
+              <div className="w-full px-3 mt-2 flex justify-between items-center text-xl">
+                <div className="flex font-semibold items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
                     strokeWidth={1.5}
                     stroke="currentColor"
-                    className="size-6 text-ReelTalk_Yellow"
+                    className="size-8 text-ReelTalk_Yellow"
                   >
                     <path
                       strokeLinecap="round"
