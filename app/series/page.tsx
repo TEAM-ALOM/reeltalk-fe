@@ -66,10 +66,12 @@ export default function Movies() {
             <div className="flex flex-col justify-between w-3/4 py-4">
               {/* 제목 및 평점 컨테이너 */}
               <div className="flex justify-between items-center px-2">
-                <span className="text-xl font-bold">{tv.name}</span>
+                <span className="text-xl font-bold 2xl:text-2xl">
+                  {tv.name}
+                </span>
                 <div className="flex items-center space-x-2">
-                  <span className="text-gray-600">평점</span>
-                  <span className="text-lg font-semibold">
+                  <span className="text-gray-600 2xl:text-2xl">평점</span>
+                  <span className="text-lg font-semibold 2xl:text-2xl">
                     {tv.vote_average.toFixed(1)}
                   </span>
                   <StarRating rating={tv.vote_average} />

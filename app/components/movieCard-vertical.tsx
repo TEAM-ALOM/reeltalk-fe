@@ -30,7 +30,7 @@ export default function MovieCardVertical({
   return (
     <motion.div
       onClick={onClick}
-      className="relative w-56 h-80 flex-shrink-0 text-white cursor-pointer"
+      className="relative w-60 h-80 2xl:w-[300px] 2xl:h-[420px] flex-shrink-0 text-white cursor-pointer"
       whileHover={{ scale: 0.95 }}
     >
       <div className="w-full h-full rounded-3xl overflow-hidden relative">

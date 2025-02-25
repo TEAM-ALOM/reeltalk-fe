@@ -24,7 +24,7 @@ export default function RootLayout({
         <NavigationWrapper />
 
         {/* ✅ 본문 컨테이너 (고정 크기) */}
-        <div className="w-[1350px] min-h-screen mx-auto">{children}</div>
+        <div className="flex-grow min-h-screen ">{children}</div>
         <Footer />
       </body>
     </html>

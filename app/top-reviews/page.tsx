@@ -46,20 +46,19 @@ export default function Movies() {
 
   return (
     <main>
-      <div className="w-full flex flex-col justify-center">
+      <div className="w-full flex flex-col justify-center xl:px-32 2xl:px-40">
         {/* 페이지 제목 컨테이너 */}
         <div className="flex w-full justify-start mt-10 ml-10">
           <span className="text-ReelTalk_Yellow text-3xl">TOP 리뷰</span>
         </div>
 
         {/* Top2 리뷰 컨테이너 */}
-        <div className="flex justify-between w-full h-full mt-10 px-24">
+        <div className="flex justify-between w-full h-full mt-10 px-20">
           {reviews.slice(0, 2).map((review, index) => (
             <div key={review.id}>
               <ReviewCardHorizontal
                 key={review.id}
-                width={540}
-                height={320}
+                isTop2={index < 2}
                 rank={index + 1}
                 {...review}
               />
@@ -100,9 +99,8 @@ export default function Movies() {
           <div className="grid grid-cols-3 gap-12 ">
             {reviews.slice(2).map((review) => (
               <ReviewCardHorizontal
+                isTop2={false}
                 key={review.id}
-                width={360}
-                height={200}
                 {...review}
               />
             ))}

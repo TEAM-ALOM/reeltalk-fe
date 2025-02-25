@@ -85,13 +85,13 @@ export default function Home() {
       )}
 
       <span
-        className={`pl-10 text-2xl my-6 text-ReelTalk_Yellow ${inter.className} font-normal`}
+        className={`pl-10 text-2xl my-6 text-ReelTalk_Yellow ${inter.className} font-normal 2xl:px-48`}
       >
         Top 리뷰 순
       </span>
 
       {/* 가로 스크롤 컨테이너 */}
-      <div className="relative  flex pb-10 pl-10 pr-5 space-x-4 group">
+      <div className="relative flex pb-10 pl-10 pr-5 space-x-4 group 2xl:px-48">
         <div
           ref={scrollContainerRef}
           className="flex gap-4 overflow-x-auto scroll-smooth"
