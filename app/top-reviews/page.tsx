@@ -58,8 +58,8 @@ export default function Movies() {
             <div key={review.id}>
               <ReviewCardHorizontal
                 key={review.id}
-                width={720}
-                height={420}
+                width={540}
+                height={320}
                 rank={index + 1}
                 {...review}
               />
@@ -101,8 +101,8 @@ export default function Movies() {
             {reviews.slice(2).map((review) => (
               <ReviewCardHorizontal
                 key={review.id}
-                width={480}
-                height={280}
+                width={360}
+                height={200}
                 {...review}
               />
             ))}
