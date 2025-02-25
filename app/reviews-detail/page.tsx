@@ -7,7 +7,7 @@ export default function ReviewsDetail() {
             
             {/* 리뷰 정보*/}
             <div className="w-full h-full max-w-[1600px] min-h-[300px] lg:min-h-[500px] mt-6 flex flex-col lg:flex-col p-5 space-y-1">
-                <div className="text-[30px] font-bold text-[#FFC107]">Review Talk</div>
+                <div className="text-[30px] ml-4 font-bold text-[#FFC107]">Review Talk</div>
                 
                 <div className="w-full h-full flex space-x-10 p-4">
                     
