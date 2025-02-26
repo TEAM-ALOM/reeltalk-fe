@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 export default function CommentMore() {
     return (
@@ -9,8 +10,16 @@ export default function CommentMore() {
                         {/** 댓글 보드 */}
                         <div className="w-full flex flex-col p-3 overflow-y-auto whitespace-nowrap">
                             {[1,2,4,5,6,7,8,9].map((index) => (
-                                <div className="w-full flex">
-                                    <div className="w-[50px] h-[50px] border rounded-full bg-[white] m-3"></div>
+                                <div className="w-full h-full flex">
+                                    <div>
+                                    <Image 
+                                    src={"/icons/profile.jpg"}
+                                    alt="Profile"
+                                    width={50}
+                                    height={50}
+                                    className="border rounded-full border-white bg-[white] m-3 aspect-square"
+                                    />
+                                    </div>
                                     
                                     <div className="flex flex-col m-3">
                                         
