@@ -4,7 +4,7 @@ import { fetchReviewCount } from "@/lib/api";
 import { useEffect, useState } from "react";
 
 export default function Footer() {
-  const [reviewCount, setReviewCount] = useState<number | null>(null);
+  const [reviewCount, setReviewCount] = useState<number | null>(0);
 
   useEffect(() => {
     async function getReviewCount() {
@@ -18,8 +18,8 @@ export default function Footer() {
       {/* 상단: 평가 개수 표시 */}
       <div className="flex justify-center items-center py-4 border-b border-gray-700 text-lg">
         지금까지
-        <span className="text-red-500 font-bold mx-1">★734,109,315</span> 개의
-        리뷰가 작성되었습니다.
+        <span className="text-red-500 font-bold mx-1">{`★${reviewCount}`}</span>{" "}
+        개의 리뷰가 작성되었습니다.
       </div>
 
       {/* 중간: 서비스 링크 및 회사 정보 */}
