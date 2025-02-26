@@ -1,13 +1,25 @@
+"use client";
+
 import React from "react";
-import { IoStarSharp } from "react-icons/io5";
+import { AiFillTrademarkCircle } from "react-icons/ai";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function ReviewsDetail() {
+    const router = useRouter();
+    const path = usePathname();
+
+    const handleMore = (href: string) => {
+        if (path !== href) {
+            router.push(href);
+        }
+    };
+
     return (
         <main className="flex flex-col justify-center items-center w-full px-8">
             
             {/* 리뷰 정보*/}
             <div className="w-full h-full max-w-[1600px] min-h-[300px] lg:min-h-[500px] mt-6 flex flex-col lg:flex-col p-5 space-y-1">
-                <div className="text-[30px] font-bold text-[#FFC107]">Review Talk</div>
+                <div className="text-[30px] ml-4 font-bold text-[#FFC107]">Review Talk</div>
                 
                 <div className="w-full h-full flex space-x-10 p-4">
                     
@@ -17,7 +29,10 @@ export default function ReviewsDetail() {
                         {/* 리뷰어*/}
                         <div className="w-full flex justify-end px-3 py-1 space-x-3">
                             <span className="text-[17px] font-bold">리뷰어</span>
-                            <span className="text-[17px] font-bold bg-[#E3F2FD] w-[90px] h-full flex justify-center items-center rounded-[80px]">코헤트</span>
+                            <span className="text-[17px] font-bold bg-[#E3F2FD] w-[90px] h-full flex justify-center items-center rounded-[80px]">
+                                코헤트
+                                <AiFillTrademarkCircle className="w-4 h-4 text-[#C977FF]"/>
+                            </span>
                             
                         </div>
                     </div>
@@ -46,7 +61,7 @@ export default function ReviewsDetail() {
              <div className="w-full h-full max-w-[1600px] min-h-[260px] lg:min-h-[260px] my-6 grid grid-rows-[auto_1fr] gap-1">
                 <div className="w-full flex justify-between">
                     <span>댓글</span>
-                    <button className="text-[17px] bg-[#E3F2FD] w-[80px] h-full flex justify-center items-center rounded-[80px]">more+</button>
+                    <button onClick={() => handleMore("/comment-more")} className="text-[17px] bg-[#E3F2FD] w-[80px] h-full flex justify-center items-center rounded-[80px]">more+</button>
                 </div>
                 <div className="w-full bg-[#D9D9D9]">
                     <form className="w-full h-full flew-grow grid grid-rows-[1fr_auto] gap-4">
