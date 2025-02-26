@@ -8,7 +8,7 @@ export default function MoviesDetail() {
   const router = useRouter();
   const path = usePathname();
 
-  const handleReviewDetail = (href:string) => {
+  const handleMore = (href:string) => {
     if (path !== href)
       router.push(href);
   };
@@ -95,7 +95,7 @@ export default function MoviesDetail() {
         <div className="w-full flex justify-between">
           <span className="text-[#FFC107] text-[24px]">Review Talk</span>
           <button 
-          onClick={() => handleReviewDetail("/reviews-detail")}
+          onClick={() => handleMore("/reviews-detail")}
           className="bg-[#E3F2FD] border rounded-[20px] text-[19.5px] md:text-[19.5px] w-[100px] h-[30px] text-[#787878] flex justify-center items-center">
             more+
           </button>
@@ -125,7 +125,9 @@ export default function MoviesDetail() {
       <div className="w-full h-full max-w-screen-xl min-h-[300px] lg:min-h-[600px]  my-6 space-y-3">
       <div className="w-full flex justify-between">
           <span className="text-[#FFC107] text-[24px]">실시간Talk</span>
-          <button className="bg-[#E3F2FD] border rounded-[20px] text-[21px] md:text-[21px] w-[100px] h-[30px] text-[#787878] flex justify-center items-center">
+          <button 
+          onClick={() => handleMore("/livechat")}
+          className="bg-[#E3F2FD] border rounded-[20px] text-[21px] md:text-[21px] w-[100px] h-[30px] text-[#787878] flex justify-center items-center">
             more+
           </button>
         </div>
