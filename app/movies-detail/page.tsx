@@ -5,10 +5,9 @@ export default function MoviesDetail() {
   return (
     <main className="flex flex-col justify-center items-center w-full px-4">
       {/* 영화 상세 정보*/}
-      <div className="w-full h-full max-w-screen-xl min-h-[300px] lg:min-h-[500px] mt-6 grid sm:grid-rows-2 sm:grid-cols-1 lg:grid-rows-1 lg:grid-cols-[auto_1fr] gap-7 
-      border border-black border-3">
+      <div className="w-full h-full max-w-screen-xl min-h-[300px] lg:min-h-[500px] mt-6 grid sm:grid-rows-2 sm:grid-cols-1 lg:grid-rows-1 lg:grid-cols-[auto_1fr] gap-7">
         {/* 영화 포스터*/}
-        <div className="w-full lg:w-[350px] lg:h-[500px] sm:aspect-[1/3] border border-5 border-black flex items-center justify-center 
+        <div className="w-full lg:w-[350px] lg:h-[500px] sm:aspect-[1/3] flex items-center justify-center 
         border border-[red] border-3">
           <img
             src=""
@@ -18,8 +17,8 @@ export default function MoviesDetail() {
         </div>
 
         {/* 영화 정보*/}
-        <div className="w-full flex flex-col space-y-3 border border-black border-3">
-          <div className="w-full flex flex-col lg:flex-row justify-between border border-black border-3">
+        <div className="w-full flex flex-col space-y-3">
+          <div className="w-full flex flex-col lg:flex-row justify-between">
             {/* 제목 및 장르*/}
             <div className="flex flex-col">
               <div className="text-[36px] md:text-[36px] font-bold">
@@ -48,7 +47,7 @@ export default function MoviesDetail() {
           </div>
 
           {/* 영화 설명 박스 */}
-          <div className="bg-[#DBDBDB] w-[90%] h-auto min-h-[150px] lg:min-h-[244px] border rounded-[10px] p-4 mt-4">
+          <div className="bg-[#DBDBDB] w-[100%] h-auto min-h-[150px] lg:min-h-[244px] border rounded-[10px] p-4 mt-4">
             <span>영화 설명...</span>
           </div>
 
@@ -79,8 +78,8 @@ export default function MoviesDetail() {
       </div>
 
       {/* 리뷰 talk*/}
-      <div className="w-full max-w-screen-xl min-h-[300px] lg:min-h-[290px] mt-6 grid grid-rows-[auto_1fr] border border-3 border-black ">
-        <div className="w-full flex justify-between border border-3 border-black">
+      <div className="w-full max-w-screen-xl min-h-[300px] lg:min-h-[290px] mt-6 grid grid-rows-[auto_1fr]">
+        <div className="w-full flex justify-between">
           <span className="text-[#FFC107] text-[24px]">Review Talk</span>
           <button className="bg-[#E3F2FD] border rounded-[20px] text-[21px] md:text-[21px] w-[100px] h-[30px] text-[#787878] flex justify-center items-center">
             more+
