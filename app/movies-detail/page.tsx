@@ -1,14 +1,27 @@
+"use client";
+
+import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 import { IoStarSharp } from "react-icons/io5";
 
 export default function MoviesDetail() {
+  const router = useRouter();
+  const path = usePathname();
+
+  const handleReviewDetail = (href:string) => {
+    if (path !== href)
+      router.push(href);
+  };
+
   return (
     <main className="flex flex-col justify-center items-center w-full px-4">
       {/* 영화 상세 정보*/}
       <div className="w-full h-full max-w-screen-xl min-h-[300px] lg:min-h-[500px] mt-6 grid sm:grid-rows-2 sm:grid-cols-1 lg:grid-rows-1 lg:grid-cols-[auto_1fr] gap-7">
         {/* 영화 포스터*/}
         <div className="w-full lg:w-[350px] lg:h-[500px] sm:aspect-[1/3] flex items-center justify-center 
-        border border-[red] border-3">
+
+        border border-black border-3">
+
           <img
             src=""
             alt="영화 포스터"
@@ -81,7 +94,9 @@ export default function MoviesDetail() {
       <div className="w-full max-w-screen-xl min-h-[300px] lg:min-h-[290px] mt-6 grid grid-rows-[auto_1fr]">
         <div className="w-full flex justify-between">
           <span className="text-[#FFC107] text-[24px]">Review Talk</span>
-          <button className="bg-[#E3F2FD] border rounded-[20px] text-[21px] md:text-[21px] w-[100px] h-[30px] text-[#787878] flex justify-center items-center">
+          <button 
+          onClick={() => handleReviewDetail("/reviews-detail")}
+          className="bg-[#E3F2FD] border rounded-[20px] text-[19.5px] md:text-[19.5px] w-[100px] h-[30px] text-[#787878] flex justify-center items-center">
             more+
           </button>
         </div>
