@@ -7,6 +7,10 @@ import {
 } from "@/lib/constants";
 import { z } from "zod";
 
+function checkUsername(username: string) {
+  return !username.includes("admin");
+}
+
 const checkPasswords = ({
   password,
   confirm_password,
@@ -17,6 +21,16 @@ const checkPasswords = ({
 
 const formSchema = z
   .object({
+    username: z
+      .string({
+        invalid_type_error: "Username must be a string",
+        required_error: "Username is required",
+      })
+
+      .toLowerCase()
+      .trim()
+      .transform((username) => `${username}🇰🇷`)
+      .refine(checkUsername, "Username cannot contain 'admin'"),
     email: z.string().email(),
     password: z
       .string()
@@ -32,21 +46,30 @@ const formSchema = z
 type FormState = {
   fieldErrors?: {
     email?: string[];
+    username?: string[];
     password?: string[];
     confirm_password?: string[];
   };
   formErrors?: string[];
 };
 
-export async function createAccount(prevState: FormState, formData: FormData) {
+export async function createAccount(
+  prevState: FormState,
+  formData: FormData
+): Promise<FormState> {
   const data = {
-    email: formData.get("email"),
-    password: formData.get("password"),
-    confirm_password: formData.get("confirm_password"),
+    email: formData.get("email") as string,
+    username: formData.get("username") as string,
+    password: formData.get("password") as string,
+    confirm_password: formData.get("confirm_password") as string,
   };
+
   const result = formSchema.safeParse(data);
 
   if (!result.success) {
     return result.error.flatten();
   }
+
+  // ✅ 성공 시 빈 객체 반환 (오류가 없다는 의미)
+  return {};
 }

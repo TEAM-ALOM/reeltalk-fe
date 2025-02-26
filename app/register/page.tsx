@@ -6,7 +6,11 @@ import { useFormState } from "react-dom";
 import Input from "../components/input";
 import Button from "../components/button";
 import { PASSWORD_MIN_LENGTH } from "@/lib/constants";
-import { LockClosedIcon, UserIcon } from "@heroicons/react/24/solid";
+import {
+  AtSymbolIcon,
+  LockClosedIcon,
+  UserIcon,
+} from "@heroicons/react/24/solid";
 import Image from "next/image";
 
 const sansita = Sansita({
@@ -17,7 +21,7 @@ const sansita = Sansita({
 });
 
 export default function Register() {
-  const [state, action] = useFormState(createAccount, null);
+  const [state, action] = useFormState(createAccount, {});
   return (
     <main>
       <div className="flex flex-col items-center justify-center w-screen h-screen bg-ReelTalk_LightBlue">
@@ -45,7 +49,7 @@ export default function Register() {
             placeholder="이메일을 입력해주세요"
             required={true}
             errors={state?.fieldErrors?.email}
-            icon={<UserIcon className="w-5 h-5 text-ReelTalk_DeepBlue" />}
+            icon={<AtSymbolIcon className="w-5 h-5 text-ReelTalk_DeepBlue" />}
           />
 
           <div className="flex items-center self-end mt-2">
@@ -55,6 +59,15 @@ export default function Register() {
             />
             <span className="ml-1 text-sm text-gray-400">아이디 중복확인</span>
           </div>
+          <Input
+            name="username"
+            text="이름"
+            type="text"
+            placeholder="이름을 입력해주세요"
+            required={true}
+            errors={state?.fieldErrors?.username}
+            icon={<UserIcon className="w-5 h-5 text-ReelTalk_DeepBlue" />}
+          />
 
           <Input
             name="password"

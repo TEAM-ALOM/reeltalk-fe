@@ -56,17 +56,20 @@ export default function Movies() {
                 title={movie.title}
                 id={movie.id}
                 poster_path={movie.poster_path}
+                isTVSeries={false}
               />
             </div>
 
             {/* 오른쪽 컨텐츠 */}
             <div className="flex flex-col justify-between w-3/4 py-4">
               {/* 제목 및 평점 컨테이너 */}
-              <div className="flex justify-between items-center px-2">
-                <span className="text-xl font-bold">{movie.title}</span>
-                <div className="flex items-center space-x-2">
+              <div className="flex justify-between items-center px-2 ">
+                <span className="text-xl font-bold 2xl:text-2xl">
+                  {movie.title}
+                </span>
+                <div className="flex items-center space-x-2 2xl:text-2xl">
                   <span className="text-gray-600">평점</span>
-                  <span className="text-lg font-semibold">
+                  <span className="text-lg font-semibold 2xl:text-2xl">
                     {movie.vote_average.toFixed(1)}
                   </span>
                   <StarRating rating={movie.vote_average} />
@@ -74,7 +77,7 @@ export default function Movies() {
               </div>
 
               {/* 리뷰 영상 가로형 */}
-              <div className="relative flex pb-3 pl-2 space-x-4 group">
+              <div className="relative flex pb-3 pl-2 space-x-4 group ">
                 <div className="flex gap-4 overflow-x-auto scroll-smooth">
                   {reviews.map((review) => (
                     <ReviewCardHorizontal key={review.id} {...review} />

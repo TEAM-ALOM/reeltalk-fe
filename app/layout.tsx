@@ -2,6 +2,7 @@
 import type { Metadata } from "next";
 import "./styles/globals.css";
 import NavigationWrapper from "./components/navigationWrapper";
+import Footer from "./components/Footer";
 
 export const metadata: Metadata = {
   title: {
@@ -18,9 +19,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
+      <body className="box-border w-full">
+        {/* ✅ 네비게이션 바 (고정 크기 X) */}
         <NavigationWrapper />
-        {children}
+
+        {/* ✅ 본문 컨테이너 (고정 크기) */}
+        <div className="flex-grow min-h-screen ">{children}</div>
+        <Footer />
       </body>
     </html>
   );

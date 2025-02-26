@@ -41,7 +41,7 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 bg-white shadow-md">
-      <div className="container flex items-center justify-between max-w-full p-4 px-2 py-3 bg-ReelTalk_LightBlue">
+      <div className="container flex items-center justify-between max-w-full p-4 px-2 py-5 bg-ReelTalk_LightBlue">
         {/* 왼쪽 섹션: 로고 + 네비게이션 메뉴 */}
         <div className="flex items-center space-x-6">
           <button

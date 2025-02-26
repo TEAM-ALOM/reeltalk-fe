@@ -19,7 +19,9 @@ export default function MoviesDetail() {
       <div className="w-full h-full max-w-screen-xl min-h-[300px] lg:min-h-[500px] mt-6 grid sm:grid-rows-2 sm:grid-cols-1 lg:grid-rows-1 lg:grid-cols-[auto_1fr] gap-7">
         {/* 영화 포스터*/}
         <div className="w-full lg:w-[350px] lg:h-[500px] sm:aspect-[1/3] flex items-center justify-center 
+
         border border-black border-3">
+
           <img
             src=""
             alt="영화 포스터"
