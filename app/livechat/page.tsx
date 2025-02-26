@@ -1,3 +1,5 @@
+import Image from "next/image"
+
 export default function liveChat() {
     return (
         <main className="flex flex-col justify-center items-center w-full relative">
@@ -13,7 +15,15 @@ export default function liveChat() {
                     <div className="w-full">
                     {[1,2,4,5,6,7,8,9,10,11,12,13,14,15].map((index) => (
                                 <div className="w-full flex">
-                                    <div className="w-[50px] h-[50px] border rounded-full bg-[white] m-3"></div>
+                                    <div className="">
+                                    <Image 
+                                    src={"/icons/profile.jpg"}
+                                    alt="Profile"
+                                    width={50}
+                                    height={50}
+                                    className="border rounded-full bg-[white] m-3"
+                                    />
+                                    </div>
                                     
                                     <div className="flex flex-col m-3">
                                         
