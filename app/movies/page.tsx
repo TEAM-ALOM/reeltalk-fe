@@ -46,7 +46,7 @@ export default function Movies() {
 
   return (
     <main className="px-10">
-      <div className="flex flex-col space-y-10 mt-10 w-full">
+      <div className="flex flex-col space-y-10 mt-10 w-full mb-20">
         {/* 🎬 영화 목록 */}
         {movies.map((movie) => (
           <div key={movie.id} className="flex w-full">

@@ -46,7 +46,7 @@ export default function Movies() {
 
   return (
     <main>
-      <div className="w-full flex flex-col justify-center xl:px-32 2xl:px-40">
+      <div className="w-full flex flex-col justify-center xl:px-32 2xl:px-40 mb-20">
         {/* 페이지 제목 컨테이너 */}
         <div className="flex w-full justify-start mt-10 ml-10">
           <span className="text-ReelTalk_Yellow text-3xl">TOP 리뷰</span>

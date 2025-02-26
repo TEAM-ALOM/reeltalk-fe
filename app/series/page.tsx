@@ -48,7 +48,7 @@ export default function Movies() {
 
   return (
     <main className="px-10">
-      <div className="flex flex-col space-y-10 mt-10 w-full">
+      <div className="flex flex-col space-y-10 mt-10 w-full mb-20">
         {/* Tv 시리즈 목록 */}
         {tvs.map((tv) => (
           <div key={tv.id} className="flex w-full">

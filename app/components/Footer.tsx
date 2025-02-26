@@ -14,7 +14,7 @@ export default function Footer() {
     getReviewCount();
   }, []);
   return (
-    <footer className="w-full bg-gray-900 text-gray-400 text-sm mt-10">
+    <footer className="w-full bg-gray-900 text-gray-400 text-sm">
       {/* 상단: 평가 개수 표시 */}
       <div className="flex justify-center items-center py-4 border-b border-gray-700 text-lg">
         지금까지
