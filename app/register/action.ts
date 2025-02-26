@@ -7,6 +7,10 @@ import {
 } from "@/lib/constants";
 import { z } from "zod";
 
+function checkUsername(username: string) {
+  return !username.includes("admin");
+}
+
 const checkPasswords = ({
   password,
   confirm_password,
@@ -17,6 +21,16 @@ const checkPasswords = ({
 
 const formSchema = z
   .object({
+    username: z
+      .string({
+        invalid_type_error: "Username must be a string",
+        required_error: "Username is required",
+      })
+
+      .toLowerCase()
+      .trim()
+      .transform((username) => `${username}🇰🇷`)
+      .refine(checkUsername, "Username cannot contain 'admin'"),
     email: z.string().email(),
     password: z
       .string()
@@ -32,6 +46,7 @@ const formSchema = z
 type FormState = {
   fieldErrors?: {
     email?: string[];
+    username?: string[];
     password?: string[];
     confirm_password?: string[];
   };
@@ -41,6 +56,7 @@ type FormState = {
 export async function createAccount(prevState: FormState, formData: FormData) {
   const data = {
     email: formData.get("email"),
+    username: formData.get("username"),
     password: formData.get("password"),
     confirm_password: formData.get("confirm_password"),
   };
