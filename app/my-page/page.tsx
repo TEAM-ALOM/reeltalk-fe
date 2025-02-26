@@ -1,10 +1,22 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import { FaPlus } from "react-icons/fa6";
 import { AiFillTrademarkCircle } from "react-icons/ai";
 import { GiSevenPointedStar } from "react-icons/gi";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function MyPage() {
+    const router = useRouter();
+    const path = usePathname();
+
+    const handleUploadReview = (href:string) => {
+        if (path != href)
+            router.push(href);
+        console.log(href);
+    }
+
   return (
     <main className="flex flex-col justify-center items-center w-full relative">
       {/* 파란색 영역*/}
@@ -12,10 +24,8 @@ export default function MyPage() {
         <div className="text-[#FFC107] lg:text-[30px] md:text-[28px] my-3 mx-5 font-semibold px-3">
           My Page
         </div>
-        <button className="lg:text-[20px] md:text-[15px] text-[#FFFFFF] underline decoration-1 my-3 mx-5 flex justify-end">
-          리뷰 등록하기
-        </button>
       </div>
+
       {/* 프로필 이미지 영역*/}
       <div className="absolute min-h-[350px] w-full h-40 top-[10%] grid grid-cols-[90%_10%] z-10">
         <div className="w-full h-full grid lg:grid-cols-2 md:grid-cols-1 md:place-items-center">
@@ -39,7 +49,7 @@ export default function MyPage() {
               <div className="text-[38px] font-semibold text-[#1E88E5]">
                 코헤트
               </div>
-              <AiFillTrademarkCircle className="w-6 h-6" />
+              <AiFillTrademarkCircle className="w-6 h-6 text-[#C977FF]" />
             </div>
             <div className="rounded-[70px] bg-[#E3F2FD] w-full min-h-[120px] p-7 flex-grow">
               <div className="text-[15px] text-[#787878] font-semibold">
@@ -51,12 +61,19 @@ export default function MyPage() {
         </div>
 
         <div className="w-full h-full flex justify-end items-center md:absolute md:right-0 md:top-1/2 md:transform md:-translate-y-1/2">
-          <button className="px-5">
+          <button onClick={() => handleUploadReview("")} className="px-5">
             <FaPlus className="w-[33px] h-[33px] text-[#FFC107]" />
           </button>
         </div>
       </div>
 
+      <div className="absolute min-h-[350px] w-[15%] h-40 right-[1%] top-[14%] grid grid-cols-[90%_10%] z-10">
+        <button
+        onClick={() => handleUploadReview("/review-upload")}
+        className="lg:text-[20px] md:text-[15px] text-[#FFFFFF] underline decoration-1 my-3 mx-5 flex justify-end">
+            리뷰 등록하기
+        </button>
+    </div>
       {/* 하얀색 영역*/}
       <div className="w-full lg:pt-[280px] md:pt-[400px] sm:pt-[400px] flex flex-col gap-4">
         {/* Best Review*/}

@@ -3,6 +3,8 @@
 import React from "react";
 import { AiFillTrademarkCircle } from "react-icons/ai";
 import { usePathname, useRouter } from "next/navigation";
+import { FaThumbsUp } from "react-icons/fa";
+import { FaShareAlt } from "react-icons/fa";
 
 export default function ReviewsDetail() {
     const router = useRouter();
@@ -47,8 +49,12 @@ export default function ReviewsDetail() {
 
                         {/* 좋아요 싫어요 */}
                         <div className="w-full min-h-[120px] flex justify-center items-center">
-                            <button className="w-[90px] h-[90px] border border-3 border-black rounded-full m-8"></button>
-                            <button className="w-[90px] h-[90px] border border-3 border-black rounded-full m-8"></button>
+                            <button className="w-[90px] h-[90px] border border-3 border-black rounded-full m-8 flex justify-center items-center bg-[#E3F2FD]">
+                                <FaThumbsUp className="w-9 h-9 text-[#1E88E5]"/>
+                            </button>
+                            <button className="w-[90px] h-[90px] border border-3 border-black rounded-full m-8 flex justify-center items-center bg-[#E3F2FD]">
+                                <FaShareAlt className="w-9 h-9 text-[#1E88E5]"/>
+                            </button>
                         </div>
                         
                     </div>
