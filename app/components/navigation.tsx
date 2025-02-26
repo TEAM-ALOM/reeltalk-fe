@@ -3,6 +3,8 @@ import { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { AiOutlineMenu, AiOutlineSearch } from "react-icons/ai";
 import { Sansita } from "next/font/google"; // Sansita 폰트 불러오기
+import LoginCard from "./loginCard";
+import { motion } from "framer-motion";
 
 const sansita = Sansita({
   weight: ["800", "700"],
@@ -13,8 +15,22 @@ const sansita = Sansita({
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
   const path = usePathname();
   const router = useRouter();
+
+  const [user, setUser] = useState<string | null>(null);
+
+  /** ✅ 로그인 핸들러 (백엔드 연동 시 수정 예정) */
+  const handleLogin = (username: string) => {
+    setUser(username); // 로그인한 유저 정보 저장
+    setIsLoginOpen(false); // 로그인 모달 닫기
+  };
+
+  /** ✅ 로그아웃 핸들러 */
+  const handleLogout = () => {
+    setUser(null); // 유저 정보 제거 (로그아웃)
+  };
 
   const handleNavigation = (href: string) => {
     if (path !== href) {
@@ -36,7 +52,7 @@ export default function Header() {
           </button>
           {/* 네비게이션 메뉴 (PC 화면에서만 보임) */}
           <nav className="hidden space-x-4 md:flex">
-            {["/", "/movies-screen", "/series", "/top-reviews"].map((href, index) => (
+            {["/", "/movies", "/series", "/top-reviews"].map((href, index) => (
               <button
                 key={index}
                 onClick={() => handleNavigation(href)}
@@ -46,7 +62,7 @@ export default function Header() {
               >
                 {href === "/"
                   ? "홈"
-                  : href === "/movies-screen"
+                  : href === "/movies"
                   ? "영화"
                   : href === "/series"
                   ? "시리즈"
@@ -68,15 +84,36 @@ export default function Header() {
             <AiOutlineSearch className="absolute text-gray-500 right-3" />
           </div>
 
-          <button
-            onClick={() => handleNavigation("/login")}
-            className="text-xs text-gray-400 hover:text-blue-500"
-          >
-            로그인/회원가입
-          </button>
+          {/* 로그인 버튼 (팝업 열기) */}
+          {user ? (
+            <button
+              onClick={handleLogout}
+              className="text-xs text-gray-400 hover:text-red-600"
+            >
+              {user}/로그아웃
+            </button>
+          ) : (
+            <div className="flex space-x-1">
+              {/* 로그인 버튼 (팝업) */}
+              <button
+                onClick={() => setIsLoginOpen(true)}
+                className="text-xs text-gray-400 hover:text-blue-500"
+              >
+                로그인
+              </button>
+              <span className="text-gray-400">/</span>
+              {/* 회원가입 버튼 (/register 이동) */}
+              <button
+                onClick={() => handleNavigation("/register")}
+                className="text-xs text-gray-400 hover:text-blue-500"
+              >
+                회원가입
+              </button>
+            </div>
+          )}
 
           <button
-            onClick={() => handleNavigation("/mypage")}
+            onClick={() => handleNavigation("/my-page")}
             className="text-xl font-bold text-ReelTalk_Yellow"
           >
             My Page
@@ -92,10 +129,44 @@ export default function Header() {
         </button>
       </div>
 
+      {/* 로그인 모달 */}
+      {isLoginOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            className="relative p-6 bg-white rounded-2xl shadow-lg w-[520px]"
+          >
+            <button
+              className="absolute text-gray-400 top-2 right-2 hover:text-gray-600"
+              onClick={() => setIsLoginOpen(false)}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="size-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18 18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+            <LoginCard onLogin={handleLogin} />
+          </motion.div>
+        </div>
+      )}
+
       {/* 모바일 네비게이션 */}
       {isMenuOpen && (
         <nav className="p-4 space-y-4 bg-white border-t border-gray-200 md:hidden">
-          {["/", "/movies-screen", "/series", "/top-reviews"].map((href, index) => (
+          {["/", "/movies", "/series", "/top-reviews"].map((href, index) => (
             <button
               key={index}
               onClick={() => handleNavigation(href)}
@@ -103,7 +174,7 @@ export default function Header() {
             >
               {href === "/"
                 ? "홈"
-                : href === "/movies-screen"
+                : href === "/movies"
                 ? "영화"
                 : href === "/series"
                 ? "시리즈"

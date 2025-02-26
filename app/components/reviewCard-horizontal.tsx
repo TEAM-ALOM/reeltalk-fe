@@ -5,17 +5,17 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { makeImagePath } from "@/lib/utils";
 
-interface IMovieProps {
+interface IReviewProps {
   title: string;
   id: string;
-  poster_path: string;
+  backdrop_path: string;
 }
 
-export default function MovieCardVertical({
+export default function ReviewCardHorizontal({
   title,
   id,
-  poster_path,
-}: IMovieProps) {
+  backdrop_path,
+}: IReviewProps) {
   const router = useRouter();
   const onClick = () => {
     router.push(`/movies/${id}`);
@@ -24,15 +24,15 @@ export default function MovieCardVertical({
   return (
     <motion.div
       onClick={onClick}
-      className="relative w-56 h-80 flex-shrink-0 text-white cursor-pointer"
+      className="relative w-80 h-52 flex-shrink-0 text-white cursor-pointer"
       whileHover={{ scale: 0.95 }}
     >
       <div className="w-full h-full rounded-3xl overflow-hidden relative">
         <Image
-          src={makeImagePath(poster_path) || "/default-image.jpg"}
+          src={makeImagePath(backdrop_path) || "/icons/Apple_logo_white.png"}
           alt={title}
-          layout="fill"
-          objectFit="cover"
+          fill
+          style={{ objectFit: "cover" }}
           className="w-full h-full drop-shadow-md"
         />
       </div>
