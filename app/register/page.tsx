@@ -21,7 +21,7 @@ const sansita = Sansita({
 });
 
 export default function Register() {
-  const [state, action] = useFormState(createAccount, null);
+  const [state, action] = useFormState(createAccount, {});
   return (
     <main>
       <div className="flex flex-col items-center justify-center w-screen h-screen bg-ReelTalk_LightBlue">

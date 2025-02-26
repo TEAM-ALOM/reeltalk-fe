@@ -53,16 +53,23 @@ type FormState = {
   formErrors?: string[];
 };
 
-export async function createAccount(prevState: FormState, formData: FormData) {
+export async function createAccount(
+  prevState: FormState,
+  formData: FormData
+): Promise<FormState> {
   const data = {
-    email: formData.get("email"),
-    username: formData.get("username"),
-    password: formData.get("password"),
-    confirm_password: formData.get("confirm_password"),
+    email: formData.get("email") as string,
+    username: formData.get("username") as string,
+    password: formData.get("password") as string,
+    confirm_password: formData.get("confirm_password") as string,
   };
+
   const result = formSchema.safeParse(data);
 
   if (!result.success) {
     return result.error.flatten();
   }
+
+  // ✅ 성공 시 빈 객체 반환 (오류가 없다는 의미)
+  return {};
 }
