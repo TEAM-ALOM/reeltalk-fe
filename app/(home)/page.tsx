@@ -5,6 +5,7 @@ import AdBanner from "../components/adBanner";
 import MovieCardVertical from "../components/movieCard-vertical";
 import { Inter } from "next/font/google";
 import { makeImagePath } from "@/lib/utils";
+import { getMovies, Movie, testMovies } from "@/lib/api";
 
 const inter = Inter({
   weight: ["500", "400", "300"],
@@ -12,33 +13,6 @@ const inter = Inter({
   style: ["italic", "normal"],
   display: "swap",
 });
-
-type Movie = {
-  id: string;
-  poster_path: string;
-  backdrop_path: string;
-  title: string;
-};
-
-async function getMovies(): Promise<Movie[]> {
-  const MOVIE_BASE_PATH = process.env.NEXT_PUBLIC_API_URL_MOVIE;
-  const API_KEY = process.env.NEXT_PUBLIC_API_URL_KEY;
-
-  if (!MOVIE_BASE_PATH) {
-    throw new Error("MOVIE_BASE_PATH went wrong");
-  }
-
-  if (!API_KEY) {
-    throw new Error("API_KEY went wrong");
-  }
-
-  const response = await fetch(
-    `${MOVIE_BASE_PATH}/movie/popular?api_key=${API_KEY}`
-  );
-  const data = await response.json();
-
-  return data.results;
-}
 
 export default function Home() {
   const [movies, setMovies] = useState<Movie[]>([]);
