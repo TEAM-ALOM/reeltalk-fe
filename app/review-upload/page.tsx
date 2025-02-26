@@ -10,7 +10,7 @@ const scada = Scada({
 
 export default function ReviewUpload() {
   return (
-    <main className="w-screen h-screen px-10 ">
+    <main className="w-full h-full px-10 ">
       <div className="flex flex-col items-start w-full h-full gap-3 my-10">
         <span className={`text-ReelTalk_Yellow text-4xl ${scada.className}`}>
           Upload
@@ -20,7 +20,7 @@ export default function ReviewUpload() {
           <div className="flex flex-col gap-6 mt-20">
             <div className="flex w-[680px] justify-between px-2 text-xl text-ReelTalk_DeepBlue">
               <span>이미지 업로드</span>
-              <span>+</span>
+              <span className="text-3xl">+</span>
             </div>
             <div className="w-[680px] min-w-96 h-[390px] bg-stone-200 rounded-3xl"></div>
           </div>
