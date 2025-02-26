@@ -9,9 +9,9 @@ export type Movie = {
 
 export async function fetchReviewCount() {
   try {
-    const res = await fetch("https://api.reeltalk.com/reviews/count"); // API 주소에 맞게 수정
-    if (!res.ok) throw new Error("Failed to fetch review count");
-    const data = await res.json();
+    const response = await fetch("https://api.reeltalk.com/reviews/count"); // API 주소에 맞게 수정해야함 만들어야 할 듯
+    if (!response.ok) throw new Error("Failed to fetch review count");
+    const data = await response.json();
     return data.count;
   } catch (error) {
     console.error("Error fetching review count:", error);

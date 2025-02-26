@@ -5,7 +5,7 @@ import AdBanner from "../components/adBanner";
 import MovieCardVertical from "../components/movieCard-vertical";
 import { Inter } from "next/font/google";
 import { makeImagePath } from "@/lib/utils";
-import { getMovies, Movie, testMovies } from "@/lib/api";
+import { getMovies, Movie } from "@/lib/api";
 
 const inter = Inter({
   weight: ["500", "400", "300"],
