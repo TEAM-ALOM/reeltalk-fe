@@ -4,43 +4,14 @@ import { useEffect, useState } from "react";
 import MovieCardVertical from "../components/movieCard-vertical";
 import StarRating from "../components/StarRating";
 import ReviewCardHorizontal from "../components/reviewCard-horizontal";
-
-type Movie = {
-  id: string;
-  poster_path: string;
-  title: string;
-  vote_average: number;
-  backdrop_path: string;
-  name: string;
-};
-
-// 시리즈로 변경해야 해서 다 수정해야함
-async function getMovies(): Promise<Movie[]> {
-  const MOVIE_BASE_PATH = process.env.NEXT_PUBLIC_API_URL_MOVIE;
-  const API_KEY = process.env.NEXT_PUBLIC_API_URL_KEY;
-
-  if (!MOVIE_BASE_PATH) {
-    throw new Error("MOVIE_BASE_PATH went wrong");
-  }
-
-  if (!API_KEY) {
-    throw new Error("API_KEY went wrong");
-  }
-
-  const response = await fetch(
-    `${MOVIE_BASE_PATH}/tv/popular?api_key=${API_KEY}`
-  );
-  const data = await response.json();
-
-  return data.results;
-}
+import { getSeries, Movie } from "@/lib/api";
 
 export default function Movies() {
   const [tvs, setTvs] = useState<Movie[]>([]);
   const [reviews, setReviews] = useState<Movie[]>([]);
 
   useEffect(() => {
-    getMovies().then((data) => {
+    getSeries().then((data) => {
       setTvs(data);
       setReviews(data); // 현재 테스트용으로 movies 데이터를 reviews로 사용 중
     });
@@ -48,7 +19,7 @@ export default function Movies() {
 
   return (
     <main className="px-10">
-      <div className="flex flex-col space-y-10 mt-10 w-full">
+      <div className="flex flex-col space-y-10 mt-10 w-full mb-20">
         {/* Tv 시리즈 목록 */}
         {tvs.map((tv) => (
           <div key={tv.id} className="flex w-full">

@@ -2,34 +2,7 @@
 
 import { useEffect, useState } from "react";
 import ReviewCardHorizontal from "../components/reviewCard-horizontal";
-
-type Movie = {
-  id: string;
-  poster_path: string;
-  title: string;
-  vote_average: number;
-  backdrop_path: string;
-};
-
-async function getMovies(): Promise<Movie[]> {
-  const MOVIE_BASE_PATH = process.env.NEXT_PUBLIC_API_URL_MOVIE;
-  const API_KEY = process.env.NEXT_PUBLIC_API_URL_KEY;
-
-  if (!MOVIE_BASE_PATH) {
-    throw new Error("MOVIE_BASE_PATH went wrong");
-  }
-
-  if (!API_KEY) {
-    throw new Error("API_KEY went wrong");
-  }
-
-  const response = await fetch(
-    `${MOVIE_BASE_PATH}/movie/popular?api_key=${API_KEY}`
-  );
-  const data = await response.json();
-
-  return data.results;
-}
+import { getMovies, Movie } from "@/lib/api";
 
 export default function Movies() {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -46,7 +19,7 @@ export default function Movies() {
 
   return (
     <main>
-      <div className="w-full flex flex-col justify-center xl:px-32 2xl:px-40">
+      <div className="w-full flex flex-col justify-center xl:px-32 2xl:px-40 mb-20">
         {/* 페이지 제목 컨테이너 */}
         <div className="flex w-full justify-start mt-10 ml-10">
           <span className="text-ReelTalk_Yellow text-3xl">TOP 리뷰</span>

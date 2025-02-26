@@ -70,6 +70,5 @@ export async function createAccount(
     return result.error.flatten();
   }
 
-  // ✅ 성공 시 빈 객체 반환 (오류가 없다는 의미)
   return {};
 }

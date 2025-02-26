@@ -4,34 +4,7 @@ import { useEffect, useState } from "react";
 import MovieCardVertical from "../components/movieCard-vertical";
 import StarRating from "../components/StarRating";
 import ReviewCardHorizontal from "../components/reviewCard-horizontal";
-
-type Movie = {
-  id: string;
-  poster_path: string;
-  title: string;
-  vote_average: number;
-  backdrop_path: string;
-};
-
-async function getMovies(): Promise<Movie[]> {
-  const MOVIE_BASE_PATH = process.env.NEXT_PUBLIC_API_URL_MOVIE;
-  const API_KEY = process.env.NEXT_PUBLIC_API_URL_KEY;
-
-  if (!MOVIE_BASE_PATH) {
-    throw new Error("MOVIE_BASE_PATH went wrong");
-  }
-
-  if (!API_KEY) {
-    throw new Error("API_KEY went wrong");
-  }
-
-  const response = await fetch(
-    `${MOVIE_BASE_PATH}/movie/popular?api_key=${API_KEY}`
-  );
-  const data = await response.json();
-
-  return data.results;
-}
+import { getMovies, Movie } from "@/lib/api";
 
 export default function Movies() {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -46,7 +19,7 @@ export default function Movies() {
 
   return (
     <main className="px-10">
-      <div className="flex flex-col space-y-10 mt-10 w-full">
+      <div className="flex flex-col space-y-10 mt-10 w-full mb-20">
         {/* 🎬 영화 목록 */}
         {movies.map((movie) => (
           <div key={movie.id} className="flex w-full">
