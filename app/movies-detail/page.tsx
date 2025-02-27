@@ -3,34 +3,23 @@
 import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { IoStarSharp } from "react-icons/io5";
-import { getMovies, Movie } from "@/lib/api";
-import { genre_map } from "@/lib/api";
+import { testMovies, MovieTest} from "@/lib/api";
 
 export default function MoviesDetail() {
-  const [movies, setMovies] = useState<Movie[]>([]);
-  const [reviews, setReviews] = useState<Movie[]>([]);
+  const [movies, setMovies] = useState<MovieTest[]>([]);
+  const [reviews, setReviews] = useState<MovieTest[]>([]);
 
   const router = useRouter();
   const path = usePathname();
 
   useEffect(() => {
-    getMovies().then((data) => {
+    testMovies().then((data) => {
       setMovies(data);
       setReviews(data);
     })
   }, []);
 
-  const getGenreNames = (genreId:number[]) : string[] => {
-    return genreId.map(id => genre_map[id] || "error");
-  }
-
   console.log(movies[0]);
-
-  //const tmpId = movies[0].id; // 임시로 받아온 영화의 아이디가 0번임을 가정
-
-  //let findIdx : number = -1;
-
-  //findIdx = movies.findIndex(movie => movie.id === tmpId);
 
   const handleMore = (href:string) => {
     if (path !== href)
@@ -45,8 +34,8 @@ export default function MoviesDetail() {
       <div 
           className="w-full lg:w-[350px] lg:h-[500px] sm:aspect-[1/3] flex items-center justify-center">
           <img
-            src={movies[2]?.poster_path
-              ? `https://image.tmdb.org/t/p/w500${movies[2].poster_path}`
+            src={movies[0]?.poster_path
+              ? `https://image.tmdb.org/t/p/w500${movies[0].poster_path}`
               : ""
             }
             alt="영화 포스터"
@@ -63,10 +52,10 @@ export default function MoviesDetail() {
                 영화 한글 제목
               </div>
               <div className="text-[36px] md:text-[36px] font-bold">
-                {movies[2]?.title || "제목 없음"}
+                {movies[0]?.title || "제목 없음"}
               </div>
-              <div className="text-[#898989] text-[14px] md:text-[14px]">
-                {movies[2]?.genre_ids ? getGenreNames(movies[2].genre_ids).join(" /") : "장르없음"}
+              <div className="text-[#898989] text-xl md:text-[14px]">
+                {movies[0]?.genres ? movies[0].genres.map(g=> g.name).join(" /") : "장르없음"}
               </div>
             </div>
 
@@ -86,7 +75,7 @@ export default function MoviesDetail() {
 
           {/* 영화 설명 박스 */}
           <div className="bg-[#DBDBDB] w-[100%] h-auto min-h-[150px] lg:min-h-[244px] border rounded-[10px] p-4 mt-4">
-            <span>{movies[2]?.overview}</span>
+            <span>{movies[0]?.overview}</span>
           </div>
 
           {/* 출연진 */}

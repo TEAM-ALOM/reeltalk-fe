@@ -5,37 +5,27 @@ export type Movie = {
   vote_average: number;
   backdrop_path: string;
   name: string; // 시리즈용 name
-  genre_ids: number[];
+  release_date: string;
+  genres: { id: number; name: string }[]; // ✅ 장르 정보 포함
   overview: string;
 };
 
-export const genre_map: {[key: number] : string} = {
-  28: "액션",
-  12: "모험",
-  16: "애니메이션",
-  35: "코미디",
-  80: "범죄",
-  99: "다큐멘터리",
-  18: "드라마",
-  10751: "가족",
-  14: "판타지",
-  36: "역사",
-  27: "공포",
-  10402: "음악",
-  9648: "미스터리",
-  10749: "로맨스",
-  878: "SF",
-  10770: "TV 영화",
-  53: "스릴러",
-  10752: "전쟁",
-  37: "서부"
-}
+export type MovieTest = {
+  id: string;
+  poster_path: string;
+  title: string;
+  vote_average: number; // ✅ `rating` 값을 여기에 매핑해야 함
+  backdrop_path: string;
+  release_date: string;
+  genres: { id: number; name: string }[]; // ✅ 장르 정보 포함
+  overview: string;
+};
 
 export async function fetchReviewCount() {
   try {
-    const response = await fetch("https://api.reeltalk.com/reviews/count"); // API 주소에 맞게 수정해야함 만들어야 할 듯
-    if (!response.ok) throw new Error("Failed to fetch review count");
-    const data = await response.json();
+    const res = await fetch("https://api.reeltalk.com/reviews/count"); // API 주소에 맞게 수정
+    if (!res.ok) throw new Error("Failed to fetch review count");
+    const data = await res.json();
     return data.count;
   } catch (error) {
     console.error("Error fetching review count:", error);
@@ -81,4 +71,26 @@ export async function getSeries(): Promise<Movie[]> {
   const data = await response.json();
 
   return data.results;
+}
+
+export async function testMovies(): Promise<MovieTest[]> {
+  try {
+    const response = await fetch(
+      "http://15.164.226.119:8080/api/movies?sort=releaseDate"
+    );
+
+    if (!response.ok)
+      throw new Error(`Failed to fetch movies: ${response.statusText}`);
+
+    const data = await response.json();
+    console.log(data);
+    console.log("API 응답 데이터:", data); // ✅ API 응답을 콘솔에 출력
+
+    if (!data.result) throw new Error("API 응답에 'result' 필드가 없음");
+
+    return data.result || []; // ✅ `result`가 없으면 빈 배열 반환
+  } catch (error) {
+    console.error("Error fetching movies:", error);
+    return []; // ✅ 오류 발생 시 빈 배열 반환
+  }
 }
