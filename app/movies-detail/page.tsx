@@ -43,10 +43,10 @@ export default function MoviesDetail() {
       <div className="w-full h-full max-w-screen-xl min-h-[300px] lg:min-h-[500px] mt-6 grid sm:grid-rows-2 sm:grid-cols-1 lg:grid-rows-1 lg:grid-cols-[auto_1fr] gap-7">
         
       <div 
-          className="w-full lg:w-[350px] lg:h-[500px] sm:aspect-[1/3] flex items-center justify-center border border-black border-3">
+          className="w-full lg:w-[350px] lg:h-[500px] sm:aspect-[1/3] flex items-center justify-center">
           <img
-            src={movies[1]?.poster_path
-              ? `https://image.tmdb.org/t/p/w500${movies[1].poster_path}`
+            src={movies[2]?.poster_path
+              ? `https://image.tmdb.org/t/p/w500${movies[2].poster_path}`
               : ""
             }
             alt="영화 포스터"
@@ -63,10 +63,10 @@ export default function MoviesDetail() {
                 영화 한글 제목
               </div>
               <div className="text-[36px] md:text-[36px] font-bold">
-                {movies[1]?.title || "제목 없음"}
+                {movies[2]?.title || "제목 없음"}
               </div>
               <div className="text-[#898989] text-[14px] md:text-[14px]">
-                {movies[1]?.genre_ids ? getGenreNames(movies[1].genre_ids).join(" /") : "장르없음"}
+                {movies[2]?.genre_ids ? getGenreNames(movies[2].genre_ids).join(" /") : "장르없음"}
               </div>
             </div>
 
@@ -86,7 +86,7 @@ export default function MoviesDetail() {
 
           {/* 영화 설명 박스 */}
           <div className="bg-[#DBDBDB] w-[100%] h-auto min-h-[150px] lg:min-h-[244px] border rounded-[10px] p-4 mt-4">
-            <span>{movies[1]?.overview}</span>
+            <span>{movies[2]?.overview}</span>
           </div>
 
           {/* 출연진 */}
