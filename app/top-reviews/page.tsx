@@ -2,14 +2,14 @@
 
 import { useEffect, useState } from "react";
 import ReviewCardHorizontal from "../components/reviewCard-horizontal";
-import { getMovies, Movie } from "@/lib/api";
+import { getTopRatedMovies, Movie } from "@/lib/api";
 
 export default function Movies() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [reviews, setReviews] = useState<Movie[]>([]);
 
   useEffect(() => {
-    getMovies().then((data) => {
+    getTopRatedMovies().then((data) => {
       setMovies(data);
       setReviews(data); // 현재 테스트용으로 movies 데이터를 reviews로 사용 중
 

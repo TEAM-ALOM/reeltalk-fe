@@ -10,7 +10,6 @@ interface IReviewProps {
   id: string;
   backdrop_path: string;
   isTop2?: boolean;
-
   rank?: number;
 }
 
@@ -38,8 +37,8 @@ export default function ReviewCardHorizontal({
       onClick={onClick}
       className={`relative flex-shrink-0 text-white cursor-pointer ${
         isTop2
-          ? "w-[460px] h-[280px] 2xl:w-[540px] 2xl:h-[360px]"
-          : "w-80 h-52 2xl:w-96 2xl:h-[270px]"
+          ? "w-[460px] h-[280px] 2xl:w-[670px] 2xl:h-[400px]"
+          : "w-80 h-52 2xl:w-[440px] 2xl:h-[270px]"
       }`}
       whileHover={{ scale: 0.95 }}
     >
