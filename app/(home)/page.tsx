@@ -11,7 +11,6 @@ import {
   getUpcomingMovies,
   Movie,
 } from "@/lib/api";
-import StarRating from "../components/StarRating";
 import { StarIcon } from "@heroicons/react/24/solid";
 
 const inter = Inter({
