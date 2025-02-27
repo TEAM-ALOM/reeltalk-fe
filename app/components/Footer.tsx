@@ -2,6 +2,8 @@
 
 import { fetchReviewCount } from "@/lib/api";
 import { useEffect, useState } from "react";
+import { FaInstagram } from "react-icons/fa";
+import { FaThreads, FaXTwitter } from "react-icons/fa6";
 
 export default function Footer() {
   const [reviewCount, setReviewCount] = useState<number | null>(0);
@@ -74,28 +76,28 @@ export default function Footer() {
         <p>© 2025 ReelTalk, Inc. All rights reserved.</p>
         <div className="flex space-x-4">
           <a
-            href="https://facebook.com"
+            href="https://x.com/home"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-white"
+            className="hover:text-white flex items-center"
           >
-            🌐 X
+            <FaXTwitter className="mr-2" /> X
           </a>
           <a
-            href="https://twitter.com"
+            href="https://www.threads.net/?hl=ko"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-white"
+            className="hover:text-white flex items-center"
           >
-            🐦 Thread
+            <FaThreads className="mr-2" /> Thread
           </a>
           <a
             href="https://instagram.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-white"
+            className="hover:text-white flex items-center "
           >
-            📸 Instagram
+            <FaInstagram className="mr-2" /> Instagram
           </a>
         </div>
       </div>
