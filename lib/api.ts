@@ -19,6 +19,7 @@ export type MovieTest = {
   release_date: string;
   genres: { id: number; name: string }[]; // ✅ 장르 정보 포함
   overview: string;
+
 };
 
 export async function fetchReviewCount() {
@@ -33,7 +34,7 @@ export async function fetchReviewCount() {
   }
 }
 
-export async function getMovies(): Promise<Movie[]> {
+export async function getTopRatedMovies(): Promise<Movie[]> {
   const MOVIE_BASE_PATH = process.env.NEXT_PUBLIC_API_URL_MOVIE;
   const API_KEY = process.env.NEXT_PUBLIC_API_URL_KEY;
 
@@ -46,7 +47,47 @@ export async function getMovies(): Promise<Movie[]> {
   }
 
   const response = await fetch(
-    `${MOVIE_BASE_PATH}/movie/popular?api_key=${API_KEY}`
+    `${MOVIE_BASE_PATH}/movie/top_rated?api_key=${API_KEY}`
+  );
+  const data = await response.json();
+
+  return data.results;
+}
+
+export async function getNowPlayingMovies(): Promise<Movie[]> {
+  const MOVIE_BASE_PATH = process.env.NEXT_PUBLIC_API_URL_MOVIE;
+  const API_KEY = process.env.NEXT_PUBLIC_API_URL_KEY;
+
+  if (!MOVIE_BASE_PATH) {
+    throw new Error("MOVIE_BASE_PATH went wrong");
+  }
+
+  if (!API_KEY) {
+    throw new Error("API_KEY went wrong");
+  }
+
+  const response = await fetch(
+    `${MOVIE_BASE_PATH}/movie/now_playing?api_key=${API_KEY}`
+  );
+  const data = await response.json();
+
+  return data.results;
+}
+
+export async function getUpcomingMovies(): Promise<Movie[]> {
+  const MOVIE_BASE_PATH = process.env.NEXT_PUBLIC_API_URL_MOVIE;
+  const API_KEY = process.env.NEXT_PUBLIC_API_URL_KEY;
+
+  if (!MOVIE_BASE_PATH) {
+    throw new Error("MOVIE_BASE_PATH went wrong");
+  }
+
+  if (!API_KEY) {
+    throw new Error("API_KEY went wrong");
+  }
+
+  const response = await fetch(
+    `${MOVIE_BASE_PATH}/movie/upcoming?api_key=${API_KEY}`
   );
   const data = await response.json();
 

@@ -24,7 +24,7 @@ export default function Movies() {
         {tvs.map((tv) => (
           <div key={tv.id} className="flex w-full">
             {/* 왼쪽 영화 포스터 */}
-            <div className="w-1/4 min-w-[180px]">
+            <div className="w-1/5 min-w-[180px]">
               <MovieCardVertical
                 title={tv.name}
                 id={tv.id}
@@ -34,15 +34,15 @@ export default function Movies() {
             </div>
 
             {/* 오른쪽 컨텐츠 */}
-            <div className="flex flex-col justify-between w-3/4 py-4">
+            <div className="flex flex-col justify-between w-4/5 py-4">
               {/* 제목 및 평점 컨테이너 */}
-              <div className="flex justify-between items-center px-2">
-                <span className="text-xl font-bold 2xl:text-2xl">
+              <div className="flex justify-between items-center px-2 ">
+                <span className="text-3xl font-medium 2xl:text-5xl">
                   {tv.name}
                 </span>
-                <div className="flex items-center space-x-2">
-                  <span className="text-gray-600 2xl:text-2xl">평점</span>
-                  <span className="text-lg font-semibold 2xl:text-2xl">
+                <div className="flex items-center space-x-2 2xl:text-2xl">
+                  <span className="text-gray-600 text-3xl">평점</span>
+                  <span className="text-lg font-semibold 2xl:text-3xl">
                     {tv.vote_average.toFixed(1)}
                   </span>
                   <StarRating rating={tv.vote_average} />
@@ -50,7 +50,7 @@ export default function Movies() {
               </div>
 
               {/* 리뷰 영상 가로형 */}
-              <div className="relative flex pb-3 pl-2 space-x-4 group">
+              <div className="relative flex pb-3 pl-2 space-x-4 group ">
                 <div className="flex gap-4 overflow-x-auto scroll-smooth">
                   {reviews.map((review) => (
                     <ReviewCardHorizontal key={review.id} {...review} />

@@ -5,7 +5,13 @@ import AdBanner from "../components/adBanner";
 import MovieCardVertical from "../components/movieCard-vertical";
 import { Inter } from "next/font/google";
 import { makeImagePath } from "@/lib/utils";
-import { getMovies, Movie } from "@/lib/api";
+import {
+  getNowPlayingMovies,
+  getTopRatedMovies,
+  getUpcomingMovies,
+  Movie,
+} from "@/lib/api";
+import { StarIcon } from "@heroicons/react/24/solid";
 
 const inter = Inter({
   weight: ["500", "400", "300"],
@@ -15,15 +21,22 @@ const inter = Inter({
 });
 
 export default function Home() {
-  const [movies, setMovies] = useState<Movie[]>([]);
+  const [topRatedMovies, setTopRatedMovies] = useState<Movie[]>([]);
+  const [nowPlayingMovies, setNowPlayingMovies] = useState<Movie[]>([]);
+  const [upcomingMovies, setUpcomingMovies] = useState<Movie[]>([]);
   const [showLeftButton, setShowLeftButton] = useState(false);
   const [showRightButton, setShowRightButton] = useState(true);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    getMovies().then((data) => {
-      setMovies(data);
-      console.log(data);
+    getTopRatedMovies().then((data) => {
+      setTopRatedMovies(data);
+    });
+    getNowPlayingMovies().then((data) => {
+      setNowPlayingMovies(data);
+    });
+    getUpcomingMovies().then((data) => {
+      setUpcomingMovies(data);
     });
   }, []);
 
@@ -47,31 +60,109 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col ">
-      {movies.length > 0 && (
+    <div className="flex flex-col items-center px-7">
+      {topRatedMovies.length > 0 && (
         <AdBanner
-          key={movies[0].id}
-          id={movies[0].id}
-          poster_path={movies[0].poster_path}
-          title={movies[0].title}
-          backdrop_path={makeImagePath(movies[0].backdrop_path)}
+          key={topRatedMovies[0].id}
+          id={topRatedMovies[0].id}
+          poster_path={topRatedMovies[0].poster_path}
+          title={topRatedMovies[0].title}
+          backdrop_path={makeImagePath(topRatedMovies[0].backdrop_path)}
         />
       )}
 
       <span
-        className={`pl-10 text-2xl my-6 text-ReelTalk_Yellow ${inter.className} font-normal 2xl:px-48`}
+        className={`text-2xl my-6 text-ReelTalk_Yellow ${inter.className} font-normal  self-start`}
       >
-        Top 리뷰 순
+        영화 별점 순
       </span>
 
       {/* 가로 스크롤 컨테이너 */}
-      <div className="relative flex pb-10 pl-10 pr-5 space-x-4 group 2xl:px-48">
+      <div className="relative flex pb-10 space-x-4 group w-full overflow-hidden">
         <div
           ref={scrollContainerRef}
-          className="flex gap-4 overflow-x-auto scroll-smooth"
+          className="flex gap-4 overflow-x-auto scroll-smooth w-full  px-10"
           onScroll={handleScroll}
         >
-          {movies.map((movie) => (
+          {topRatedMovies.map((movie) => (
+            <div key={movie.id}>
+              <MovieCardVertical key={movie.id} {...movie} isTVSeries={false} />
+              <div className="flex items-center space-x-2 2xl:text-2xl ml-4">
+                <StarIcon className=" text-ReelTalk_Yellow size-6" />
+                <span className="text-lg font-semibold 2xl:text-2xl text-gray-500">
+                  {movie.vote_average.toFixed(1)}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {showLeftButton && (
+          <button
+            onClick={() => scroll("left")}
+            className="absolute left-0 p-2 text-lg font-semibold text-gray-300 -translate-y-1/2 bg-white rounded-full opacity-0 top-1/2 group-hover:opacity-80"
+          >
+            ＜
+          </button>
+        )}
+
+        {showRightButton && (
+          <button
+            onClick={() => scroll("right")}
+            className="absolute right-0 p-2 text-lg font-semibold text-gray-300 -translate-y-1/2 bg-white rounded-full opacity-0 top-1/2 group-hover:opacity-80"
+          >
+            ＞
+          </button>
+        )}
+      </div>
+      <span
+        className={`text-2xl my-6 text-ReelTalk_Yellow ${inter.className} font-normal  self-start`}
+      >
+        현재 상영 중
+      </span>
+      {/* 가로 스크롤 컨테이너 */}
+      <div className="relative flex pb-10 space-x-4 group w-full overflow-hidden">
+        <div
+          ref={scrollContainerRef}
+          className="flex gap-4 overflow-x-auto scroll-smooth w-full  px-10"
+          onScroll={handleScroll}
+        >
+          {nowPlayingMovies.map((movie) => (
+            <MovieCardVertical key={movie.id} {...movie} isTVSeries={false} />
+          ))}
+        </div>
+
+        {showLeftButton && (
+          <button
+            onClick={() => scroll("left")}
+            className="absolute left-0 p-2 text-lg font-semibold text-gray-300 -translate-y-1/2 bg-white rounded-full opacity-0 top-1/2 group-hover:opacity-80"
+          >
+            ＜
+          </button>
+        )}
+
+        {showRightButton && (
+          <button
+            onClick={() => scroll("right")}
+            className="absolute right-0 p-2 text-lg font-semibold text-gray-300 -translate-y-1/2 bg-white rounded-full opacity-0 top-1/2 group-hover:opacity-80"
+          >
+            ＞
+          </button>
+        )}
+      </div>
+      <span
+        className={`text-2xl my-6 text-ReelTalk_Yellow ${inter.className} font-normal  self-start`}
+      >
+        개봉 예정작
+      </span>
+      {/* 가로 스크롤 컨테이너 */}
+      <div className="relative flex pb-10 space-x-4 group w-full overflow-hidden">
+        <div
+          ref={scrollContainerRef}
+          className="flex gap-4 overflow-x-auto scroll-smooth w-full  px-10"
+          onScroll={handleScroll}
+        >
+          {upcomingMovies.map((movie) => (
             <MovieCardVertical key={movie.id} {...movie} isTVSeries={false} />
           ))}
         </div>
