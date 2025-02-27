@@ -1,12 +1,36 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { IoStarSharp } from "react-icons/io5";
+import { getMovies, Movie } from "@/lib/api";
+import { genre_map } from "@/lib/api";
 
 export default function MoviesDetail() {
+  const [movies, setMovies] = useState<Movie[]>([]);
+  const [reviews, setReviews] = useState<Movie[]>([]);
+
   const router = useRouter();
   const path = usePathname();
+
+  useEffect(() => {
+    getMovies().then((data) => {
+      setMovies(data);
+      setReviews(data);
+    })
+  }, []);
+
+  const getGenreNames = (genreId:number[]) : string[] => {
+    return genreId.map(id => genre_map[id] || "error");
+  }
+
+  console.log(movies[0]);
+
+  //const tmpId = movies[0].id; // 임시로 받아온 영화의 아이디가 0번임을 가정
+
+  //let findIdx : number = -1;
+
+  //findIdx = movies.findIndex(movie => movie.id === tmpId);
 
   const handleMore = (href:string) => {
     if (path !== href)
@@ -17,13 +41,14 @@ export default function MoviesDetail() {
     <main className="flex flex-col justify-center items-center w-full px-4">
       {/* 영화 상세 정보*/}
       <div className="w-full h-full max-w-screen-xl min-h-[300px] lg:min-h-[500px] mt-6 grid sm:grid-rows-2 sm:grid-cols-1 lg:grid-rows-1 lg:grid-cols-[auto_1fr] gap-7">
-        {/* 영화 포스터*/}
-        <div className="w-full lg:w-[350px] lg:h-[500px] sm:aspect-[1/3] flex items-center justify-center 
-
-        border border-black border-3">
-
+        
+      <div 
+          className="w-full lg:w-[350px] lg:h-[500px] sm:aspect-[1/3] flex items-center justify-center">
           <img
-            src=""
+            src={movies[2]?.poster_path
+              ? `https://image.tmdb.org/t/p/w500${movies[2].poster_path}`
+              : ""
+            }
             alt="영화 포스터"
             className="w-full h-full object-cover"
           />
@@ -35,13 +60,13 @@ export default function MoviesDetail() {
             {/* 제목 및 장르*/}
             <div className="flex flex-col">
               <div className="text-[36px] md:text-[36px] font-bold">
-                위키드
+                영화 한글 제목
               </div>
               <div className="text-[36px] md:text-[36px] font-bold">
-                Wicked: Part One
+                {movies[2]?.title || "제목 없음"}
               </div>
               <div className="text-[#898989] text-[14px] md:text-[14px]">
-                2024.판타지/뮤지컬/모험/액션/가족/로맨스/음악.미국
+                {movies[2]?.genre_ids ? getGenreNames(movies[2].genre_ids).join(" /") : "장르없음"}
               </div>
             </div>
 
@@ -61,7 +86,7 @@ export default function MoviesDetail() {
 
           {/* 영화 설명 박스 */}
           <div className="bg-[#DBDBDB] w-[100%] h-auto min-h-[150px] lg:min-h-[244px] border rounded-[10px] p-4 mt-4">
-            <span>영화 설명...</span>
+            <span>{movies[2]?.overview}</span>
           </div>
 
           {/* 출연진 */}
@@ -132,15 +157,15 @@ export default function MoviesDetail() {
           </button>
         </div>
 
-        <div className="w-full min-h-[620px] lg:min-h-[630px] bg-[#D9D9D9] flex flex-col items-stretch justify-stretch">
-          <form className="w-full h-full flew-grow grid grid-rows-[5fr_1fr] gap-4">
+        <div className="w-full lg:min-h-[300px] bg-[#D9D9D9] flex flex-col items-stretch justify-stretch">
+          <form className="w-full h-full flew-grow grid grid-rows-[3fr_1fr] gap-4">
             <div className="w-full"></div>
             <div className="w-full flex items-baseline">
               <input
                 type="text"
-                className="w-full max-w-[90%] h-[75px] border rounded-[30px] m-3 text-[16px] bg-[#EDEDED]"
+                className="w-full max-w-[90%] mt-10 h-[60px] border rounded-[30px] m-3 text-[16px] bg-[#EDEDED] border-none"
               />
-              <button className="h-[75px] lg:w-[8%] border rounded-[30px] bg-[#FFC107] m-3 text-[24px]">
+              <button className="h-[60px] lg:w-[8%] mt-10 border rounded-[30px] bg-[#FFC107] m-3 text-[24px]">
                 입력
               </button>
             </div>
