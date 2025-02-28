@@ -19,14 +19,14 @@ export default function Movies() {
 
   return (
     <main>
-      <div className="w-full flex flex-col justify-center xl:px-32 2xl:px-40 mb-20">
+      <div className="flex flex-col justify-center w-full mb-20 xl:px-32 2xl:px-40">
         {/* 페이지 제목 컨테이너 */}
-        <div className="flex w-full justify-start mt-10 ml-10">
-          <span className="text-ReelTalk_Yellow text-3xl">TOP 리뷰</span>
+        <div className="flex justify-start w-full mt-10 ">
+          <span className="text-3xl text-ReelTalk_Yellow">TOP 리뷰</span>
         </div>
 
         {/* Top2 리뷰 컨테이너 */}
-        <div className="flex justify-between w-full h-full mt-10 px-20">
+        <div className="flex justify-between w-full h-full mt-10 ">
           {reviews.slice(0, 2).map((review, index) => (
             <div key={review.id}>
               <ReviewCardHorizontal
@@ -36,8 +36,8 @@ export default function Movies() {
                 {...review}
               />
               {/* top2 영상 하단 정보 컨테이너 */}
-              <div className="w-full px-3 mt-2 flex justify-between items-center text-xl">
-                <div className="flex font-semibold items-center">
+              <div className="flex items-center justify-between w-full px-3 mt-2 text-xl">
+                <div className="flex items-center font-semibold">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -56,7 +56,7 @@ export default function Movies() {
                 </div>
                 <div className="flex items-center font-semibold">
                   <span>리뷰어</span>
-                  <div className="bg-ReelTalk_LightBlue rounded-2xl p-2 ml-2 flex">
+                  <div className="flex p-2 ml-2 bg-ReelTalk_LightBlue rounded-2xl">
                     <span>코헤트</span>
                     <span className="bg-[#C977FF] rounded-full text-white ml-1 flex items-center justify-center w-6 h-6 text-sm">
                       R

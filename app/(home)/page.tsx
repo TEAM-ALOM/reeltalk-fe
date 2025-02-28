@@ -60,7 +60,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col items-center px-7">
+    <div className="flex flex-col items-center px-28">
       {topRatedMovies.length > 0 && (
         <AdBanner
           key={topRatedMovies[0].id}
@@ -78,18 +78,18 @@ export default function Home() {
       </span>
 
       {/* 가로 스크롤 컨테이너 */}
-      <div className="relative flex pb-10 space-x-4 group w-full overflow-hidden">
+      <div className="relative flex w-full pb-10 space-x-4 overflow-hidden group">
         <div
           ref={scrollContainerRef}
-          className="flex gap-4 overflow-x-auto scroll-smooth w-full  px-10"
+          className="flex w-full gap-4 overflow-x-auto scroll-smooth"
           onScroll={handleScroll}
         >
           {topRatedMovies.map((movie) => (
             <div key={movie.id}>
               <MovieCardVertical key={movie.id} {...movie} isTVSeries={false} />
-              <div className="flex items-center space-x-2 2xl:text-2xl ml-4">
+              <div className="flex items-center space-x-2 2xl:text-2xl">
                 <StarIcon className=" text-ReelTalk_Yellow size-6" />
-                <span className="text-lg font-semibold 2xl:text-2xl text-gray-500">
+                <span className="text-lg font-semibold text-gray-500 2xl:text-2xl">
                   {movie.vote_average.toFixed(1)}
                 </span>
               </div>
@@ -121,10 +121,10 @@ export default function Home() {
         현재 상영 중
       </span>
       {/* 가로 스크롤 컨테이너 */}
-      <div className="relative flex pb-10 space-x-4 group w-full overflow-hidden">
+      <div className="relative flex w-full pb-10 space-x-4 overflow-hidden group">
         <div
           ref={scrollContainerRef}
-          className="flex gap-4 overflow-x-auto scroll-smooth w-full  px-10"
+          className="flex w-full gap-4 overflow-x-auto scroll-smooth"
           onScroll={handleScroll}
         >
           {nowPlayingMovies.map((movie) => (
@@ -156,10 +156,10 @@ export default function Home() {
         개봉 예정작
       </span>
       {/* 가로 스크롤 컨테이너 */}
-      <div className="relative flex pb-10 space-x-4 group w-full overflow-hidden">
+      <div className="relative flex w-full pb-10 space-x-4 overflow-hidden group">
         <div
           ref={scrollContainerRef}
-          className="flex gap-4 overflow-x-auto scroll-smooth w-full  px-10"
+          className="flex w-full gap-4 overflow-x-auto scroll-smooth"
           onScroll={handleScroll}
         >
           {upcomingMovies.map((movie) => (
