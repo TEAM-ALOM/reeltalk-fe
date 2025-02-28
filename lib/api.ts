@@ -12,6 +12,7 @@ export type Movie = {
 
 export type MovieTest = {
   id: string;
+  adult: boolean,
   poster_path: string;
   title: string;
   vote_average: number; // ✅ `rating` 값을 여기에 매핑해야 함
@@ -20,6 +21,54 @@ export type MovieTest = {
   genres: { id: number; name: string }[]; // ✅ 장르 정보 포함
   overview: string;
 
+  reviews: {
+    createdAt: string,
+    updatedAt: string,
+    id: number,
+
+    content: {
+      createdAt: string,
+      updatedAt: string,
+      id: string,
+      adult: boolean,
+      country: string,
+      overview: string,
+      popularity: number,
+      ratingCount: number,
+      ratingSum: number,
+      ratingAverage: number,
+      genres: {id: string, name: string}[],
+      runtime: number,
+      en_title: string,
+      kor_title: string,
+      backdrop_path: string,
+      poster_path: string,
+      release_date: string,
+    },
+
+    user: {
+      id: number,
+      email: string,
+      password: string,
+      createdAt: string,
+      updatedAt: string,
+      role: string,
+    },
+
+    image: {
+      id: number,
+      url: string,
+    },
+
+    overview: string,
+    videoPath: string,
+    duration: null,
+    title: string,
+    reviewLikes: [],
+    comments: [],
+    likeCount: number,
+    hateCount: number,
+  }[],
 };
 
 export async function fetchReviewCount() {
