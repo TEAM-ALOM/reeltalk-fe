@@ -1,5 +1,7 @@
+"use client"
+
 import { MovieContent, MovieTest, testMovies } from "@/lib/api";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { IoStarSharp } from "react-icons/io5";
@@ -9,8 +11,11 @@ export default function ReviewTalkMore() {
     const [movies, setMovies] = useState<MovieTest[]>([]);
     const [movieDetail, setMovieDetail] = useState<MovieContent | null>(null);
 
-    const router= useRouter();
     const path = usePathname();
+    
+    const searchParams = useSearchParams();
+    const contentId = searchParams.get("contentId");
+
 
     useEffect(() => {
         testMovies().then((data)=> {
