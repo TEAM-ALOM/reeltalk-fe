@@ -200,7 +200,7 @@ export async function fetchContentId(
 
 export async function loginUser(username: string, password: string) {
   try {
-    const response = await fetch("https://api.reeltalk.com/auth/login", {
+    const response = await fetch("http://15.164.226.119:8080/api/users/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -214,7 +214,7 @@ export async function loginUser(username: string, password: string) {
       throw new Error(data.message || "로그인 실패");
     }
 
-    return data;
+    return data.result;
   } catch (error: any) {
     console.error("Login error:", error);
     throw new Error(error.message);
