@@ -25,8 +25,10 @@ export default function LoginCard({
     try {
       const data = await loginUser(username, password);
       onLogin(data.username); // 로그인 성공
-    } catch (error: any) {
-      setError(error.message); // 로그인 실패
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setError(error.message); // 로그인 실패
+      }
     }
   };
   return (

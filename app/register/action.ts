@@ -74,7 +74,10 @@ export async function createAccount(
   try {
     await registerUser(data.email, data.username, data.password);
     return { success: true };
-  } catch (error: any) {
-    return { formErrors: [error.message] };
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return { formErrors: [error.message] };
+    }
+    return { formErrors: ["알 수 없는 오류가 발생했습니다."] };
   }
 }
