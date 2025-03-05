@@ -1,5 +1,6 @@
 "use server";
 
+import { registerUser } from "@/lib/api";
 import {
   PASSWORD_MIN_LENGTH,
   PASSWORD_REGEX,
@@ -51,6 +52,7 @@ type FormState = {
     confirm_password?: string[];
   };
   formErrors?: string[];
+  success?: boolean;
 };
 
 export async function createAccount(
@@ -65,10 +67,17 @@ export async function createAccount(
   };
 
   const result = formSchema.safeParse(data);
-
   if (!result.success) {
     return result.error.flatten();
   }
 
-  return {};
+  try {
+    await registerUser(data.email, data.username, data.password);
+    return { success: true };
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return { formErrors: [error.message] };
+    }
+    return { formErrors: ["알 수 없는 오류가 발생했습니다."] };
+  }
 }

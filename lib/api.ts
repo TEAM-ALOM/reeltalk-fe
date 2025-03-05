@@ -41,7 +41,7 @@ export type MovieContent = {
   release_date: string;
 
   reviews: Review[];
-  talks: any[];
+  talks: unknown[];
 };
 
 export type Review = {
@@ -215,8 +215,44 @@ export async function loginUser(username: string, password: string) {
     }
 
     return data.result;
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Login error:", error);
-    throw new Error(error.message);
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+
+    throw new Error("알 수 없는 오류가 발생했습니다.");
+  }
+}
+
+export async function registerUser(
+  email: string,
+  username: string,
+  password: string
+) {
+  try {
+    const response = await fetch(
+      "http://15.164.226.119:8080/api/users/signup",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, username, password }),
+      }
+    );
+
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      throw new Error(responseData.message || "회원가입 실패");
+    }
+
+    return { success: true };
+  } catch (error: unknown) {
+    console.error("Register error:", error);
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+
+    throw new Error("서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
   }
 }
