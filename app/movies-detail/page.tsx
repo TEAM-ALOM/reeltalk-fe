@@ -3,11 +3,11 @@
 import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { IoStarSharp } from "react-icons/io5";
-import { testMovies, MovieTest} from "@/lib/api";
+import { testMovies, MovieTest, MovieContent, fetchContentId, Movie} from "@/lib/api";
 
 export default function MoviesDetail() {
   const [movies, setMovies] = useState<MovieTest[]>([]);
-  const [reviews, setReviews] = useState<MovieTest[]>([]);
+  const [movieDetail, setMovieDetail] = useState<MovieContent | null>(null);
 
   const router = useRouter();
   const path = usePathname();
@@ -15,11 +15,20 @@ export default function MoviesDetail() {
   useEffect(() => {
     testMovies().then((data) => {
       setMovies(data);
-      setReviews(data);
-    })
-  }, []);
+      
+      // 클릭한 영화가 0번째 영화라고 가정
+      if (data.length > 0) {
+        const firstMovie = data[0];
+        const contentId = parseInt(firstMovie.id, 10);
 
-  console.log(movies[0]);
+        fetchContentId(contentId).then((detail) => {
+          setMovieDetail(detail);
+        });
+      }
+    });
+  }, []);
+  
+  console.log(movieDetail);
 
   const handleMore = (href:string) => {
     if (path !== href)
@@ -34,8 +43,8 @@ export default function MoviesDetail() {
       <div 
           className="w-full lg:w-[350px] lg:h-[500px] sm:aspect-[1/3] flex items-center justify-center">
           <img
-            src={movies[0]?.poster_path
-              ? `https://image.tmdb.org/t/p/w500${movies[0].poster_path}`
+            src={movieDetail?.poster_path
+              ? `https://image.tmdb.org/t/p/w500${movieDetail.poster_path}`
               : ""
             }
             alt="영화 포스터"
@@ -49,13 +58,13 @@ export default function MoviesDetail() {
             {/* 제목 및 장르*/}
             <div className="flex flex-col">
               <div className="text-[36px] md:text-[36px] font-bold">
-                영화 한글 제목
+                {movieDetail?.kor_title || "한글 제목 없음"}
               </div>
               <div className="text-[36px] md:text-[36px] font-bold">
-                {movies[0]?.title || "제목 없음"}
+                {movieDetail?.en_title || "영어 제목 없음"}
               </div>
               <div className="text-[#898989] text-xl md:text-[14px]">
-                {movies[0]?.genres ? movies[0].genres.map(g=> g.name).join(" /") : "장르없음"}
+                {movieDetail?.genres?.map((g) => g.name).join(" /") || "장르 없음"}
               </div>
             </div>
 
@@ -75,7 +84,7 @@ export default function MoviesDetail() {
 
           {/* 영화 설명 박스 */}
           <div className="bg-[#DBDBDB] w-[100%] h-auto min-h-[150px] lg:min-h-[244px] border rounded-[10px] p-4 mt-4">
-            <span>{movies[0]?.overview}</span>
+            <span>{movieDetail?.overview || "설명없음"}</span>
           </div>
 
           {/* 출연진 */}
@@ -109,7 +118,7 @@ export default function MoviesDetail() {
         <div className="w-full flex justify-between">
           <span className="text-[#FFC107] text-[24px]">Review Talk</span>
           <button 
-          onClick={() => handleMore("/reviews-detail")}
+          onClick={() => handleMore("/review-talkmore")}
           className="bg-[#E3F2FD] border rounded-[20px] text-[19.5px] md:text-[19.5px] w-[100px] h-[30px] text-[#787878] flex justify-center items-center">
             more+
           </button>
@@ -119,17 +128,12 @@ export default function MoviesDetail() {
         <div className="w-full flex justify-between space-x-10 overflow-x-auto whitespace-nowrap scrollbar-hide">
 
           {/*리뷰 영상 동적 렌더링*/}
-          {[1,2,3].map((index) => (
-            <div 
-            key={index}
-            className="flex aspect-[500/250] w-[90%] h-full md:max-w-[70%] lg:w-[450px] bg-[#CDC8C8] border rounded-[20px] flex items-center justify-center"
-            >
-            <video
-            className="w-full h-full object-cover"
-            src=""
-            >
-            </video>
-          </div>
+          {movieDetail?.reviews.map((index) => (
+            <img 
+            className="flex aspect-[500/250] w-[90%] h-full md:max-w-[70%] lg:w-[450px] bg-[#CDC8C8] border rounded-[20px] flex items-center justify-center hover:cursor-pointer"
+            src={index?.image?.url}
+            onClick={() => handleMore(`${index?.video_path}`)}
+            />
           ))}
 
         </div>
