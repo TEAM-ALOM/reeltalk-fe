@@ -1,6 +1,6 @@
 "use client"
 
-import { MovieContent, MovieTest, testMovies } from "@/lib/api";
+import { fetchContentId, MovieContent, MovieTest, testMovies } from "@/lib/api";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
@@ -21,7 +21,9 @@ export default function ReviewTalkMore() {
         testMovies().then((data)=> {
             setMovies(data);
 
-        
+            fetchContentId(Number(contentId)).then((detail) => {
+                setMovieDetail(detail);
+            });
         })
     })
 
