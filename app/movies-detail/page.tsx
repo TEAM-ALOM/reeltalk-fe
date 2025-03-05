@@ -118,7 +118,7 @@ export default function MoviesDetail() {
         <div className="w-full flex justify-between">
           <span className="text-[#FFC107] text-[24px]">Review Talk</span>
           <button 
-          onClick={() => handleMore("/reviews-detail")}
+          onClick={() => handleMore("/review-talkmore")}
           className="bg-[#E3F2FD] border rounded-[20px] text-[19.5px] md:text-[19.5px] w-[100px] h-[30px] text-[#787878] flex justify-center items-center">
             more+
           </button>
