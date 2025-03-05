@@ -30,9 +30,9 @@ export default function MoviesDetail() {
   
   console.log(movieDetail);
 
-  const handleMore = (href:string) => {
+  const handleMore = (href:string, contentId: number) => {
     if (path !== href)
-      router.push(href);
+      router.push(`${href}?contentId=${contentId}`);
   };
 
   return (
@@ -118,7 +118,7 @@ export default function MoviesDetail() {
         <div className="w-full flex justify-between">
           <span className="text-[#FFC107] text-[24px]">Review Talk</span>
           <button 
-          onClick={() => handleMore("/review-talkmore")}
+          onClick={() => handleMore("/review-talkmore", movieDetail?.id || 0)}
           className="bg-[#E3F2FD] border rounded-[20px] text-[19.5px] md:text-[19.5px] w-[100px] h-[30px] text-[#787878] flex justify-center items-center">
             more+
           </button>
@@ -132,7 +132,7 @@ export default function MoviesDetail() {
             <img 
             className="flex aspect-[500/250] w-[90%] h-full md:max-w-[70%] lg:w-[450px] bg-[#CDC8C8] border rounded-[20px] flex items-center justify-center hover:cursor-pointer"
             src={index?.image?.url}
-            onClick={() => handleMore(`${index?.video_path}`)}
+            onClick={() => window.open(index?.video_path, "_blank")}
             />
           ))}
 
@@ -144,7 +144,7 @@ export default function MoviesDetail() {
       <div className="w-full flex justify-between">
           <span className="text-[#FFC107] text-[24px]">실시간Talk</span>
           <button 
-          onClick={() => handleMore("/livechat")}
+          onClick={() => handleMore("/livechat", movieDetail?.id || 0)}
           className="bg-[#E3F2FD] border rounded-[20px] text-[21px] md:text-[21px] w-[100px] h-[30px] text-[#787878] flex justify-center items-center">
             more+
           </button>
