@@ -1,8 +1,25 @@
-import React from "react";
+import { MovieContent, MovieTest, testMovies } from "@/lib/api";
+import { usePathname } from "next/navigation";
+import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
 import { IoStarSharp } from "react-icons/io5";
 
 
 export default function ReviewTalkMore() {
+    const [movies, setMovies] = useState<MovieTest[]>([]);
+    const [movieDetail, setMovieDetail] = useState<MovieContent | null>(null);
+
+    const router= useRouter();
+    const path = usePathname();
+
+    useEffect(() => {
+        testMovies().then((data)=> {
+            setMovies(data);
+
+        
+        })
+    })
+
     return (
         <main className="flex flex-col justify-center items-center w-full px-10">
 

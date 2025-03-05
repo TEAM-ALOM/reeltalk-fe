@@ -19,8 +19,46 @@ export type MovieTest = {
   release_date: string;
   genres: { id: number; name: string }[]; // ✅ 장르 정보 포함
   overview: string;
-
 };
+
+export type MovieContent = {
+  id: number;
+  adult: boolean;
+  country: string;
+  overview: string;
+  popularity: number;
+  ratingCount: number;
+  ratingSum: number;
+  ratingAverage: number;
+  genres : { id: number; name: string}[];
+  runtime: number;
+  tagline: string;
+  contentType: string;
+  en_title: string;
+  kor_title: string;
+  backdrop_path: string;
+  poster_path: string;
+  release_date: string;
+  
+  reviews: Review[];
+  talks: any[];
+};
+
+export type Review = {
+  id: number;
+  content_id: number;
+  user_id: number;
+  image: {
+    id: number;
+    url: string;
+  };
+  overview: string;
+  video_path: string;
+  duration: string | null; 
+  title: string;
+  like_count: number;
+  hate_count: string;     
+};  
 
 export async function fetchReviewCount() {
   try {
@@ -117,7 +155,7 @@ export async function getSeries(): Promise<Movie[]> {
 export async function testMovies(): Promise<MovieTest[]> {
   try {
     const response = await fetch(
-      "http://15.164.226.119:8080/api/movies?sort=releaseDate"
+      "http://15.164.226.119:8080/api/movies?sort=top-rated"
     );
 
     if (!response.ok)
@@ -133,5 +171,30 @@ export async function testMovies(): Promise<MovieTest[]> {
   } catch (error) {
     console.error("Error fetching movies:", error);
     return []; // ✅ 오류 발생 시 빈 배열 반환
+  }
+}
+
+
+
+export async function fetchContentId(contentId: number): Promise<MovieContent | null> {
+  try {
+    const response = await fetch(
+      `http://15.164.226.119:8080/api/contents/${contentId}`
+    );
+
+    if (!response.ok)
+      throw new Error(`Failed to fetch content: ${response.statusText}`);
+
+    const data = await response.json();
+    
+    if (!data.isSuccess) {
+      throw new Error("API 응답에 'result' 필드가 없음");
+    }
+
+    return data.result as MovieContent;
+    
+  }catch(error) {
+    console.log(`Error fetching content ID ${contentId}:`+ error);
+    return null;
   }
 }
