@@ -220,3 +220,31 @@ export async function loginUser(username: string, password: string) {
     throw new Error(error.message);
   }
 }
+
+export async function registerUser(
+  email: string,
+  username: string,
+  password: string
+) {
+  try {
+    const response = await fetch(
+      "http://15.164.226.119:8080/api/users/signup",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, username, password }),
+      }
+    );
+
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      throw new Error(responseData.message || "회원가입 실패");
+    }
+
+    return { success: true };
+  } catch (error: any) {
+    console.error("Register error:", error);
+    throw new Error("서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+  }
+}

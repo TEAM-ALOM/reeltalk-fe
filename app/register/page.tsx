@@ -22,6 +22,7 @@ const sansita = Sansita({
 
 export default function Register() {
   const [state, action] = useFormState(createAccount, {});
+
   return (
     <main>
       <div className="flex flex-col items-center justify-center w-screen h-screen bg-ReelTalk_LightBlue">
@@ -40,59 +41,70 @@ export default function Register() {
             보고 느낀 모든 것, 릴톡에서 나눠요!
           </span>
         </div>
-
-        <form action={action} className="flex flex-col w-96">
-          <Input
-            name="email"
-            text="이메일"
-            type="email"
-            placeholder="이메일을 입력해주세요"
-            required={true}
-            errors={state?.fieldErrors?.email}
-            icon={<AtSymbolIcon className="w-5 h-5 text-ReelTalk_DeepBlue" />}
-          />
-
-          <div className="flex items-center self-end mt-2">
-            <input
-              type="checkbox"
-              className="rounded-sm border-ReelTalk_DeepBlue"
+        {state?.success ? ( // ✅ 회원가입 성공 시 메시지 표시
+          <p className="text-green-500 text-lg">
+            🎉 회원가입이 완료되었습니다! 로그인해주세요.
+          </p>
+        ) : (
+          <form action={action} className="flex flex-col w-96">
+            <Input
+              name="email"
+              text="이메일"
+              type="email"
+              placeholder="이메일을 입력해주세요"
+              required={true}
+              errors={state?.fieldErrors?.email}
+              icon={<AtSymbolIcon className="w-5 h-5 text-ReelTalk_DeepBlue" />}
             />
-            <span className="ml-1 text-sm text-gray-400">아이디 중복확인</span>
-          </div>
-          <Input
-            name="username"
-            text="이름"
-            type="text"
-            placeholder="이름을 입력해주세요"
-            required={true}
-            errors={state?.fieldErrors?.username}
-            icon={<UserIcon className="w-5 h-5 text-ReelTalk_DeepBlue" />}
-          />
 
-          <Input
-            name="password"
-            text="비밀번호"
-            type="password"
-            placeholder="비밀번호를 입력해주세요"
-            required={true}
-            errors={state?.fieldErrors?.password}
-            minLength={PASSWORD_MIN_LENGTH}
-            icon={<LockClosedIcon className="w-5 h-5 text-ReelTalk_DeepBlue" />}
-          />
+            <div className="flex items-center self-end mt-2">
+              <input
+                type="checkbox"
+                className="rounded-sm border-ReelTalk_DeepBlue"
+              />
+              <span className="ml-1 text-sm text-gray-400">
+                아이디 중복확인
+              </span>
+            </div>
+            <Input
+              name="username"
+              text="이름"
+              type="text"
+              placeholder="이름을 입력해주세요"
+              required={true}
+              errors={state?.fieldErrors?.username}
+              icon={<UserIcon className="w-5 h-5 text-ReelTalk_DeepBlue" />}
+            />
 
-          <Input
-            name="confirm_password"
-            text="비밀번호 확인"
-            type="password"
-            placeholder="비밀번호를 다시 입력해주세요"
-            required={true}
-            errors={state?.fieldErrors?.confirm_password}
-            minLength={PASSWORD_MIN_LENGTH}
-            icon={<LockClosedIcon className="w-5 h-5 text-ReelTalk_DeepBlue" />}
-          />
+            <Input
+              name="password"
+              text="비밀번호"
+              type="password"
+              placeholder="비밀번호를 입력해주세요"
+              required={true}
+              errors={state?.fieldErrors?.password}
+              minLength={PASSWORD_MIN_LENGTH}
+              icon={
+                <LockClosedIcon className="w-5 h-5 text-ReelTalk_DeepBlue" />
+              }
+            />
 
-          <Button text="가입하기" />
-        </form>
+            <Input
+              name="confirm_password"
+              text="비밀번호 확인"
+              type="password"
+              placeholder="비밀번호를 다시 입력해주세요"
+              required={true}
+              errors={state?.fieldErrors?.confirm_password}
+              minLength={PASSWORD_MIN_LENGTH}
+              icon={
+                <LockClosedIcon className="w-5 h-5 text-ReelTalk_DeepBlue" />
+              }
+            />
+
+            <Button text="가입하기" />
+          </form>
+        )}
         {/* SNS 로그인 */}
         <p className="mb-4 text-sm mt-14 text-ReelTalk_DeepBlue">
           SNS 계정 연결하기
