@@ -30,6 +30,7 @@ export default function MoviesDetail() {
   
   console.log(movieDetail);
 
+  // 쿼리 파라미터로 전달
   const handleMore = (href:string, contentId: number) => {
     if (path !== href)
       router.push(`${href}?contentId=${contentId}`);
