@@ -30,7 +30,7 @@ export type MovieContent = {
   ratingCount: number;
   ratingSum: number;
   ratingAverage: number;
-  genres : { id: number; name: string}[];
+  genres: { id: number; name: string }[];
   runtime: number;
   tagline: string;
   contentType: string;
@@ -39,9 +39,9 @@ export type MovieContent = {
   backdrop_path: string;
   poster_path: string;
   release_date: string;
-  
+
   reviews: Review[];
-  talks: any[];
+  talks: unknown[];
 };
 
 export type Review = {
@@ -54,11 +54,11 @@ export type Review = {
   };
   overview: string;
   video_path: string;
-  duration: string | null; 
+  duration: string | null;
   title: string;
   like_count: number;
-  hate_count: string;     
-};  
+  hate_count: string;
+};
 
 export async function fetchReviewCount() {
   try {
@@ -174,9 +174,9 @@ export async function testMovies(): Promise<MovieTest[]> {
   }
 }
 
-
-
-export async function fetchContentId(contentId: number): Promise<MovieContent | null> {
+export async function fetchContentId(
+  contentId: number
+): Promise<MovieContent | null> {
   try {
     const response = await fetch(
       `http://15.164.226.119:8080/api/contents/${contentId}`
@@ -186,15 +186,73 @@ export async function fetchContentId(contentId: number): Promise<MovieContent | 
       throw new Error(`Failed to fetch content: ${response.statusText}`);
 
     const data = await response.json();
-    
+
     if (!data.isSuccess) {
       throw new Error("API 응답에 'result' 필드가 없음");
     }
 
     return data.result as MovieContent;
-    
-  }catch(error) {
-    console.log(`Error fetching content ID ${contentId}:`+ error);
+  } catch (error) {
+    console.log(`Error fetching content ID ${contentId}:` + error);
     return null;
+  }
+}
+
+export async function loginUser(username: string, password: string) {
+  try {
+    const response = await fetch("http://15.164.226.119:8080/api/users/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username, password }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "로그인 실패");
+    }
+
+    return data.result;
+  } catch (error: unknown) {
+    console.error("Login error:", error);
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+
+    throw new Error("알 수 없는 오류가 발생했습니다.");
+  }
+}
+
+export async function registerUser(
+  email: string,
+  username: string,
+  password: string
+) {
+  try {
+    const response = await fetch(
+      "http://15.164.226.119:8080/api/users/signup",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, username, password }),
+      }
+    );
+
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      throw new Error(responseData.message || "회원가입 실패");
+    }
+
+    return { success: true };
+  } catch (error: unknown) {
+    console.error("Register error:", error);
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+
+    throw new Error("서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
   }
 }

@@ -1,6 +1,8 @@
 import { Sansita } from "next/font/google";
 import { LockClosedIcon, UserIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
+import { useState } from "react";
+import { loginUser } from "@/lib/api";
 
 const sansita = Sansita({
   weight: ["800", "700"],
@@ -13,8 +15,21 @@ export default function LoginCard({
 }: {
   onLogin: (username: string) => void;
 }) {
-  const handleLoginClick = () => {
-    onLogin("홍길동"); // 예제: 로그인 성공 후 유저 이름을 "홍길동"으로 설정
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const handleLoginClick = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      const data = await loginUser(username, password);
+      onLogin(data.username); // 로그인 성공
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setError(error.message); // 로그인 실패
+      }
+    }
   };
   return (
     <form className="flex flex-col items-center p-6 ">
@@ -24,10 +39,9 @@ export default function LoginCard({
       >
         ReelTalk
       </h2>
-
       {/* "로그인 하기" 아래 마진 추가 */}
       <p className="mb-12 text-2xl text-ReelTalk_DeepBlue">로그인 하기</p>
-
+      {error && <p className="text-red-500">{error}</p>}
       <div className="self-start pl-1 mb-1 font-semibold text-ReelTalk_DeepBlue">
         아이디
       </div>
@@ -37,10 +51,10 @@ export default function LoginCard({
         <input
           type="text"
           placeholder="아이디를 입력해주세요"
+          onChange={(e) => setUsername(e.target.value)}
           className="w-full px-10 py-4 placeholder-white bg-blue-100 border-none rounded-2xl focus:outline-blue-500 placeholder:text-sm"
         />
       </div>
-
       {/* 비밀번호 입력 필드 */}
       <div className="self-start pl-1 mb-1 font-semibold text-ReelTalk_DeepBlue">
         비밀번호
@@ -50,15 +64,14 @@ export default function LoginCard({
         <input
           type="password"
           placeholder="비밀번호를 입력해주세요"
+          onChange={(e) => setPassword(e.target.value)}
           className="w-full px-10 py-4 placeholder-white bg-blue-100 border-none rounded-2xl focus:outline-blue-500 placeholder:text-sm"
         />
       </div>
-
       {/* 아이디/비밀번호 찾기 */}
       <p className="w-full mb-10 text-xs text-right text-gray-500 cursor-pointer hover:underline">
         아이디/비밀번호 찾기
       </p>
-
       {/* 로그인 버튼 아래 마진 추가 */}
       <button
         type="submit"
@@ -67,7 +80,6 @@ export default function LoginCard({
       >
         로그인
       </button>
-
       {/* SNS 로그인 */}
       <p className="mb-4 text-sm text-ReelTalk_DeepBlue">
         SNS 계정으로 간편 로그인
