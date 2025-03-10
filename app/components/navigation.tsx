@@ -1,10 +1,17 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { AiOutlineMenu, AiOutlineSearch } from "react-icons/ai";
 import { Sansita } from "next/font/google"; // Sansita 폰트 불러오기
 import LoginCard from "./loginCard";
 import { motion } from "framer-motion";
+import {
+  getUserInfo,
+  removeTokens,
+  removeUserInfo,
+  isLoggedIn,
+  fetchApi,
+} from "@/lib/api";
 
 const sansita = Sansita({
   weight: ["800", "700"],
@@ -21,6 +28,17 @@ export default function Header() {
 
   const [user, setUser] = useState<string | null>(null);
 
+  // 컴포넌트 마운트 시 로그인 상태 확인
+  useEffect(() => {
+    // 로그인 상태 확인 및 사용자 정보 불러오기
+    if (isLoggedIn()) {
+      const username = getUserInfo();
+      if (username) {
+        setUser(username);
+      }
+    }
+  }, []);
+
   /** ✅ 로그인 핸들러 (백엔드 연동 시 수정 예정) */
   const handleLogin = (username: string) => {
     setUser(username); // 로그인한 유저 정보 저장
@@ -29,6 +47,8 @@ export default function Header() {
 
   /** ✅ 로그아웃 핸들러 */
   const handleLogout = () => {
+    removeTokens(); // 토큰 삭제
+    removeUserInfo(); // 사용자 정보 삭제
     setUser(null); // 유저 정보 제거 (로그아웃)
   };
 
