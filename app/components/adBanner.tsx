@@ -19,13 +19,39 @@ interface IMovieProps {
   }[];
 }
 
+// 슬라이드 애니메이션 변형
+const slideVariants = {
+  enter: (direction: number) => ({
+    x: direction * 1000,
+    opacity: 0,
+  }),
+  center: {
+    x: 0,
+    opacity: 1,
+    transition: {
+      x: { type: "tween", duration: 0.8, ease: "easeInOut" },
+      opacity: { duration: 0.5, ease: "easeInOut" },
+    },
+  },
+  exit: (direction: number) => ({
+    x: direction * -1000,
+    opacity: 0,
+    transition: {
+      x: { type: "tween", duration: 0.8, ease: "easeInOut" },
+      opacity: { duration: 0.5, ease: "easeInOut" },
+    },
+  }),
+};
+
 export default function AdBanner({ movies }: IMovieProps) {
   const router = useRouter();
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [direction, setDirection] = useState(1); // 1: 오른쪽에서 왼쪽, -1: 왼쪽에서 오른쪽
 
   // 5초마다 다음 영화로 슬라이드
   useEffect(() => {
     const interval = setInterval(() => {
+      setDirection(1); // 기본 방향: 오른쪽에서 왼쪽으로
       setCurrentIndex((prevIndex) => (prevIndex + 1) % movies.length);
     }, 5000);
 
@@ -88,16 +114,17 @@ export default function AdBanner({ movies }: IMovieProps) {
   };
 
   return (
-    <div className="relative w-full h-[600px] mt-7 overflow-hidden">
-      <AnimatePresence mode="wait">
+    <div className="relative w-full h-[600px] mt-7 overflow-hidden rounded-2xl">
+      <AnimatePresence custom={direction} initial={false}>
         <motion.div
           key={currentIndex}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.5 }}
+          custom={direction}
+          variants={slideVariants}
+          initial="enter"
+          animate="center"
+          exit="exit"
           onClick={handleClick}
-          className="flex justify-center relative w-full h-full text-white cursor-pointer"
+          className="flex justify-center absolute inset-0 w-full h-full text-white cursor-pointer"
         >
           <div className="absolute z-10 w-full h-full bg-gradient-to-t from-black/70 to-transparent"></div>
           <Image
@@ -105,7 +132,7 @@ export default function AdBanner({ movies }: IMovieProps) {
             alt={currentMovie.title}
             layout="fill"
             objectFit="cover"
-            className="w-full h-full rounded-2xl"
+            className="w-full h-full"
             priority
           />
 
@@ -123,6 +150,7 @@ export default function AdBanner({ movies }: IMovieProps) {
                 key={index}
                 onClick={(e) => {
                   e.stopPropagation();
+                  setDirection(index > currentIndex ? 1 : -1);
                   setCurrentIndex(index);
                 }}
                 className={`w-3 h-3 rounded-full ${
