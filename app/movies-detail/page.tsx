@@ -133,7 +133,7 @@ export default function MoviesDetail() {
             <img 
             className="flex aspect-[500/250] w-[90%] h-full md:max-w-[70%] lg:w-[450px] bg-[#CDC8C8] border rounded-[20px] flex items-center justify-center hover:cursor-pointer"
             src={index?.image?.url}
-            onClick={() => window.open(index?.video_path, "_blank")}
+            onClick={() => handleMore("/reviews-detail", movieDetail?.id || 0)}
             />
           ))}
 
