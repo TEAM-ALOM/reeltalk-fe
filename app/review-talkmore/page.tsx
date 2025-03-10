@@ -17,9 +17,6 @@ export default function ReviewTalkMore() {
     const searchParams = useSearchParams();
     const contentId = searchParams.get("contentId");
 
-    console.log(contentId);
-
-
     useEffect(() => {
         if (!contentId) {
             console.error("contentId가 없음");
