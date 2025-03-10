@@ -15,9 +15,12 @@ export default function ReviewTalkMore() {
     
     const searchParams = useSearchParams();
     const contentId = searchParams.get("contentId");
+    console.log(contentId);
 
 
     useEffect(() => {
+        if (!contentId) return;
+
         testMovies().then((data)=> {
             setMovies(data);
 
@@ -25,7 +28,9 @@ export default function ReviewTalkMore() {
                 setMovieDetail(detail);
             });
         })
-    })
+    }, [contentId]);
+    // 의존성 배열 -> contentId가 바뀔 때만 실행
+    // 아니면 무한요청됨
 
     return (
         <main className="flex flex-col justify-center items-center w-full px-10">
@@ -38,8 +43,8 @@ export default function ReviewTalkMore() {
                     <div className="w-full min-h-[168px] flex flex-col justify-between">
                         {/* 제목*/}
                         <div className="flex flex-col">
-                            <span className="text-[24px] font-bold">위키드</span>
-                            <span className="text-[24px] font-bold">Wicked: Part One</span>
+                            <span className="text-[24px] font-bold">{movieDetail?.kor_title || "한글 제목 없음"}</span>
+                            <span className="text-[24px] font-bold">{movieDetail?.en_title || "영어 제목 없음"}</span>
                             <span className="text-[14px] text-[#898989]">2024. 판타지/뮤지컬/모험/액션/가족/로맨스/음악. 미국</span>
                         </div>
                         
