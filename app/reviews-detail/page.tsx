@@ -2,24 +2,38 @@
 
 import React, { useEffect, useState } from "react";
 import { AiFillTrademarkCircle } from "react-icons/ai";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { FaThumbsUp } from "react-icons/fa";
 import { FaShareAlt } from "react-icons/fa";
-import { MovieTest, testMovies } from "@/lib/api";
+import { fetchContentId, MovieContent, MovieTest, testMovies } from "@/lib/api";
 
 export default function ReviewsDetail() {
     const [movies, setMovies] = useState<MovieTest[]>([]);
+    const [movieDetail, setMovieDetail] = useState<MovieContent | null>(null);
 
     const router = useRouter();
     const path = usePathname();
 
+    const searchParams = useSearchParams();
+    const contentId = searchParams.get("contentId");
+
     useEffect(() => {
+        if (!contentId) {
+            console.error("contentId가 없음");
+            return;
+        }
+
         testMovies().then((data) => {
             setMovies(data);
-        })
-    }, []);
 
-    console.log(movies[0]);
+            fetchContentId(Number(contentId)).then((detail) => {
+                console.log("받아온 데이터: ", detail);
+                setMovieDetail(detail);
+            }).catch(error => {
+                console.log("fetchContendId 에러: ", error);
+            });
+        })
+    }, [contentId]);
 
     const handleMore = (href: string) => {
         if (path !== href) {
@@ -39,7 +53,8 @@ export default function ReviewsDetail() {
                     <div className="w-full h-full lg:w-3/4 aspect-[2/3] max-h-[470px] max-w-[840px]">
                         {/* 리뷰 영상*/}
                         <img 
-                        src={movies[0]?.reviews[0]?.image?.url ?? "영상 없음" }                        
+                        src=""
+                                             
                         alt="리뷰 영상"
                         className="w-full h-full border border-5 border-black rounded-[20px] flex items-center justify-center"
                         />
@@ -60,7 +75,7 @@ export default function ReviewsDetail() {
                         <div className="w-full">
                             <div className="text-[#1E88E5] text-[20px]">영상 소개</div>
                             <div className="w-full min-h-[253px] bg-[#D9D9D9] p-3 text-[16px]">
-                                {movies[0]?.reviews[0]?.overview ?? "설명없음"}
+                                {movieDetail?.overview || "설명없음"}
                             </div>
                         </div>
 

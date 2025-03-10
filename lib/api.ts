@@ -60,6 +60,30 @@ export type Review = {
   hate_count: string;
 };
 
+export type UserId = {
+  user_id: number,
+  username: string,
+  description: null,
+  email: string,
+  image_url: null,
+  best_reviews: BestRecentReviews[],
+  recent_reviews: BestRecentReviews[],
+}
+
+export type BestRecentReviews = {
+  id: number,
+  title:string,
+  username: string,
+  user_id: number,
+  overview: string,
+  video_path: string,
+  published_at: string,
+  duration: null,
+  thumbnail: string,
+  like_count: number,
+  hate_count: number,
+};
+
 export async function fetchReviewCount() {
   try {
     const res = await fetch("https://api.reeltalk.com/reviews/count"); // API 주소에 맞게 수정
@@ -194,6 +218,28 @@ export async function fetchContentId(
     return data.result as MovieContent;
   } catch (error) {
     console.log(`Error fetching content ID ${contentId}:` + error);
+    return null;
+  }
+}
+
+export async function fetchUserId(userId: number) : Promise<UserId | null> {
+  try {
+    const response = await fetch(
+      `http://15.164.226.119:8080/api/mypage/${userId}`
+    );
+
+    if (!response.ok)
+      throw new Error(`Failed to fetch content : ${response.statusText}`);
+
+    const data = await response.json();
+
+    if (!data.isSuccess) {
+      throw new Error ("API 응답에 'result' 필드가 없음");
+    }
+
+    return data.result as UserId;
+  }catch (error) {
+    console.log(`Error fetching content ID ${userId}: ` + error);
     return null;
   }
 }
