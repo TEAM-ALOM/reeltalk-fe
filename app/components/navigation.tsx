@@ -10,7 +10,6 @@ import {
   removeTokens,
   removeUserInfo,
   isLoggedIn,
-  fetchApi,
 } from "@/lib/api";
 
 const sansita = Sansita({

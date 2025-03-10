@@ -6,18 +6,21 @@ export type Movie = {
   backdrop_path: string;
   name: string; // 시리즈용 name
   release_date: string;
-  genres: { id: number; name: string }[]; // ✅ 장르 정보 포함
-  overview: string;
+  genres: { id: number; name: string }[];
 };
 
 export type MovieTest = {
   id: string;
-  poster_path: string;
+  poster_path?: string;
+  posterPath?: string; // 백엔드 API 응답 형식
   title: string;
-  vote_average: number; // ✅ `rating` 값을 여기에 매핑해야 함
-  backdrop_path: string;
-  release_date: string;
-  genres: { id: number; name: string }[]; // ✅ 장르 정보 포함
+  vote_average?: number;
+  rating?: number; // 백엔드 API 응답 형식
+  backdrop_path?: string;
+  backdropPath?: string; // 백엔드 API 응답 형식
+  release_date?: string;
+  releaseDate?: string; // 백엔드 API 응답 형식
+  genres: { id: number; name: string }[];
   overview: string;
 };
 
