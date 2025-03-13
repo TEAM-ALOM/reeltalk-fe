@@ -31,9 +31,15 @@ export default function MoviesDetail() {
   console.log(movieDetail);
 
   // 쿼리 파라미터로 전달
-  const handleMore = (href:string, contentId: number) => {
+  const handleMore = (href:string, contentId: number, reviewId?: number) => {
+    let url = `${href}?contentId=${contentId}`;
+    
+    if (reviewId) {
+      url = url + `&reviewId=${reviewId}`;
+    }
+
     if (path !== href)
-      router.push(`${href}?contentId=${contentId}`);
+      router.push(url);
   };
 
   return (
@@ -129,11 +135,13 @@ export default function MoviesDetail() {
         <div className="w-full flex justify-between space-x-10 overflow-x-auto whitespace-nowrap scrollbar-hide">
 
           {/*리뷰 영상 동적 렌더링*/}
-          {movieDetail?.reviews.map((index) => (
+          {movieDetail?.reviews.map((review) => (
             <img 
+            key={review.id}
             className="flex aspect-[500/250] w-[90%] h-full md:max-w-[70%] lg:w-[450px] bg-[#CDC8C8] border rounded-[20px] flex items-center justify-center hover:cursor-pointer"
-            src={index?.image?.url}
-            onClick={() => handleMore("/reviews-detail", movieDetail?.id || 0)}
+            src={review?.image?.url}
+            alt={review?.title}
+            onClick={() => handleMore("/reviews-detail", movieDetail?.id || 0, review.id)}
             />
           ))}
 
