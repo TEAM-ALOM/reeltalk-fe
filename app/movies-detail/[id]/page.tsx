@@ -43,6 +43,8 @@ export default function MoviesDetail() {
   
     if (reviewId)
       url = url + `&reviewId=${reviewId}`;
+
+    console.log("Navigating to", url);
     
     if (path !== href)
       router.push(url);
