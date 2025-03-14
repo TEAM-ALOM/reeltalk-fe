@@ -3,11 +3,12 @@
 import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { IoStarSharp } from "react-icons/io5";
-import { testMovies, MovieTest, MovieContent, fetchContentId, Movie} from "@/lib/api";
+import { testMovies, MovieTest, MovieContent, fetchContentId, Movie, AllReviews, fetchReviews, DetailedMovie} from "@/lib/api";
 
 export default function MoviesDetail() {
   const [movies, setMovies] = useState<MovieTest[]>([]);
-  const [movieDetail, setMovieDetail] = useState<MovieContent | null>(null);
+  const [movieDetail, setMovieDetail] = useState<DetailedMovie | null>(null);
+  const [reviews,setReviews] = useState<AllReviews[]>([]);
 
   const router = useRouter();
   const path = usePathname();
@@ -22,7 +23,9 @@ export default function MoviesDetail() {
         const contentId = parseInt(firstMovie.id, 10);
 
         fetchContentId(contentId).then((detail) => {
-          setMovieDetail(detail);
+          console.log(detail);
+          if (detail)
+            setMovieDetail(detail);
         });
       }
     });
@@ -50,8 +53,8 @@ export default function MoviesDetail() {
       <div 
           className="w-full lg:w-[350px] lg:h-[500px] sm:aspect-[1/3] flex items-center justify-center">
           <img
-            src={movieDetail?.poster_path
-              ? `https://image.tmdb.org/t/p/w500${movieDetail.poster_path}`
+            src={movieDetail?.posterPath
+              ? `https://image.tmdb.org/t/p/w500${movieDetail.posterPath}`
               : ""
             }
             alt="영화 포스터"
