@@ -31,7 +31,7 @@ export type MovieContent = {
   overview: string;
   popularity: number;
   rating: number;
-  posterPath: string;
+  poster_path: string;
   releaseDate: string;
   title: string;
 
@@ -232,7 +232,7 @@ export async function fetchContentId(
 ): Promise<DetailedMovie | null> {
   try {
     const response = await fetch(
-      `http://54.180.94.187:8080/api/movies?sort=top-rated`
+      `http://54.180.94.187:8080/api/contents/${contentId}`
     );
 
     if (!response.ok)

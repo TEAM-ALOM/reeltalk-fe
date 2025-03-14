@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { IoStarSharp } from "react-icons/io5";
 import { testMovies, MovieTest, MovieContent, fetchContentId, Movie, AllReviews, fetchReviews, DetailedMovie} from "@/lib/api";
@@ -8,28 +8,26 @@ import { testMovies, MovieTest, MovieContent, fetchContentId, Movie, AllReviews,
 export default function MoviesDetail() {
   const [movies, setMovies] = useState<MovieTest[]>([]);
   const [movieDetail, setMovieDetail] = useState<DetailedMovie | null>(null);
-  const [reviews,setReviews] = useState<AllReviews[]>([]);
 
   const router = useRouter();
   const path = usePathname();
+  const params = useParams();
+  const movieId = Array.isArray(params.id) ? params.id[0] : params.id;
 
   useEffect(() => {
-    testMovies().then((data) => {
-      setMovies(data);
-      
-      // 클릭한 영화가 0번째 영화라고 가정
-      if (data.length > 0) {
-        const firstMovie = data[0];
-        const contentId = parseInt(firstMovie.id, 10);
+    if (!movieId) return;
+    
+    const contentId = parseInt(movieId, 10);
+    if (isNaN(contentId)) return;
 
-        fetchContentId(contentId).then((detail) => {
-          console.log(detail);
-          if (detail)
-            setMovieDetail(detail);
-        });
-      }
+    console.log("contentID : ", contentId);
+
+    fetchContentId(contentId).then((detail) => {
+      console.log("detail: ",detail);
+      if (detail)
+        setMovieDetail(detail);
     });
-  }, []);
+  }, [movieId]);
   
   console.log(movieDetail);
 
@@ -53,8 +51,8 @@ export default function MoviesDetail() {
       <div 
           className="w-full lg:w-[350px] lg:h-[500px] sm:aspect-[1/3] flex items-center justify-center">
           <img
-            src={movieDetail?.posterPath
-              ? `https://image.tmdb.org/t/p/w500${movieDetail.posterPath}`
+            src={movieDetail?.poster_path
+              ? `https://image.tmdb.org/t/p/w500${movieDetail.poster_path}`
               : ""
             }
             alt="영화 포스터"
@@ -138,7 +136,7 @@ export default function MoviesDetail() {
         <div className="w-full flex justify-between space-x-10 overflow-x-auto whitespace-nowrap scrollbar-hide">
 
           {/*리뷰 영상 동적 렌더링*/}
-          {movieDetail?.reviews.map((review) => (
+          {(movieDetail?.reviews ?? []).map((review) => (
             <img 
             key={review.id}
             className="flex aspect-[500/250] w-[90%] h-full md:max-w-[70%] lg:w-[450px] bg-[#CDC8C8] border rounded-[20px] flex items-center justify-center hover:cursor-pointer"
