@@ -1,39 +1,46 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { IoStarSharp } from "react-icons/io5";
-import { testMovies, MovieTest, MovieContent, fetchContentId, Movie} from "@/lib/api";
+import { testMovies, MovieTest, MovieContent, fetchContentId, Movie, AllReviews, fetchReviews, DetailedMovie} from "@/lib/api";
 
 export default function MoviesDetail() {
   const [movies, setMovies] = useState<MovieTest[]>([]);
-  const [movieDetail, setMovieDetail] = useState<MovieContent | null>(null);
+  const [movieDetail, setMovieDetail] = useState<DetailedMovie | null>(null);
 
   const router = useRouter();
   const path = usePathname();
+  const params = useParams();
+  const movieId = Array.isArray(params.id) ? params.id[0] : params.id;
 
   useEffect(() => {
-    testMovies().then((data) => {
-      setMovies(data);
-      
-      // 클릭한 영화가 0번째 영화라고 가정
-      if (data.length > 0) {
-        const firstMovie = data[0];
-        const contentId = parseInt(firstMovie.id, 10);
+    if (!movieId) return;
+    
+    const contentId = parseInt(movieId, 10);
+    if (isNaN(contentId)) return;
 
-        fetchContentId(contentId).then((detail) => {
-          setMovieDetail(detail);
-        });
-      }
+    console.log("contentID : ", contentId);
+
+    fetchContentId(contentId).then((detail) => {
+      console.log("detail: ",detail);
+      if (detail)
+        setMovieDetail(detail);
     });
-  }, []);
+  }, [movieId]);
   
   console.log(movieDetail);
 
   // 쿼리 파라미터로 전달
-  const handleMore = (href:string, contentId: number) => {
+  const handleMore = (href:string, contentId: number, reviewId?: number) => {
+    let url = `${href}?contentId=${contentId}`;
+    
+    if (reviewId) {
+      url = url + `&reviewId=${reviewId}`;
+    }
+
     if (path !== href)
-      router.push(`${href}?contentId=${contentId}`);
+      router.push(url);
   };
 
   return (
@@ -129,11 +136,13 @@ export default function MoviesDetail() {
         <div className="w-full flex justify-between space-x-10 overflow-x-auto whitespace-nowrap scrollbar-hide">
 
           {/*리뷰 영상 동적 렌더링*/}
-          {movieDetail?.reviews.map((index) => (
+          {(movieDetail?.reviews ?? []).map((review) => (
             <img 
+            key={review.id}
             className="flex aspect-[500/250] w-[90%] h-full md:max-w-[70%] lg:w-[450px] bg-[#CDC8C8] border rounded-[20px] flex items-center justify-center hover:cursor-pointer"
-            src={index?.image?.url}
-            onClick={() => handleMore("/reviews-detail", movieDetail?.id || 0)}
+            src={review?.image?.url}
+            alt={review?.title}
+            onClick={() => handleMore("/reviews-detail", movieDetail?.id || 0, review.id)}
             />
           ))}
 

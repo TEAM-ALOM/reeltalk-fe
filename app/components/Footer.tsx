@@ -6,7 +6,7 @@ import { FaInstagram } from "react-icons/fa";
 import { FaThreads, FaXTwitter } from "react-icons/fa6";
 
 export default function Footer() {
-  const [reviewCount, setReviewCount] = useState<number | null>(0);
+  const [reviewCount, setReviewCount] = useState<number | null>(-1);
 
   useEffect(() => {
     async function getReviewCount() {
