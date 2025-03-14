@@ -23,7 +23,7 @@ export default function MovieCardVertical({
     if (isTVSeries) {
       router.push(`/tv/${id}`);
     } else {
-      router.push(`/movies/${id}`);
+      router.push(`/movies-detail/${id}`);
     }
   };
 

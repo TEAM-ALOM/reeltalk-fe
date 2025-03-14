@@ -110,7 +110,7 @@ export default function AdBanner({ movies }: IMovieProps) {
       : "장르 정보 없음";
 
   const handleClick = () => {
-    router.push(`/movies/${currentMovie.id}`);
+    router.push(`/movies-detail/${currentMovie.id}`);
   };
 
   return (
