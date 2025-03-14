@@ -73,7 +73,7 @@ export type DetailedMovie = MovieContent & {
   numberOfEpisodes: number | null;
   en_title: string;
   kor_title: string;
-  talks: any[];
+  talks: unknown[];
 };
 
 export type UserId = {
