@@ -5,7 +5,7 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { IoStarSharp } from "react-icons/io5";
-import StarRating from "../components/StarRating";
+import StarRating from "../../components/StarRating";
 
 
 export default function ReviewTalkMore() {
