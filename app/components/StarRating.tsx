@@ -9,7 +9,7 @@ export default function StarRating({ rating, maxStars = 5 }: StarRatingProps) {
   const emptyStars = maxStars - filledStars - (hasHalfStar ? 1 : 0);
 
   return (
-    <div className="flex space-x-1">
+    <div className="flex space-x-1 ">
       {/* 가득 찬 별 */}
       {Array(filledStars)
         .fill(0)
@@ -33,7 +33,7 @@ export default function StarRating({ rating, maxStars = 5 }: StarRatingProps) {
 // 가득 찬 별
 const FullStar = () => (
   <svg
-    className="w-6 h-6 text-yellow-400"
+    className="w-7 h-7 text-yellow-400"
     viewBox="0 0 24 24"
     fill="currentColor"
   >
@@ -43,7 +43,7 @@ const FullStar = () => (
 
 // 반쪽 별
 const HalfStar = () => (
-  <svg className="w-6 h-6 text-yellow-400" viewBox="0 0 24 24">
+  <svg className="w-7 h-7 text-yellow-400" viewBox="0 0 24 24">
     <defs>
       <linearGradient id="halfGrad">
         <stop offset="50%" stopColor="currentColor" />
@@ -60,7 +60,7 @@ const HalfStar = () => (
 // 빈 별
 const EmptyStar = () => (
   <svg
-    className="w-6 h-6 text-gray-300"
+    className="w-7 h-7 text-gray-300"
     viewBox="0 0 24 24"
     fill="currentColor"
   >
