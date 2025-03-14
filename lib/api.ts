@@ -27,53 +27,40 @@ export type MovieTest = {
 export type MovieContent = {
   id: number;
   adult: boolean;
-  backdropPath: string;
+  country: string;
   overview: string;
   popularity: number;
-  rating: number;
-  poster_path: string;
-  releaseDate: string;
-  title: string;
-
-  genres : {
-    id : number,
-    name: string,
-  }[],
-
-  reviews : {
-    id: number;
-    contentId: number;
-    userId: number;
-
-    image: {
-      id : number,
-      url: string,
-    };
-
-    overview: string;
-    videoPath: string;
-    duration: number | null;
-    title: string;
-    likeCount: number;
-    hateCount: number;
-  }[];
-};
-
-export type DetailedMovie = MovieContent & {
-  createdAt: string;
-  updatedAt: string;
-  country: string;
   ratingCount: number;
   ratingSum: number;
   ratingAverage: number;
+  genres: { id: number; name: string }[];
   runtime: number;
   tagline: string;
   contentType: string;
-  numberOfSeasons: number | null;
-  numberOfEpisodes: number | null;
   en_title: string;
   kor_title: string;
-  talks: any[]; 
+  backdrop_path: string;
+  poster_path: string;
+  release_date: string;
+
+  reviews: Review[];
+  talks: unknown[];
+};
+
+export type Review = {
+  id: number;
+  content_id: number;
+  user_id: number;
+  image: {
+    id: number;
+    url: string;
+  };
+  overview: string;
+  video_path: string;
+  duration: string | null;
+  title: string;
+  like_count: number;
+  hate_count: string;
 };
 
 export type UserId = {
@@ -85,19 +72,6 @@ export type UserId = {
   best_reviews: BestRecentReviews[],
   recent_reviews: BestRecentReviews[],
 }
-
-export type AllReviews = {
-  reviewId: number,
-  title: string,
-  authorId: number,
-  author: string,
-  overview: string,
-  videoPath: string,
-  publishedAt: string,
-  thumbnail: string,
-  likeCount: number,
-  hateCount: number,
-};
 
 export type BestRecentReviews = {
   id: number,
@@ -208,7 +182,7 @@ export async function getSeries(): Promise<Movie[]> {
 export async function testMovies(): Promise<MovieTest[]> {
   try {
     const response = await fetch(
-      "http://54.180.94.187:8080/api/movies?sort=top-rated"
+      "http://15.164.226.119:8080/api/movies?sort=top-rated"
     );
 
     if (!response.ok)
@@ -229,10 +203,10 @@ export async function testMovies(): Promise<MovieTest[]> {
 
 export async function fetchContentId(
   contentId: number
-): Promise<DetailedMovie | null> {
+): Promise<MovieContent | null> {
   try {
     const response = await fetch(
-      `http://54.180.94.187:8080/api/contents/${contentId}`
+      `http://15.164.226.119:8080/api/contents/${contentId}`
     );
 
     if (!response.ok)
@@ -244,34 +218,13 @@ export async function fetchContentId(
       throw new Error("API 응답에 'result' 필드가 없음");
     }
 
-    return data.result as DetailedMovie;
+    return data.result as MovieContent;
   } catch (error) {
     console.log(`Error fetching content ID ${contentId}:` + error);
     return null;
   }
 }
 
-export async function fetchReviews(contentId : number) : Promise<MovieContent | null>  {
-  try {
-    const response = await fetch(
-      `http://15.164.226.119:8080/api/reviews?contentId=${contentId}`
-    );
-
-    if (!response.ok)
-      throw new Error(`Failed to fetch content : ${response.statusText}`);
-
-    const data = await response.json();
-
-    if (!data.isSuccess) {
-      throw new Error ("API 응답에 'result' 필드가 없음");
-    }
-
-    return data.result as MovieContent;
-  }catch (error) {
-    console.log(`Error fetching content ID ${contentId}: ` + error);
-    return null;
-  }
-}
 
 export async function fetchUserId(userId: number) : Promise<UserId | null> {
   try {
