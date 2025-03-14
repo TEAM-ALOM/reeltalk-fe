@@ -115,10 +115,10 @@ export type BestRecentReviews = {
 
 export async function fetchReviewCount() {
   try {
-    const res = await fetch("https://api.reeltalk.com/reviews/count"); // API 주소에 맞게 수정
+    const res = await fetch("http://54.180.94.187:8080/api/reviews/count");
     if (!res.ok) throw new Error("Failed to fetch review count");
     const data = await res.json();
-    return data.count;
+    return data.result;
   } catch (error) {
     console.error("Error fetching review count:", error);
     return 0;
