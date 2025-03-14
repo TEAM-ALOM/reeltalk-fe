@@ -8,6 +8,7 @@ import { testMovies, MovieTest, MovieContent, fetchContentId, Movie, AllReviews,
 export default function MoviesDetail() {
   const [movies, setMovies] = useState<MovieTest[]>([]);
   const [movieDetail, setMovieDetail] = useState<DetailedMovie | null>(null);
+  const [reviews, setReviews] = useState<AllReviews[]>([]);
 
   const router = useRouter();
   const path = usePathname();
@@ -27,6 +28,11 @@ export default function MoviesDetail() {
       if (detail)
         setMovieDetail(detail);
     });
+
+    fetchReviews(contentId).then((reviewData) => {
+      if (reviewData)
+        setReviews(reviewData);
+    })
   }, [movieId]);
   
   console.log(movieDetail);
@@ -34,11 +40,10 @@ export default function MoviesDetail() {
   // 쿼리 파라미터로 전달
   const handleMore = (href:string, contentId: number, reviewId?: number) => {
     let url = `${href}?contentId=${contentId}`;
-    
-    if (reviewId) {
+  
+    if (reviewId)
       url = url + `&reviewId=${reviewId}`;
-    }
-
+    
     if (path !== href)
       router.push(url);
   };
