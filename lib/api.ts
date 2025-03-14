@@ -252,8 +252,8 @@ export async function fetchContentId(
 }
 
 export async function fetchReviews(
-  contentId: number
-): Promise<AllReviews | null> {
+  contentId: number,
+): Promise<AllReviews[] | null> {
   try {
     const response = await fetch(
       `http://15.164.226.119:8080/api/reviews?contentId=${contentId}`
@@ -268,12 +268,13 @@ export async function fetchReviews(
       throw new Error("API 응답에 'result' 필드가 없음");
     }
 
-    return data.result as AllReviews;
+    return data.result as AllReviews[];
   } catch (error) {
     console.log(`Error fetching content ID ${contentId}: ` + error);
     return null;
   }
 }
+
 
 export async function fetchUserId(userId: number): Promise<UserId | null> {
   try {
