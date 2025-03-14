@@ -64,35 +64,35 @@ export type Review = {
 };
 
 export type UserId = {
-  user_id: number,
-  username: string,
-  description: null,
-  email: string,
-  image_url: null,
-  best_reviews: BestRecentReviews[],
-  recent_reviews: BestRecentReviews[],
-}
+  user_id: number;
+  username: string;
+  description: null;
+  email: string;
+  image_url: null;
+  best_reviews: BestRecentReviews[];
+  recent_reviews: BestRecentReviews[];
+};
 
 export type BestRecentReviews = {
-  id: number,
-  title:string,
-  username: string,
-  user_id: number,
-  overview: string,
-  video_path: string,
-  published_at: string,
-  duration: null,
-  thumbnail: string,
-  like_count: number,
-  hate_count: number,
+  id: number;
+  title: string;
+  username: string;
+  user_id: number;
+  overview: string;
+  video_path: string;
+  published_at: string;
+  duration: null;
+  thumbnail: string;
+  like_count: number;
+  hate_count: number;
 };
 
 export async function fetchReviewCount() {
   try {
-    const res = await fetch("https://api.reeltalk.com/reviews/count"); // API 주소에 맞게 수정
+    const res = await fetch("http://54.180.94.187:8080/api/reviews/count");
     if (!res.ok) throw new Error("Failed to fetch review count");
     const data = await res.json();
-    return data.count;
+    return data.result;
   } catch (error) {
     console.error("Error fetching review count:", error);
     return 0;
@@ -182,7 +182,7 @@ export async function getSeries(): Promise<Movie[]> {
 export async function testMovies(): Promise<MovieTest[]> {
   try {
     const response = await fetch(
-      "http://15.164.226.119:8080/api/movies?sort=top-rated"
+      "http://54.180.94.187:8080/api/movies?sort=top-rated"
     );
 
     if (!response.ok)
@@ -206,7 +206,7 @@ export async function fetchContentId(
 ): Promise<MovieContent | null> {
   try {
     const response = await fetch(
-      `http://15.164.226.119:8080/api/contents/${contentId}`
+      `http://54.180.94.187:8080/api/contents/${contentId}`
     );
 
     if (!response.ok)
@@ -225,10 +225,10 @@ export async function fetchContentId(
   }
 }
 
-export async function fetchUserId(userId: number) : Promise<UserId | null> {
+export async function fetchUserId(userId: number): Promise<UserId | null> {
   try {
     const response = await fetch(
-      `http://15.164.226.119:8080/api/mypage/${userId}`
+      `http://54.180.94.187:8080/api/mypage/${userId}`
     );
 
     if (!response.ok)
@@ -237,11 +237,11 @@ export async function fetchUserId(userId: number) : Promise<UserId | null> {
     const data = await response.json();
 
     if (!data.isSuccess) {
-      throw new Error ("API 응답에 'result' 필드가 없음");
+      throw new Error("API 응답에 'result' 필드가 없음");
     }
 
     return data.result as UserId;
-  }catch (error) {
+  } catch (error) {
     console.log(`Error fetching content ID ${userId}: ` + error);
     return null;
   }
@@ -369,7 +369,7 @@ export async function registerUser(
 ) {
   try {
     // fetchApi 유틸리티 함수 사용 (인증 불필요)
-    await fetchApi("http://15.164.226.119:8080/api/users/signup", {
+    await fetchApi("http://54.180.94.187:8080/api/users/signup", {
       method: "POST",
       body: JSON.stringify({ email, username, password }),
       requireAuth: false, // 명시적으로 인증 불필요 표시
@@ -394,7 +394,7 @@ export async function loginUser(
     console.log("로그인 시도:", { email, password: "***" }); // 디버깅용 로그 추가
 
     // 직접 fetch 호출로 변경하여 문제 해결
-    const response = await fetch("http://15.164.226.119:8080/api/users/login", {
+    const response = await fetch("http://54.180.94.187:8080/api/users/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
