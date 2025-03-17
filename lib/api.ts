@@ -1,5 +1,5 @@
 // 환경 변수 상수 선언
-export const SERVER_BASE_URL = process.env.Server_Base_URL;
+export const SERVER_BASE_URL = process.env.NEXT_PUBLIC_SERVER_BASE_URL;
 export const MOVIE_BASE_PATH = process.env.NEXT_PUBLIC_API_URL_MOVIE;
 export const API_KEY = process.env.NEXT_PUBLIC_API_URL_KEY;
 
