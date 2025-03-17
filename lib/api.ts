@@ -1,3 +1,13 @@
+// 환경 변수 상수 선언
+export const SERVER_BASE_URL = process.env.Server_Base_URL;
+export const MOVIE_BASE_PATH = process.env.NEXT_PUBLIC_API_URL_MOVIE;
+export const API_KEY = process.env.NEXT_PUBLIC_API_URL_KEY;
+
+// 환경 변수 유효성 검사
+if (!SERVER_BASE_URL) {
+  console.error("Server_Base_URL 환경 변수가 설정되지 않았습니다.");
+}
+
 export type Movie = {
   id: string;
   poster_path: string;
@@ -115,7 +125,10 @@ export type BestRecentReviews = {
 
 export async function fetchReviewCount() {
   try {
-    const res = await fetch("http://54.180.94.187:8080/api/reviews/count");
+    if (!SERVER_BASE_URL) {
+      throw new Error("SERVER_BASE_URL 환경 변수가 설정되지 않았습니다.");
+    }
+    const res = await fetch(`${SERVER_BASE_URL}api/reviews/count`);
     if (!res.ok) throw new Error("Failed to fetch review count");
     const data = await res.json();
     return data.result;
@@ -126,9 +139,6 @@ export async function fetchReviewCount() {
 }
 
 export async function getTopRatedMovies(): Promise<Movie[]> {
-  const MOVIE_BASE_PATH = process.env.NEXT_PUBLIC_API_URL_MOVIE;
-  const API_KEY = process.env.NEXT_PUBLIC_API_URL_KEY;
-
   if (!MOVIE_BASE_PATH) {
     throw new Error("MOVIE_BASE_PATH went wrong");
   }
@@ -146,9 +156,6 @@ export async function getTopRatedMovies(): Promise<Movie[]> {
 }
 
 export async function getNowPlayingMovies(): Promise<Movie[]> {
-  const MOVIE_BASE_PATH = process.env.NEXT_PUBLIC_API_URL_MOVIE;
-  const API_KEY = process.env.NEXT_PUBLIC_API_URL_KEY;
-
   if (!MOVIE_BASE_PATH) {
     throw new Error("MOVIE_BASE_PATH went wrong");
   }
@@ -166,9 +173,6 @@ export async function getNowPlayingMovies(): Promise<Movie[]> {
 }
 
 export async function getUpcomingMovies(): Promise<Movie[]> {
-  const MOVIE_BASE_PATH = process.env.NEXT_PUBLIC_API_URL_MOVIE;
-  const API_KEY = process.env.NEXT_PUBLIC_API_URL_KEY;
-
   if (!MOVIE_BASE_PATH) {
     throw new Error("MOVIE_BASE_PATH went wrong");
   }
@@ -186,9 +190,6 @@ export async function getUpcomingMovies(): Promise<Movie[]> {
 }
 
 export async function getSeries(): Promise<Movie[]> {
-  const MOVIE_BASE_PATH = process.env.NEXT_PUBLIC_API_URL_MOVIE;
-  const API_KEY = process.env.NEXT_PUBLIC_API_URL_KEY;
-
   if (!MOVIE_BASE_PATH) {
     throw new Error("MOVIE_BASE_PATH went wrong");
   }
@@ -207,9 +208,10 @@ export async function getSeries(): Promise<Movie[]> {
 
 export async function testMovies(): Promise<MovieTest[]> {
   try {
-    const response = await fetch(
-      "http://54.180.94.187:8080/api/movies?sort=top-rated"
-    );
+    if (!SERVER_BASE_URL) {
+      throw new Error("SERVER_BASE_URL 환경 변수가 설정되지 않았습니다.");
+    }
+    const response = await fetch(`${SERVER_BASE_URL}api/movies?sort=top-rated`);
 
     if (!response.ok)
       throw new Error(`Failed to fetch movies: ${response.statusText}`);
@@ -231,9 +233,10 @@ export async function fetchContentId(
   contentId: number
 ): Promise<DetailedMovie | null> {
   try {
-    const response = await fetch(
-      `http://54.180.94.187:8080/api/contents/${contentId}`
-    );
+    if (!SERVER_BASE_URL) {
+      throw new Error("SERVER_BASE_URL 환경 변수가 설정되지 않았습니다.");
+    }
+    const response = await fetch(`${SERVER_BASE_URL}api/contents/${contentId}`);
 
     if (!response.ok)
       throw new Error(`Failed to fetch content: ${response.statusText}`);
@@ -252,11 +255,14 @@ export async function fetchContentId(
 }
 
 export async function fetchReviews(
-  contentId: number,
+  contentId: number
 ): Promise<AllReviews[] | null> {
   try {
+    if (!SERVER_BASE_URL) {
+      throw new Error("SERVER_BASE_URL 환경 변수가 설정되지 않았습니다.");
+    }
     const response = await fetch(
-      `http://15.164.226.119:8080/api/reviews?contentId=${contentId}`
+      `${SERVER_BASE_URL}api/reviews?contentId=${contentId}`
     );
 
     if (!response.ok)
@@ -275,12 +281,12 @@ export async function fetchReviews(
   }
 }
 
-
 export async function fetchUserId(userId: number): Promise<UserId | null> {
   try {
-    const response = await fetch(
-      `http://15.164.226.119:8080/api/mypage/${userId}`
-    );
+    if (!SERVER_BASE_URL) {
+      throw new Error("SERVER_BASE_URL 환경 변수가 설정되지 않았습니다.");
+    }
+    const response = await fetch(`${SERVER_BASE_URL}api/mypage/${userId}`);
 
     if (!response.ok)
       throw new Error(`Failed to fetch content : ${response.statusText}`);
@@ -329,6 +335,8 @@ export function getRefreshToken(): string | null {
 export function removeTokens(): void {
   localStorage.removeItem("accessToken");
   localStorage.removeItem("refreshToken");
+  removeUserId();
+  removeUserInfo();
 }
 
 // 로그인 상태 확인 함수
@@ -352,6 +360,27 @@ export function getUserInfo(): string | null {
 // 사용자 정보 삭제
 export function removeUserInfo(): void {
   localStorage.removeItem("username");
+}
+
+// 사용자 ID 저장
+export function saveUserId(userId: number): void {
+  localStorage.setItem("userId", userId.toString());
+}
+
+// 사용자 ID 가져오기
+export function getUserId(): number | null {
+  if (typeof window !== "undefined") {
+    const userIdStr = localStorage.getItem("userId");
+    if (userIdStr) {
+      return parseInt(userIdStr, 10);
+    }
+  }
+  return null;
+}
+
+// 사용자 ID 삭제
+export function removeUserId(): void {
+  localStorage.removeItem("userId");
 }
 
 // API 요청 시 사용할 기본 설정
@@ -419,8 +448,11 @@ export async function registerUser(
   password: string
 ) {
   try {
+    if (!SERVER_BASE_URL) {
+      throw new Error("SERVER_BASE_URL 환경 변수가 설정되지 않았습니다.");
+    }
     // fetchApi 유틸리티 함수 사용 (인증 불필요)
-    await fetchApi("http://15.164.226.119:8080/api/users/signup", {
+    await fetchApi(`${SERVER_BASE_URL}api/users/signup`, {
       method: "POST",
       body: JSON.stringify({ email, username, password }),
       requireAuth: false, // 명시적으로 인증 불필요 표시
@@ -442,10 +474,13 @@ export async function loginUser(
   password: string
 ): Promise<AuthResponse> {
   try {
+    if (!SERVER_BASE_URL) {
+      throw new Error("SERVER_BASE_URL 환경 변수가 설정되지 않았습니다.");
+    }
     console.log("로그인 시도:", { email, password: "***" }); // 디버깅용 로그 추가
 
     // 직접 fetch 호출로 변경하여 문제 해결
-    const response = await fetch("http://15.164.226.119:8080/api/users/login", {
+    const response = await fetch(`${SERVER_BASE_URL}api/users/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -473,6 +508,11 @@ export async function loginUser(
     if (data.result.accessToken && data.result.refreshToken) {
       saveTokens(data.result.accessToken, data.result.refreshToken);
       saveUserInfo(data.result.username || email); // 응답에 username이 없을 경우 입력값 사용
+
+      // 사용자 ID 저장 (응답에 userId가 있는 경우)
+      if (data.result.userId) {
+        saveUserId(data.result.userId);
+      }
     } else {
       console.warn("토큰 정보가 응답에 포함되지 않았습니다:", data);
     }

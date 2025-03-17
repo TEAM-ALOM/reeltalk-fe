@@ -5,17 +5,21 @@ import { AiFillTrademarkCircle } from "react-icons/ai";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { FaThumbsUp } from "react-icons/fa";
 import { FaShareAlt } from "react-icons/fa";
-import { fetchContentId, MovieContent, MovieTest, testMovies } from "@/lib/api";
+import { AllReviews, fetchContentId, fetchReviews, MovieContent, MovieTest, testMovies } from "@/lib/api";
+import { unknown } from "zod";
 
 export default function ReviewsDetail() {
+    const searchParams = useSearchParams();
+    const contentId = searchParams.get("contentId");
+    const reviewId = searchParams.get("reviewId");
+    
     const [movies, setMovies] = useState<MovieTest[]>([]);
-    const [movieDetail, setMovieDetail] = useState<MovieContent | null>(null);
+    const [movieDetail, setMovieDetail] = useState<MovieContent | unknown>(unknown);
+    const [reviews, setReviews] = useState<AllReviews[]>([]);
+    const [selectedReview, setSelectedReview] = useState<AllReviews | unknown>(unknown);
 
     const router = useRouter();
     const path = usePathname();
-
-    const searchParams = useSearchParams();
-    const contentId = searchParams.get("contentId");
 
     useEffect(() => {
         if (!contentId) {
@@ -23,17 +27,16 @@ export default function ReviewsDetail() {
             return;
         }
 
-        testMovies().then((data) => {
-            setMovies(data);
+       fetchReviews(Number(contentId)).then((reviewList) => {
+        if (reviewList)
+            setReviews(reviewList);
 
-            fetchContentId(Number(contentId)).then((detail) => {
-                console.log("받아온 데이터: ", detail);
-                setMovieDetail(detail);
-            }).catch(error => {
-                console.log("fetchContendId 에러: ", error);
-            });
-        })
-    }, [contentId]);
+        const review = reviewList?.find(re => re.reviewId === Number(reviewId));
+        setSelectedReview(review || unknown);
+       });
+
+       console.log(selectedReview);
+    }, [contentId, reviewId]);
 
     const handleMore = (href: string) => {
         if (path !== href) {
