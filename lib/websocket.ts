@@ -1,10 +1,15 @@
 import { Client, IMessage, Frame } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
-import { getAccessToken, isLoggedIn } from "./api";
+// 테스트를 위해 인증 관련 임포트 주석 처리
+// import { getAccessToken, isLoggedIn } from "./api";
 import { ChatMessage } from "./chat-api";
 
-const WS_BASE_URL =
-  process.env.NEXT_PUBLIC_WS_URL || "https://api.reeltalk.com/ws";
+// 임시 데이터가 있는 테스트 서버 URL로 변경
+const WS_BASE_URL = "http://3.39.19.42:8080/ws";
+
+// 테스트용 토큰 (임시)
+const TEST_TOKEN =
+  "eyJhbGciOiJIUzI1NiJ9.eyJjYXRlZ29yeSI6ImFjY2VzcyIsInVzZXJJZCI6MSwidXNlcm5hbWUiOiJ0ZXN0MSIsInJvbGUiOiJST0xFX0FETUlOIiwiaWF0IjoxNzQ2NTQyMzgxLCJleHAiOjE3NDY1NDQxODF9.Z-hkkNoy0BXVwYI9tPKfUiIe_5yOjjaO9HzRxbtIV1s";
 
 interface WSConfig {
   onConnect?: () => void;
@@ -34,11 +39,10 @@ export class ChatSocketClient {
     // STOMP 클라이언트 생성
     this.client = new Client({
       webSocketFactory: () => new SockJS(WS_BASE_URL),
-      connectHeaders: isLoggedIn()
-        ? {
-            Authorization: `Bearer ${getAccessToken()}`,
-          }
-        : {},
+      connectHeaders: {
+        // 항상 테스트 토큰 사용
+        Authorization: `Bearer ${TEST_TOKEN}`,
+      },
       debug: function (str) {
         // 프로덕션에서는 console.log 비활성화
         if (process.env.NODE_ENV !== "production") {
@@ -117,11 +121,10 @@ export class ChatSocketClient {
     this.client.publish({
       destination: `/app/api/contents/${this.contentId}/talks`,
       body: JSON.stringify({ content }),
-      headers: isLoggedIn()
-        ? {
-            Authorization: `Bearer ${getAccessToken()}`,
-          }
-        : {},
+      headers: {
+        // 항상 테스트 토큰 사용
+        Authorization: `Bearer ${TEST_TOKEN}`,
+      },
     });
   }
 

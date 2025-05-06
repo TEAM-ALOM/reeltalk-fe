@@ -22,8 +22,8 @@ export default function ChatRoom({ contentId, userId }: ChatRoomProps) {
   const [isLoading, setIsLoading] = useState(true);
   const chatClientRef = useRef<ChatSocketClient | null>(null);
 
-  // 현재 로그인 유저 ID 가져오기 (임시로 1을 사용하거나 props로 전달받은 userId 사용)
-  const currentUserId = userId || 1;
+  // 현재 로그인 유저 ID 가져오기 (테스트 토큰은 userId가 1)
+  const currentUserId = userId || 1; // 테스트 계정 userId: 1
 
   useEffect(() => {
     // 1. 초기 메시지 목록 불러오기

@@ -3,7 +3,16 @@
 import { useParams, usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { IoStarSharp } from "react-icons/io5";
-import { testMovies, MovieTest, MovieContent, fetchContentId, Movie, AllReviews, fetchReviews, DetailedMovie} from "@/lib/api";
+import {
+  testMovies,
+  MovieTest,
+  MovieContent,
+  fetchContentId,
+  Movie,
+  AllReviews,
+  fetchReviews,
+  DetailedMovie,
+} from "@/lib/api";
 
 export default function MoviesDetail() {
   const [movies, setMovies] = useState<MovieTest[]>([]);
@@ -17,50 +26,55 @@ export default function MoviesDetail() {
 
   useEffect(() => {
     if (!movieId) return;
-    
+
     const contentId = parseInt(movieId, 10);
     if (isNaN(contentId)) return;
 
     console.log("contentID : ", contentId);
 
     fetchContentId(contentId).then((detail) => {
-      console.log("detail: ",detail);
-      if (detail)
-        setMovieDetail(detail);
+      console.log("detail: ", detail);
+      if (detail) setMovieDetail(detail);
     });
 
     fetchReviews(contentId).then((reviewData) => {
-      if (reviewData)
-        setReviews(reviewData);
-    })
+      if (reviewData) setReviews(reviewData);
+    });
   }, [movieId]);
-  
+
   console.log(movieDetail);
 
   // 쿼리 파라미터로 전달
-  const handleMore = (href:string, contentId: number, reviewId?: number) => {
-    let url = `${href}?contentId=${contentId}`;
-  
-    if (reviewId)
-      url = url + `&reviewId=${reviewId}`;
+  const handleMore = (href: string, contentId: number, reviewId?: number) => {
+    let url;
+
+    // livechat 페이지로 이동할 때는 경로 파라미터 방식 사용
+    if (href === "/livechat") {
+      // 테스트를 위해 임시 데이터가 있는 ID인 575265를 사용
+      url = `${href}/575265`;
+    }
+    // 다른 페이지는 기존 쿼리 파라미터 방식 유지
+    else {
+      url = `${href}?contentId=${contentId}`;
+
+      if (reviewId) url = url + `&reviewId=${reviewId}`;
+    }
 
     console.log("Navigating to", url);
-    
-    if (path !== href)
-      router.push(url);
+
+    if (path !== href) router.push(url);
   };
 
   return (
     <main className="flex flex-col justify-center items-center w-full px-4">
       {/* 영화 상세 정보*/}
       <div className="w-full h-full max-w-screen-xl min-h-[300px] lg:min-h-[500px] mt-6 grid sm:grid-rows-2 sm:grid-cols-1 lg:grid-rows-1 lg:grid-cols-[auto_1fr] gap-7">
-        
-      <div 
-          className="w-full lg:w-[350px] lg:h-[500px] sm:aspect-[1/3] flex items-center justify-center">
+        <div className="w-full lg:w-[350px] lg:h-[500px] sm:aspect-[1/3] flex items-center justify-center">
           <img
-            src={movieDetail?.poster_path
-              ? `https://image.tmdb.org/t/p/w500${movieDetail.poster_path}`
-              : ""
+            src={
+              movieDetail?.poster_path
+                ? `https://image.tmdb.org/t/p/w500${movieDetail.poster_path}`
+                : ""
             }
             alt="영화 포스터"
             className="w-full h-full object-cover"
@@ -79,7 +93,8 @@ export default function MoviesDetail() {
                 {movieDetail?.en_title || "영어 제목 없음"}
               </div>
               <div className="text-[#898989] text-xl md:text-[14px]">
-                {movieDetail?.genres?.map((g) => g.name).join(" /") || "장르 없음"}
+                {movieDetail?.genres?.map((g) => g.name).join(" /") ||
+                  "장르 없음"}
               </div>
             </div>
 
@@ -88,11 +103,11 @@ export default function MoviesDetail() {
               <div className="text-[18px]">평점</div>
               <div className="text-[36px] md:text-[36px]">4.0</div>
               <div className="h-50 w-50 flex">
-                <IoStarSharp className="text-[#FFC107] w-8 h-8"/>
-                <IoStarSharp className="text-[#FFC107] w-8 h-8"/>
-                <IoStarSharp className="text-[#FFC107] w-8 h-8"/>
-                <IoStarSharp className="text-[#FFC107] w-8 h-8"/>
-                <IoStarSharp className="text-[#D9D9D9] w-8 h-8"/>
+                <IoStarSharp className="text-[#FFC107] w-8 h-8" />
+                <IoStarSharp className="text-[#FFC107] w-8 h-8" />
+                <IoStarSharp className="text-[#FFC107] w-8 h-8" />
+                <IoStarSharp className="text-[#FFC107] w-8 h-8" />
+                <IoStarSharp className="text-[#D9D9D9] w-8 h-8" />
               </div>
             </div>
           </div>
@@ -106,23 +121,22 @@ export default function MoviesDetail() {
           <div>
             <span className="text-[16px]">출연진</span>
             <div className="flex space-x-12 md:space-x-10 my-3 overflow-x-auto whitespace-nowrap scrollbar-hide">
-
               {/*출연진 정보 동적 렌더링*/}
-              {[1,2,3,4].map((index) => (
-                <div 
-                className="flex space-x-3 items-center"
-                key={index}
-                >
-                    {/*출연진 이미지, img로 바꿀 예정*/}
-                    <div className="bg-[#CDC8C8] w-16 h-16 md:w-20 md:h-20 border rounded-full"></div>
-                    {/*역할 및 이름*/}
-                    <div className="flex flex-col justify-center">
-                        <span className="text-[16px] md:text-[16px]">엘파바 역</span>
-                        <span className="text-[18px] md:text-[16px]">신시아 에리보</span>
-                    </div>
+              {[1, 2, 3, 4].map((index) => (
+                <div className="flex space-x-3 items-center" key={index}>
+                  {/*출연진 이미지, img로 바꿀 예정*/}
+                  <div className="bg-[#CDC8C8] w-16 h-16 md:w-20 md:h-20 border rounded-full"></div>
+                  {/*역할 및 이름*/}
+                  <div className="flex flex-col justify-center">
+                    <span className="text-[16px] md:text-[16px]">
+                      엘파바 역
+                    </span>
+                    <span className="text-[18px] md:text-[16px]">
+                      신시아 에리보
+                    </span>
+                  </div>
                 </div>
               ))}
-
             </div>
           </div>
         </div>
@@ -132,37 +146,39 @@ export default function MoviesDetail() {
       <div className="w-full max-w-screen-xl min-h-[300px] lg:min-h-[290px] mt-6 grid grid-rows-[auto_1fr]">
         <div className="w-full flex justify-between">
           <span className="text-[#FFC107] text-[24px]">Review Talk</span>
-          <button 
-          onClick={() => handleMore("/review-talkmore", movieDetail?.id || 0)}
-          className="bg-[#E3F2FD] border rounded-[20px] text-[19.5px] md:text-[19.5px] w-[100px] h-[30px] text-[#787878] flex justify-center items-center">
+          <button
+            onClick={() => handleMore("/review-talkmore", movieDetail?.id || 0)}
+            className="bg-[#E3F2FD] border rounded-[20px] text-[19.5px] md:text-[19.5px] w-[100px] h-[30px] text-[#787878] flex justify-center items-center"
+          >
             more+
           </button>
         </div>
 
         {/* 리뷰 영상들*/}
         <div className="w-full flex justify-between space-x-10 overflow-x-auto whitespace-nowrap scrollbar-hide">
-
           {/*리뷰 영상 동적 렌더링*/}
           {(movieDetail?.reviews ?? []).map((review) => (
-            <img 
-            key={review.id}
-            className="flex aspect-[500/250] w-[90%] h-full md:max-w-[70%] lg:w-[450px] bg-[#CDC8C8] border rounded-[20px] flex items-center justify-center hover:cursor-pointer"
-            src={review?.image?.url}
-            alt={review?.title}
-            onClick={() => handleMore("/reviews-detail", movieDetail?.id || 0, review.id)}
+            <img
+              key={review.id}
+              className="flex aspect-[500/250] w-[90%] h-full md:max-w-[70%] lg:w-[450px] bg-[#CDC8C8] border rounded-[20px] flex items-center justify-center hover:cursor-pointer"
+              src={review?.image?.url}
+              alt={review?.title}
+              onClick={() =>
+                handleMore("/reviews-detail", movieDetail?.id || 0, review.id)
+              }
             />
           ))}
-
         </div>
       </div>
 
       {/* 실시간 talk*/}
       <div className="w-full h-full max-w-screen-xl min-h-[300px] lg:min-h-[600px]  my-6 space-y-3">
-      <div className="w-full flex justify-between">
+        <div className="w-full flex justify-between">
           <span className="text-[#FFC107] text-[24px]">실시간Talk</span>
-          <button 
-          onClick={() => handleMore("/livechat", movieDetail?.id || 0)}
-          className="bg-[#E3F2FD] border rounded-[20px] text-[21px] md:text-[21px] w-[100px] h-[30px] text-[#787878] flex justify-center items-center">
+          <button
+            onClick={() => handleMore("/livechat", movieDetail?.id || 0)}
+            className="bg-[#E3F2FD] border rounded-[20px] text-[21px] md:text-[21px] w-[100px] h-[30px] text-[#787878] flex justify-center items-center"
+          >
             more+
           </button>
         </div>
